@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light" data-accent="signal">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RX-09 // IDEA BOARD — WEBSITE DESIGN REFERENCE</title>
+<script>
+/* no-flash theme boot */
+(function(){var d=document.documentElement;try{var t=localStorage.getItem("app_theme");var a=localStorage.getItem("app_accent");if(!t){t=window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light";}d.setAttribute("data-theme",t);d.setAttribute("data-accent",a==="mono"?"mono":"signal");}catch(e){d.setAttribute("data-theme","light");d.setAttribute("data-accent","signal");}})();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;700&family=DotGothic16&family=JetBrains+Mono:wght@400;700;800&family=Rubik+Mono+One&display=swap" rel="stylesheet">
+<style>
+/* ===== 00 // TOKENS ===== */
+:root{
+  --bg:#F2F2F2;--ink:#0A0A0A;--line:#D6D6D6;--gray:#A0A3A0;--slate:#3A4550;
+  --accent:#FF5A1F;--on-accent:#0A0A0A;--field-focus:#FFF4EE;--u:8px;
+  --hero:"Chakra Petch","Rubik Mono One",sans-serif;
+  --display:"Rubik Mono One","Orbitron",sans-serif;
+  --mono:"JetBrains Mono","Space Mono",monospace;
+  --dot:"DotGothic16","JetBrains Mono",monospace;
+  color-scheme:light;
+}
+[data-theme="dark"]{--bg:#0D0E0F;--ink:#ECECEC;--line:#2A2D30;--gray:#7F8481;--field-focus:#1A1410;color-scheme:dark}
+[data-accent="mono"],.mode-b{--accent:var(--ink);--on-accent:var(--bg)}
+
+/* ===== 01 // BASE ===== */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;border-radius:0}
+html{background:var(--bg);color:var(--ink);scroll-behavior:smooth}
+body{font:400 13px/1.6 var(--mono);background:var(--bg);color:var(--ink);overflow-x:hidden;min-width:320px}
+body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:200;opacity:.06;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+[data-theme="dark"] body::after{opacity:.08;filter:invert(1)}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.skip{position:absolute;left:-9999px;top:8px;background:var(--ink);color:var(--bg);padding:8px 16px;z-index:300}
+.skip:focus{left:8px}
+
+/* ===== 02 // PRIMITIVES ===== */
+.label{font:700 10px/1.2 var(--mono);letter-spacing:.18em;text-transform:uppercase}
+.micro{font:400 9px/1.4 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--gray)}
+.jp{font:400 11px/1.2 var(--dot);letter-spacing:.2em;color:var(--gray)}
+.readout{font:400 48px/1 var(--display);letter-spacing:-.02em}
+.lcd{font:400 24px/1 var(--dot);letter-spacing:.06em}
+.svg-ink{stroke:var(--ink);fill:none}
+.svg-gray{stroke:var(--gray);fill:none}
+.svg-track{stroke:var(--line);fill:none}
+.svg-accent{stroke:var(--accent);fill:none}
+.svg-fill-ink{fill:var(--ink)}
+.svg-fill-accent{fill:var(--accent)}
+.svg-fill-bg{fill:var(--bg)}
+.svg-fill-gray{fill:var(--gray)}
+.nss{vector-effect:non-scaling-stroke}
+.hazard{background:repeating-linear-gradient(45deg,var(--ink) 0 8px,var(--bg) 8px 16px);height:16px}
+.cross{position:absolute;width:16px;height:16px}
+.cross::before,.cross::after{content:"";position:absolute;background:var(--ink)}
+.cross::before{left:7px;top:0;width:1px;height:16px}
+.cross::after{top:7px;left:0;height:1px;width:16px}
+.brackets{position:relative}
+.brackets::before,.brackets::after{content:"";position:absolute;width:16px;height:16px;pointer-events:none}
+.brackets::before{top:-1px;left:-1px;border-top:2px solid var(--ink);border-left:2px solid var(--ink)}
+.brackets::after{bottom:-1px;right:-1px;border-bottom:2px solid var(--ink);border-right:2px solid var(--ink)}
+.chip{display:inline-block;font:700 9px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;padding:4px 8px;border:1px solid var(--ink)}
+.chip.ok{background:var(--ink);color:var(--bg)}
+.chip.warn{background:var(--accent);color:var(--on-accent);border-color:var(--accent)}
+.blink{animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+
+/* ===== 03 // CONTROLS ===== */
+.mode-switch{display:inline-grid;grid-template-columns:1fr 1fr;border:1px solid var(--ink);font:700 9px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase}
+.mode-switch span{padding:8px;white-space:nowrap}
+.mode-switch[aria-checked="false"] span:first-child,.mode-switch[aria-checked="true"] span:last-child{background:var(--ink);color:var(--bg)}
+.mode-switch:hover{box-shadow:4px 4px 0 var(--ink)}
+.mode-switch:active{transform:translate(4px,4px);box-shadow:none}
+
+/* ===== 04 // LAYOUT ===== */
+.top{position:sticky;top:0;z-index:50;background:var(--bg);border-bottom:1px solid var(--ink);display:grid;grid-template-columns:240px 1fr auto;align-items:stretch}
+.brand{background:var(--ink);color:var(--bg);padding:16px 24px;clip-path:polygon(0 0,calc(100% - 16px) 0,100% 16px,100% 100%,0 100%);display:flex;flex-direction:column;justify-content:center}
+.brand b{font:400 16px/1 var(--display);letter-spacing:.02em}
+.brand .micro{color:var(--gray);margin-top:8px}
+.nav{display:flex;align-items:stretch}
+.nav a{display:flex;align-items:center;gap:8px;padding:0 16px;border-right:1px solid var(--line);font:700 10px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase}
+.nav a i{font-style:normal;color:var(--gray)}
+.nav a:hover{background:var(--ink);color:var(--bg)}
+.nav a[aria-current="true"]{background:var(--accent);color:var(--on-accent)}
+.nav a[aria-current="true"] i{color:var(--on-accent)}
+.top-r{display:flex;align-items:center;gap:16px;padding:8px 16px;border-left:1px solid var(--ink)}
+.clock{display:flex;flex-direction:column;gap:4px}
+.clock .lcd{font-size:16px}
+.ticker{border-bottom:1px solid var(--ink);overflow:hidden;white-space:nowrap;font:700 10px/1 var(--mono);letter-spacing:.2em;text-transform:uppercase;padding:8px 0}
+.ticker-in{display:inline-block;animation:tick 40s steps(400) infinite}
+.ticker-in span{padding:0 16px}
+.ticker-in .hl{color:var(--accent)}
+@keyframes tick{to{transform:translateX(-50%)}}
+
+.sec{position:relative;padding:64px 32px;border-bottom:1px solid var(--ink)}
+.sec-head{display:grid;grid-template-columns:auto 1fr auto;gap:24px;align-items:end;margin-bottom:32px;padding-bottom:16px;border-bottom:1px solid var(--ink)}
+.sec-idx{font:400 48px/1 var(--dot);color:var(--accent)}
+.sec-title{font:700 clamp(32px,5vw,64px)/.85 var(--hero);text-transform:uppercase;letter-spacing:-.045em;margin-top:8px}
+.sec-meta{text-align:right;display:flex;flex-direction:column;gap:4px}
+
+/* ===== 05 // HERO ===== */
+.hero{position:relative;overflow:hidden;padding:64px 32px 32px;border-bottom:1px solid var(--ink);min-height:640px;display:flex;flex-direction:column;justify-content:space-between}
+.trace{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.hero-diag{position:absolute;right:0;top:0;width:34%;height:56%;background:var(--accent);clip-path:polygon(40% 0,100% 0,100% 100%,0 100%)}
+.hero-top{position:relative;display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
+.hero-top .lead{max-width:420px}
+.hero-top p{margin-top:16px}
+.giant{position:relative;font:700 clamp(64px,15vw,232px)/.78 var(--hero);letter-spacing:-.045em;text-transform:uppercase;margin:64px 0 32px}
+.giant em{font-style:normal;color:var(--accent)}
+.hero .cross.c1{top:24px;left:24px}.hero .cross.c2{bottom:24px;right:24px}
+.cells{position:relative;display:grid;grid-template-columns:repeat(5,1fr);border:1px solid var(--ink);background:var(--bg)}
+.cell{position:relative;padding:16px;border-right:1px solid var(--ink);display:flex;flex-direction:column;gap:8px;min-height:112px}
+.cell:last-child{border-right:0}
+.cell .tag{position:absolute;top:8px;right:8px}
+.cell .readout{font-size:40px;margin-top:auto}
+.cell.warn{background:var(--ink);color:var(--bg)}
+.cell.warn .readout{color:var(--accent)}
+
+/* ===== 06 // BOARD 01 PAGE INDEX ===== */
+.pg-grid{display:grid;grid-template-columns:repeat(2,1fr);border-top:1px solid var(--ink);border-left:1px solid var(--ink)}
+.pg-cell{position:relative;border-right:1px solid var(--ink);border-bottom:1px solid var(--ink);padding:40px 32px 32px;min-height:144px;display:flex;align-items:center}
+.pg-cell:nth-child(even){justify-content:flex-end}
+.pg-cell .tag{position:absolute;top:8px;left:8px}
+.pg{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.pg-t{font:500 clamp(22px,3.2vw,32px)/1 var(--hero);letter-spacing:-.01em;color:var(--gray);text-transform:uppercase;white-space:nowrap}
+.pg-t b{font-weight:700;color:var(--ink)}
+.pg-num{font:500 clamp(28px,3.6vw,40px)/1 var(--hero);letter-spacing:-.02em}
+.pg-bar{width:8px;height:40px;background:var(--accent);flex:none}
+.pg-sub{display:block;margin-top:4px}
+.stack{display:flex;flex-direction:column}
+.stack.r{align-items:flex-end;text-align:right}
+.spaced{font:400 12px/1 var(--mono);letter-spacing:.4em;color:var(--gray);text-transform:uppercase}
+.v8 .long{flex:1;min-width:96px;height:32px;background:var(--accent)}
+.v8{flex-wrap:nowrap;width:100%}
+.v9 .tall{width:2px;height:88px;background:var(--gray);align-self:flex-end}
+.v9{align-items:flex-end}
+.v10 .rule{width:1px;height:40px;background:var(--ink)}
+.v10 .big{font:500 48px/1 var(--hero);letter-spacing:-.02em}
+.v10 .big b{font-weight:700;color:var(--accent)}
+.v11 .blk{display:flex;align-items:center;background:var(--accent);color:var(--on-accent);padding:4px 64px 4px 8px;font:700 clamp(22px,3.2vw,32px)/1 var(--hero)}
+.v12{position:relative;height:96px;width:160px;justify-content:flex-end;align-items:flex-end}
+.v12 .tblk{position:absolute;right:0;top:-24px;width:56px;height:120px;background:var(--accent)}
+.v12 .pg-t{position:relative}
+.v12 .pg-t b{color:var(--on-accent)}
+.chev-blk{display:flex;align-items:center;background:var(--accent);padding:4px 8px;height:32px}
+.sq{width:32px;height:32px;background:var(--accent)}
+.v14 .vl{width:4px;height:48px;background:var(--accent)}
+.v16 .b1,.v16 .b2{display:inline-block;padding:2px 4px;margin-left:2px;font-weight:700}
+.v16 .b1{background:var(--accent);color:var(--on-accent);border:2px solid var(--accent)}
+.v16 .b2{border:2px solid var(--accent);color:var(--ink)}
+
+/* ===== 07 // BOARD 02 VERTICAL POSTER ===== */
+.two-up{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:32px;align-items:start}
+.poster{position:relative;container-type:inline-size;aspect-ratio:3/4;border:1px solid var(--ink);background:var(--bg);overflow:hidden;box-shadow:8px 8px 0 var(--ink)}
+.poster>*{position:absolute}
+.ps-idx{left:4cqw;top:6cqw;writing-mode:vertical-rl;font:700 1.6cqw/1 var(--mono);letter-spacing:.1em}
+.ps-idx::before{content:"";display:block;width:1.2cqw;height:1.2cqw;background:var(--ink);margin-bottom:1cqw}
+.ps-vt{left:16cqw;top:7cqw;writing-mode:vertical-rl;font:700 16.5cqw/.8 var(--hero);letter-spacing:-.03em;text-transform:uppercase;white-space:nowrap}
+.ps-dots{left:33cqw;top:11cqw;width:21cqw;height:76%}
+.ps-vline{left:44.5cqw;top:8cqw;width:.3cqw;height:17cqw;background:var(--ink)}
+.ps-h1{left:48cqw;right:6cqw;top:23cqw;height:1.4cqw;background:var(--ink)}
+.ps-h1b{left:62cqw;right:6cqw;top:21.4cqw;height:1.6cqw;background:var(--ink)}
+.ps-h2{left:48cqw;right:0;top:26.5cqw;height:.5cqw;background:var(--ink)}
+.ps-00{right:6cqw;top:18cqw;font:700 1.8cqw/1 var(--mono)}
+.ps-chk{left:48cqw;top:16cqw;width:22cqw}
+.ps-rail{left:66cqw;top:36cqw;width:26cqw;height:31cqw}
+.ps-mark{right:7cqw;bottom:22cqw;width:14cqw}
+.ps-acc{right:24cqw;bottom:24cqw;width:5cqw;height:5cqw;background:var(--accent)}
+.ps-txt{left:62cqw;right:6cqw;bottom:13cqw;display:grid;grid-template-columns:1fr 1fr;gap:2cqw;border-top:.3cqw solid var(--ink);padding-top:1.4cqw;font:400 1.15cqw/1.4 var(--mono)}
+.ps-txt b{font-weight:800}
+.ps-spec{left:11cqw;bottom:13cqw;font:400 1.4cqw/1.3 var(--mono)}
+.ps-spec::before{content:"";display:block;width:7cqw;height:.4cqw;background:var(--ink);margin-bottom:2cqw}
+.ps-spec strong{display:block;font-weight:800;font-size:1.6cqw}
+.ps-spec small{display:block;margin-top:1.5cqw;font-size:1cqw;letter-spacing:.1em}
+.ps-foot{left:12cqw;right:12cqw;bottom:6cqw;height:.2cqw;background:var(--ink)}
+.ps-foot2{right:3cqw;bottom:4.6cqw;width:27cqw;height:1cqw;border:.25cqw solid var(--ink)}
+.notes{display:flex;flex-direction:column;border:1px solid var(--ink)}
+.note{position:relative;padding:16px 16px 16px 24px;border-bottom:1px solid var(--line)}
+.note:last-child{border-bottom:0}
+.note h3{font:400 13px/1.2 var(--display);margin-bottom:8px;text-transform:uppercase}
+.note p{color:var(--ink)}
+.note .tag{position:absolute;top:16px;right:16px}
+.note.hot{border-left:8px solid var(--accent);padding-left:16px}
+
+/* ===== 08 // BOARD 03 SWISS GRID ===== */
+.swiss{container-type:inline-size;border:1px solid var(--ink);background:var(--bg);box-shadow:8px 8px 0 var(--ink)}
+.sw{display:grid;grid-template-columns:20% 1fr;min-height:100%}
+.sw-aside{padding:4cqw 2.4cqw;border-right:1px solid var(--ink);display:flex;flex-direction:column;gap:2.4cqw;font-size:max(9px,1.25cqw)}
+.sw-plus{width:6cqw;height:6cqw;background:var(--accent);position:relative}
+.sw-plus::before,.sw-plus::after{content:"";position:absolute;background:var(--on-accent)}
+.sw-plus::before{left:42%;top:18%;width:16%;height:64%}
+.sw-plus::after{top:42%;left:18%;height:16%;width:64%}
+.sw-aside h4{font:700 max(10px,1.5cqw)/1.3 var(--mono);text-transform:uppercase;letter-spacing:.06em}
+.sw-rule{height:.4cqw;background:var(--ink)}
+.sw-thin{height:1px;background:var(--ink)}
+.sw-big{font:700 9cqw/.85 var(--hero);letter-spacing:-.03em}
+.sw-list{list-style:none;font:700 max(9px,1.3cqw)/1.6 var(--mono);text-transform:uppercase}
+.sw-mono{margin-top:auto;width:7cqw;height:7cqw;border:2px solid var(--ink);display:grid;place-items:center;font:400 2.4cqw/1 var(--display)}
+.sw-main{display:grid;grid-template-rows:auto auto auto}
+.sw-head{position:relative;padding:4cqw 3cqw 2cqw;border-bottom:1px solid var(--ink)}
+.sw-tag{position:absolute;right:13cqw;top:3cqw;text-align:right;font:700 max(9px,1.3cqw)/1.4 var(--mono);text-transform:uppercase}
+.sw-vbar{position:absolute;right:3cqw;top:3cqw;width:5cqw;height:28cqw;background:var(--accent)}
+.sw-vl{position:absolute;right:10cqw;top:3cqw;width:1px;height:28cqw;background:var(--ink)}
+.sw-h{font:700 12.5cqw/.86 var(--hero);text-transform:uppercase;letter-spacing:-.035em;margin-top:6cqw;position:relative}
+.sw-h i{font-style:normal;color:var(--accent)}
+.sw-grid{display:grid;grid-template-columns:1.5fr 1fr .9fr;grid-template-rows:auto auto;border-bottom:1px solid var(--ink)}
+.sw-grid>div{border-right:1px solid var(--ink);border-bottom:1px solid var(--ink);padding:2.4cqw}
+.sw-grid>div:nth-child(3n){border-right:0}
+.sw-grid>div:nth-child(n+4){border-bottom:0}
+.sw-red{background:var(--accent);min-height:22cqw}
+.sw-form h5{font:700 2.6cqw/1.1 var(--hero);margin-bottom:1.6cqw}
+.sw-form hr{border:0;height:1px;background:var(--ink);width:40%;margin-bottom:1.6cqw}
+.sw-form p{font-size:max(9px,1.25cqw);line-height:1.5}
+.sw-dots{display:grid;grid-template-columns:repeat(5,1fr);gap:2.4cqw;align-content:center}
+.sw-dots span{width:.8cqw;height:.8cqw;background:var(--ink)}
+.sw-03{font:700 21cqw/.8 var(--hero);color:var(--accent);letter-spacing:-.04em;display:flex;align-items:flex-end}
+.sw-A{font:700 21cqw/.8 var(--hero);display:flex;align-items:flex-end;justify-content:center}
+.sw-yr{display:flex;flex-direction:column;justify-content:space-between;gap:2.4cqw;padding:0!important}
+.sw-yr .y{padding:2.4cqw;border-bottom:1px solid var(--ink)}
+.sw-yr .y b{display:block;font:700 4cqw/1 var(--hero)}
+.sw-yr .y span{font:700 max(9px,1.3cqw)/1 var(--mono)}
+.sw-bars{padding:0 2.4cqw 2.4cqw;display:flex;flex-direction:column;gap:1.6cqw}
+.sw-bars span{height:2.2cqw;background:var(--ink)}
+.sw-foot{display:grid;grid-template-columns:1fr 1fr 1fr .9fr;gap:2.4cqw;padding:2.4cqw 3cqw;font-size:max(9px,1.2cqw);line-height:1.5}
+.sw-foot h6{font:700 max(9px,1.3cqw)/1 var(--mono);text-transform:uppercase;margin-bottom:1cqw;display:flex;align-items:center;gap:1cqw}
+.sw-foot h6::before{content:"";width:1.2cqw;height:1.2cqw;background:var(--accent)}
+.sw-foot .end{border-left:1px solid var(--ink);padding-left:2.4cqw;font:700 max(9px,1.4cqw)/1.4 var(--mono);text-transform:uppercase}
+
+/* ===== 09 // BOARD 04 GLYPH SHEET ===== */
+.gl-grid{display:grid;grid-template-columns:repeat(6,1fr);border-top:1px solid var(--ink);border-left:1px solid var(--ink)}
+.gl{position:relative;aspect-ratio:1;border-right:1px solid var(--ink);border-bottom:1px solid var(--ink);display:grid;place-items:center;padding:16px;color:var(--ink)}
+.gl:hover{background:var(--ink);color:var(--bg)}
+[data-accent="mono"] .gl:hover .a{fill:var(--bg)}
+.gl .tag{position:absolute;top:6px;left:6px;font:400 8px/1 var(--mono);letter-spacing:.14em;color:var(--gray)}
+.gl svg{width:100%;height:100%;overflow:visible}
+.gl .f{fill:currentColor}
+.gl .s{fill:none;stroke:currentColor;stroke-linecap:square;stroke-linejoin:miter}
+.gl .a{fill:var(--accent)}
+.gl .as{fill:none;stroke:var(--accent)}
+.gl .oa{fill:var(--on-accent)}
+.gl .bgf{fill:var(--bg)}
+.gl:hover .bgf{fill:var(--ink)}
+.t-hero{font-family:var(--hero);font-weight:700}
+.t-disp{font-family:var(--display)}
+.t-mono{font-family:var(--mono);font-weight:800}
+.t-dot{font-family:var(--dot)}
+
+/* ===== 10 // BOARD 05 APPLY ===== */
+.tbl-wrap{overflow-x:auto;border:1px solid var(--ink)}
+table{width:100%;border-collapse:collapse;min-width:720px}
+th{font:700 10px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;text-align:left;padding:16px;border-bottom:1px solid var(--ink)}
+td{padding:16px;border-bottom:1px solid var(--line);vertical-align:top}
+tbody tr:hover{background:var(--ink);color:var(--bg)}
+td .dot-n{font:400 24px/1 var(--dot);color:var(--accent)}
+tbody tr:hover .dot-n{color:var(--accent)}
+code{font:700 11px/1 var(--mono)}
+.comp{margin-top:32px;display:grid;grid-template-columns:minmax(0,1fr) 280px;gap:32px}
+.site{border:1px solid var(--ink);box-shadow:8px 8px 0 var(--accent);clip-path:polygon(0 0,calc(100% - 16px) 0,100% 16px,100% 100%,0 100%);background:var(--bg)}
+.s-nav{display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--ink);padding:8px 16px;gap:16px;flex-wrap:wrap}
+.s-nav ul{list-style:none;display:flex;gap:16px}
+.s-nav li.on{background:var(--accent);color:var(--on-accent);padding:0 8px}
+.s-hero{display:grid;grid-template-columns:auto 1fr;border-bottom:1px solid var(--ink);min-height:240px}
+.s-vt{writing-mode:vertical-rl;font:700 88px/.8 var(--hero);letter-spacing:-.04em;padding:16px;border-right:1px solid var(--ink)}
+.s-hero-r{position:relative;padding:24px;display:flex;flex-direction:column;justify-content:space-between;gap:16px}
+.s-hero-r .dots{position:absolute;right:16px;top:16px;width:128px;height:96px}
+.s-hero-r h3{font:700 clamp(28px,4vw,48px)/.85 var(--hero);text-transform:uppercase;letter-spacing:-.04em;position:relative;max-width:420px}
+.s-hero-r h3 i{font-style:normal;color:var(--accent)}
+.s-cta{align-self:flex-start;font:800 11px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;padding:16px 24px;background:var(--accent);color:var(--on-accent);border:1px solid var(--ink);box-shadow:4px 4px 0 var(--ink)}
+.s-cta:hover{background:var(--ink);color:var(--bg)}
+.s-cta:active{transform:translate(4px,4px);box-shadow:none}
+.s-idx{display:flex;align-items:center;gap:16px;padding:16px;border-bottom:1px solid var(--ink)}
+.s-cards{display:grid;grid-template-columns:repeat(3,1fr)}
+.s-cards article{padding:16px;border-right:1px solid var(--ink);display:flex;flex-direction:column;gap:8px;min-height:144px}
+.s-cards article:last-child{border-right:0}
+.s-cards b{font:700 56px/.8 var(--hero);letter-spacing:-.04em}
+.s-cards article:first-child b{color:var(--accent)}
+.s-foot{border-top:1px solid var(--ink);display:flex;justify-content:space-between;align-items:center;gap:16px;padding:8px 16px;flex-wrap:wrap}
+.plates{display:flex;flex-direction:column;gap:16px}
+.plate{display:grid;grid-template-columns:48px 1fr;align-items:center;gap:16px;padding:16px;border:1px solid var(--ink)}
+.plate svg{width:48px;height:48px}
+.plate b{font:400 16px/1 var(--display);display:block}
+.plate.danger{background:var(--accent);color:var(--on-accent);border-color:var(--accent)}
+.plate.danger .jp{color:var(--on-accent)}
+.plate.caution{background:var(--ink);color:var(--bg)}
+.plate.notice{background:var(--bg)}
+
+/* ===== 11 // FOOTER ===== */
+.foot{padding:32px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+
+/* ===== 12 // RESPONSIVE ===== */
+@media (max-width:1100px){
+  .two-up,.comp{grid-template-columns:1fr}
+  .gl-grid{grid-template-columns:repeat(4,1fr)}
+  .cells{grid-template-columns:repeat(3,1fr)}
+  .cell:nth-child(3){border-right:0}
+  .cell:nth-child(-n+3){border-bottom:1px solid var(--ink)}
+  .nav a{padding:0 8px}
+  .nav a span{display:none}
+}
+@media (max-width:960px){
+  .top{position:relative;grid-template-columns:1fr}
+  .nav{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--ink)}
+  .nav a{padding:16px;border-bottom:1px solid var(--line)}
+  .nav a span{display:inline}
+  .top-r{border-left:0;border-top:1px solid var(--ink);flex-wrap:wrap}
+  .pg-grid{grid-template-columns:1fr}
+  .pg-cell:nth-child(even){justify-content:flex-start}
+  .hero-diag{width:50%;height:32%}
+}
+@media (max-width:640px){
+  .sec{padding:48px 16px}
+  .hero{padding:48px 16px 16px;min-height:0}
+  .sec-head{grid-template-columns:1fr}
+  .sec-meta{text-align:left}
+  .meta-ne{display:none}
+  .cells{grid-template-columns:1fr 1fr}
+  .cell{border-bottom:1px solid var(--ink)}
+  .cell:nth-child(odd){border-right:1px solid var(--ink)}
+  .cell:nth-child(even),.cell:last-child{border-right:0}
+  .gl-grid{grid-template-columns:repeat(2,1fr)}
+  .pg-cell{padding:40px 16px 24px}
+  .v8 .long{min-width:40px}
+  .s-hero{grid-template-columns:1fr}
+  .s-vt{writing-mode:horizontal-tb;font-size:48px;border-right:0;border-bottom:1px solid var(--ink)}
+  .s-cards{grid-template-columns:1fr}
+  .s-cards article{border-right:0;border-bottom:1px solid var(--ink)}
+  .poster,.swiss,.site{box-shadow:4px 4px 0 var(--ink)}
+}
+
+/* ===== 13 // MOTION ===== */
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">SKIP TO CONTENT</a>
+
+<header class="top">
+  <div class="brand">
+    <b>RX-09</b>
+    <span class="micro">IDEA BOARD // WEB DESIGN REF</span>
+  </div>
+  <nav class="nav" aria-label="Board sections">
+    <a href="#b01" data-sec="b01"><i>01</i><span>[PAGE INDEX]</span></a>
+    <a href="#b02" data-sec="b02"><i>02</i><span>[VERTICAL]</span></a>
+    <a href="#b03" data-sec="b03"><i>03</i><span>[SWISS GRID]</span></a>
+    <a href="#b04" data-sec="b04"><i>04</i><span>[GLYPHS]</span></a>
+    <a href="#b05" data-sec="b05"><i>05</i><span>[APPLY]</span></a>
+  </nav>
+  <div class="top-r">
+    <div class="clock"><span class="micro">LIVE // LOCAL</span><span class="lcd" id="clock">00:00:00</span></div>
+    <button class="mode-switch" id="sw-theme" role="switch" aria-checked="false" aria-label="Dark mode"><span>DAY</span><span>夜 NIGHT</span></button>
+    <button class="mode-switch" id="sw-accent" role="switch" aria-checked="false" aria-label="Pictogram mode"><span>A·SIGNAL</span><span>B·PICTO</span></button>
+  </div>
+</header>
+
+<div class="ticker" aria-hidden="true"><div class="ticker-in">
+  <span>IDEA BOARD</span><span class="hl">///</span><span>04 SOURCES</span><span>PAGE INDEX</span><span class="hl">&gt;&gt;&gt;</span><span>VERTICAL POSTER</span><span>SWISS GRID</span><span class="hl">&gt;&gt;&gt;</span><span>GLYPH SHEET</span><span>想像力を動力源</span><span class="hl">///</span>
+  <span>IDEA BOARD</span><span class="hl">///</span><span>04 SOURCES</span><span>PAGE INDEX</span><span class="hl">&gt;&gt;&gt;</span><span>VERTICAL POSTER</span><span>SWISS GRID</span><span class="hl">&gt;&gt;&gt;</span><span>GLYPH SHEET</span><span>想像力を動力源</span><span class="hl">///</span>
+</div></div>
+
+<main id="main">
+
+<!-- ===== HERO ===== -->
+<section class="hero" aria-labelledby="hero-t">
+  <svg class="trace" viewBox="0 0 1440 720" preserveAspectRatio="none" aria-hidden="true">
+    <g stroke-width="1.5">
+      <path class="svg-ink nss" d="M0 120 H360 L420 180 H760 L820 120 H980"/>
+      <path class="svg-ink nss" d="M0 600 H220 L280 540 H620 L680 600 H1440"/>
+      <path class="svg-ink nss" d="M1100 720 V520 L1160 460 H1440"/>
+      <path class="svg-gray nss" d="M0 400 H140 L200 340 H520"/>
+      <path class="svg-gray nss" d="M1440 300 H1240 L1180 360 H1000 L940 420 H860"/>
+    </g>
+    <rect class="svg-fill-ink" x="974" y="114" width="12" height="12"/>
+    <rect class="svg-fill-ink" x="1094" y="714" width="12" height="6"/>
+    <rect class="svg-fill-accent" x="514" y="394" width="12" height="12"/>
+    <circle class="svg-fill-ink" cx="860" cy="420" r="5"/>
+    <circle class="svg-fill-ink" cx="1440" cy="460" r="5"/>
+    <rect class="svg-fill-ink" x="560" y="174" width="6" height="12"/>
+    <rect class="svg-fill-ink" x="400" y="594" width="6" height="12"/>
+  </svg>
+  <div class="hero-diag" aria-hidden="true"></div>
+  <span class="cross c1" aria-hidden="true"></span>
+  <span class="cross c2" aria-hidden="true"></span>
+
+  <div class="hero-top">
+    <div class="lead">
+      <span class="label">C-00 // MOODBOARD COMPILATION</span>
+      <p>Four reference sheets rebuilt as live, themeable HTML specimens: editorial page indexes, a brutalist vertical poster, a Swiss modular grid and a techwear glyph sheet. Each board ends in a pattern you can lift into a website.</p>
+    </div>
+    <div class="stack r">
+      <span class="jp">設計資料 // アイデアボード</span>
+      <span class="micro">REV 01 // 2026.10.14</span>
+    </div>
+  </div>
+
+  <h1 class="giant" id="hero-t">IDEA<br>BOARD<em>.</em></h1>
+
+  <div class="cells">
+    <div class="cell"><span class="micro tag">#01</span><span class="label">SOURCES</span><span class="readout" data-count="4" data-pad="3">004</span></div>
+    <div class="cell"><span class="micro tag">#02</span><span class="label">SPECIMENS</span><span class="readout" data-count="54" data-pad="3">054</span></div>
+    <div class="cell"><span class="micro tag">#03</span><span class="label">GRID UNIT</span><span class="readout">8PX</span></div>
+    <div class="cell"><span class="micro tag">#04</span><span class="label">SIGNAL // TELEMETRY</span><span class="lcd" id="telemetry">00.19.90_</span><span class="micro">REFRESH 2.5S</span></div>
+    <div class="cell warn"><span class="micro tag">#05</span><span class="label">注意 // RULE</span><span class="readout">1</span><span class="micro">ONE ACCENT ONLY</span></div>
+  </div>
+</section>
+
+<!-- ===== BOARD 01 ===== -->
+<section class="sec" id="b01" aria-labelledby="b01-t">
+  <div class="sec-head">
+    <span class="sec-idx" aria-hidden="true">01</span>
+    <div><span class="jp">頁番号 // PAGE INDEX SYSTEM</span><h2 class="sec-title" id="b01-t">Page Index</h2></div>
+    <div class="sec-meta"><span class="label">16 VARIANTS</span><span class="micro meta-ne">USE: SECTION HEADERS / PAGERS</span></div>
+  </div>
+
+  <div class="pg-grid">
+    <div class="pg-cell"><span class="micro tag">#01 // CHEVRON</span>
+      <div class="pg"><svg width="40" height="24" viewBox="0 0 40 24" aria-hidden="true"><polygon class="svg-fill-accent" points="0,0 16,12 0,24"/><polygon class="svg-fill-accent" points="18,0 34,12 18,24"/></svg><span class="pg-num">01/02</span></div>
+    </div>
+    <div class="pg-cell"><span class="micro tag">#02 // OFFSET SQUARES</span>
+      <div class="pg"><span class="spaced">RX-09 HUD SYSTEM</span><svg width="56" height="48" viewBox="0 0 56 48" aria-hidden="true"><rect class="svg-ink" x="1" y="13" width="32" height="32" stroke-width="1"/><rect class="svg-fill-accent" x="18" y="1" width="22" height="22"/><rect class="svg-ink" x="42" y="23" width="12" height="12" stroke-width="1"/></svg></div>
+    </div>
+    <div class="pg-cell"><span class="micro tag">#03 // TAIL BAR</span>
+      <div class="pg"><span class="pg-t">PAGE <b>01/02</b></span><span class="pg-bar"></span></div>
+    </div>
+    <div class="pg-cell"><span class="micro tag">#04 // BILINGUAL SLASH</span>
+      <div class="pg"><span class="stack r"><span class="jp" style="color:var(--ink)">設計と版面構成</span><span class="micro pg-sub">SEKKEI TO HANMEN KOUSEI</span></span>
+        <svg width="16" height="40" viewBox="0 0 16 40" aria-hidden="true"><line class="svg-ink" x1="15" y1="1" x2="1" y2="39" stroke-width="1"/></svg>
+        <span class="pg-num" style="color:var(--gray);font-weight:700">02</span><span class="pg-bar" style="width:4px"></span></div>
+    </div>
+    <div class="pg-cell"><span class="micro tag">#05 // CHAPTER LINE</span>
+      <div class="pg"><span class="jp" style="color:var(--ink);font-size:16px;letter-spacing:.1em">第一章　設計概論</span><span style="width:1px;height:20px;background:var(--gray)"></span><span class="pg-t" style="font-size:22px">PAGE 01/02</span></div>
+    </div>
+    <div class="pg-cell"><span class="micro tag">#06 // STEP DOTS</span>
+      <div class="pg"><svg width="56" height="16" viewBox="0 0 56 16" aria-hidden="true"><circle class="svg-accent" cx="8" cy="8" r="6" stroke-width="1.5"/><circle class="svg-accent" cx="26" cy="8" r="6" stroke-width="1.5"/><circle class="svg-fill-accent" cx="44" cy="8" r="7"/></svg><span class="pg-t" style="font-size:22px">PAGE 01/02</span><span class="pg-bar" style="height:24px"></span></div>
+    </div>
+    <div class="pg-cell"><span class="micro tag">#07 // OVERLAP PAIR</span>
+      <div class="pg"><svg width="48" height="28" viewBox="0 0 48 28" aria-hidden="true"><circle class="svg-fill-accent" cx="14" cy="14" r="13"/><circle class="svg-ink" cx="32" cy="14" r="13" stroke-width="2"/></svg><span class="pg-t">PAGE <b>01/02</b></span></div>
+    </div>
+    <div class="pg-cell"><span class="micro tag">#08 // RUN BAR</span>
+      <div class="pg v8"><span class="pg-t">PAGE <b>01/02</b></span><span class="long"></span></div>
+    </div>
+    <div class="pg-cell"><span class="micro tag">#09 // MAST LINE</span>
+      <div class="pg v9"><span class="pg-t">PAGE <b>01/02</b></span><span class="tall"></span></div>
+    </div>
+    <div class="pg-cell"><span class="micro tag">#10 // SPLIT CAPTION</span>
+      <div class="pg v10"><span class="stack r"><span class="micro">HANSHI SEKKEI // OUYOU</span><span class="jp" style="color:var(--ink)">設計と版面構成</span></span><span class="rule"></span><span class="big">P <b>01/02</b></span></div>
+    </div>
+    <div class="pg-cell"><span class="micro tag">#11 // TAB SLAB</span>
+      <div class="pg v11"><span class="pg-t">PAGE</span><span class="blk">01/02</span></div>
+    </div>
+    <div class="pg-cell"><span class="micro tag">#12 // PILLAR</span>
+      <div class="pg v12"><span class="tblk" aria-hidden="true"></span><span class="pg-t" style="font-size:24px">PAGE <b>01/02</b></span></div>
+    </div>
+    <div class="pg-cell"><span class="micro tag">#13 // CHEVRON PLATE</span>
+      <div class="pg"><span class="stack r"><span class="pg-t" style="font-size:24px;color:var(--ink)">PAGE 01/02</span><span class="micro pg-sub">HANSHI SEKKEI YU OUYOU</span></span>
+        <span class="chev-blk" aria-hidden="true"><svg width="40" height="20" viewBox="0 0 40 20"><g fill="none" stroke="var(--on-accent)" stroke-width="3"><polyline points="2,2 10,10 2,18"/><polyline points="14,2 22,10 14,18"/><polyline points="26,2 34,10 26,18"/></g></svg></span></div>
+    </div>
+    <div class="pg-cell"><span class="micro tag">#14 // EDGE RULE</span>
+      <div class="pg v14"><span class="pg-t" style="color:var(--ink);font-weight:400">PAGE 01/02</span><span class="vl"></span></div>
+    </div>
+    <div class="pg-cell"><span class="micro tag">#15 // BLOCK STAMP</span>
+      <div class="pg"><span class="stack r"><span class="pg-t" style="color:var(--ink);font-weight:400">PAGE 01/02</span><span class="micro pg-sub">SEKKEI YU HANMEN KOUSEI</span></span><span class="sq"></span></div>
+    </div>
+    <div class="pg-cell"><span class="micro tag">#16 // BOXED PAIR</span>
+      <div class="pg v16"><span class="pg-t">PAGE<span class="b1">01</span><span class="b2">02</span></span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== BOARD 02 ===== -->
+<section class="sec" id="b02" aria-labelledby="b02-t">
+  <div class="sec-head">
+    <span class="sec-idx" aria-hidden="true">02</span>
+    <div><span class="jp">縦組ポスター // VERTICAL TYPE POSTER</span><h2 class="sec-title" id="b02-t">Vertical Poster</h2></div>
+    <div class="sec-meta"><span class="label">1 SPECIMEN</span><span class="micro meta-ne">USE: LANDING HERO / 404 / LAUNCH</span></div>
+  </div>
+
+  <div class="two-up">
+    <figure class="poster" role="img" aria-label="Brutalist poster with vertical identifier RX/09-26/.1014, dot field, pixel checker and rail labels">
+      <span class="ps-idx" aria-hidden="true">01.</span>
+      <span class="ps-vt" aria-hidden="true">RX/09—26/.1014</span>
+      <svg class="ps-dots" aria-hidden="true"><defs><pattern id="dp" width="14" height="14" patternUnits="userSpaceOnUse"><rect class="svg-fill-ink" x="6" y="6" width="2" height="2"/></pattern></defs><rect width="100%" height="100%" fill="url(#dp)"/></svg>
+      <span class="ps-vline"></span>
+      <span class="ps-00">.00</span>
+      <span class="ps-h1b"></span><span class="ps-h1"></span><span class="ps-h2"></span>
+      <svg class="ps-chk" viewBox="0 0 100 60" aria-hidden="true">
+        <g class="svg-fill-ink"><rect x="0" y="0" width="5" height="5"/><rect x="10" y="0" width="5" height="5"/><rect x="5" y="5" width="5" height="5"/><rect x="0" y="12" width="12" height="4"/>
+        <rect x="20" y="20" width="10" height="10"/><rect x="40" y="20" width="10" height="10"/><rect x="60" y="20" width="10" height="10"/>
+        <rect x="30" y="30" width="10" height="10"/><rect x="50" y="30" width="10" height="10"/><rect x="70" y="30" width="10" height="10"/>
+        <rect x="40" y="40" width="10" height="10"/><rect x="80" y="40" width="10" height="10"/><rect x="90" y="50" width="10" height="10"/></g>
+        <g class="svg-ink" stroke-width="1.5"><rect x="21" y="41" width="8" height="8"/><rect x="61" y="41" width="8" height="8"/></g>
+        <rect class="svg-fill-accent" x="30" y="40" width="10" height="10"/>
+      </svg>
+      <svg class="ps-rail" viewBox="0 0 100 120" preserveAspectRatio="none" aria-hidden="true">
+        <polyline class="svg-ink nss" points="30,0 40,0 40,118 48,118" stroke-width="2"/>
+        <rect class="svg-ink nss" x="47" y="114" width="6" height="6" stroke-width="1.5"/>
+        <g class="svg-fill-ink"><rect x="58" y="12" width="20" height="4"/><rect x="58" y="62" width="20" height="4"/><rect x="82" y="97" width="3" height="2"/></g>
+        <rect class="svg-ink nss" x="58" y="37" width="20" height="4" stroke-width="1.5"/>
+        <g class="t-mono svg-fill-ink" font-size="5.5"><text x="0" y="16">A0/5</text><text x="0" y="41">A1/B</text><text x="0" y="66">B0/7</text><text x="0" y="104">00/?</text></g>
+      </svg>
+      <span class="ps-acc" aria-hidden="true"></span>
+      <svg class="ps-mark" viewBox="0 0 100 80" aria-hidden="true"><polygon class="svg-fill-ink" points="0,52 52,0 70,0 70,8 22,56 22,80 0,80"/><polygon class="svg-fill-ink" points="34,80 56,40 74,40 100,80 80,80 64,54 54,80"/><text x="76" y="8" font-size="7" class="t-mono" fill="var(--ink)">TM</text></svg>
+      <div class="ps-txt">
+        <p>RX-09 is a fictional collective building the architecture of machine interfaces.</p>
+        <p>RX-09 has no office, no faces, only [signal].</p>
+        <p>Born from the friction between noise and order: structure out of static.</p>
+        <p><b>We build for clarity.</b></p>
+      </div>
+      <div class="ps-spec"><span>CHAKRA PETCH</span><strong>Bold</strong><span>174pt</span><small>14 CHARACTERS /<br>16 BYTES</small></div>
+      <span class="ps-foot"></span><span class="ps-foot2"></span>
+    </figure>
+
+    <div class="notes">
+      <div class="note hot"><span class="micro tag">N-01</span><h3>Rotated Identifier</h3><p>One giant code set in <code>writing-mode:vertical-rl</code>. Becomes the landing hero spine; content runs beside it.</p></div>
+      <div class="note"><span class="micro tag">N-02</span><h3>Dot Field</h3><p>SVG pattern behind the type. Theme-aware fill, no images, scales with the container.</p></div>
+      <div class="note"><span class="micro tag">N-03</span><h3>Pixel Checker</h3><p>8-bit squares used as a transition between headline and data. Pair with one orange cell.</p></div>
+      <div class="note"><span class="micro tag">N-04</span><h3>Rail Labels</h3><p>A0/5, A1/B, B0/7: bracket rail with filled / outline bars. Works as a stepper or a status legend.</p></div>
+      <div class="note"><span class="micro tag">N-05</span><h3>Spec Footer</h3><p>Font name, weight and size printed as content. Use on about / colophon pages.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== BOARD 03 ===== -->
+<section class="sec" id="b03" aria-labelledby="b03-t">
+  <div class="sec-head">
+    <span class="sec-idx" aria-hidden="true">03</span>
+    <div><span class="jp">スイス様式 // INTERNATIONAL STYLE</span><h2 class="sec-title" id="b03-t">Swiss Grid</h2></div>
+    <div class="sec-meta"><span class="label">1 SPECIMEN</span><span class="micro meta-ne">USE: CONTENT / BLOG / CASE STUDY</span></div>
+  </div>
+
+  <article class="swiss" aria-label="Swiss grid poster: Design is information">
+    <div class="sw">
+      <aside class="sw-aside">
+        <span class="sw-plus" aria-hidden="true"></span>
+        <h4>Grid System<br>Day 03</h4>
+        <span class="sw-rule"></span>
+        <p>The International Typographic Style took shape in Switzerland in the 1950s, built on objective layout, sans-serif type and strict grids.</p>
+        <span class="sw-thin"></span>
+        <span class="sw-big">03</span>
+        <h4>Day<br>Three</h4>
+        <span class="sw-rule"></span>
+        <ul class="sw-list"><li>Grid</li><li>Typography</li><li>Alignment</li><li>Hierarchy</li><li>Clarity</li></ul>
+        <span class="sw-mono" aria-hidden="true">R9</span>
+      </aside>
+      <div class="sw-main">
+        <div class="sw-head">
+          <span class="sw-tag">Less decoration.<br>More communication.</span>
+          <span class="sw-vl" aria-hidden="true"></span>
+          <span class="sw-vbar" aria-hidden="true"></span>
+          <h3 class="sw-h">Design<br>is<br>information<i>.</i></h3>
+        </div>
+        <div class="sw-grid">
+          <div class="sw-red" aria-hidden="true"></div>
+          <div class="sw-form"><h5>Form follows function.</h5><hr><p>Every cell carries a job. Nothing is placed for ornament; each element exists to move information to the reader.</p></div>
+          <div class="sw-dots" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+          <div class="sw-03">03</div>
+          <div class="sw-A" aria-hidden="true">A</div>
+          <div class="sw-yr"><div class="y"><b>1950s</b><span>SWITZERLAND</span></div><div class="sw-bars" aria-hidden="true"><span></span><span></span><span></span></div></div>
+        </div>
+        <div class="sw-foot">
+          <div><h6>Grid</h6><p>A modular grid creates order, balance and rhythm.</p></div>
+          <div><h6>Type</h6><p>Neutral sans-serif type keeps the message objective.</p></div>
+          <div><h6>Clarity</h6><p>Good layout is not decoration. It is delivery.</p></div>
+          <div class="end">Simple.<br>Clear.<br>Impactful.</div>
+        </div>
+      </div>
+    </div>
+  </article>
+</section>
+
+<!-- ===== BOARD 04 ===== -->
+<section class="sec" id="b04" aria-labelledby="b04-t">
+  <div class="sec-head">
+    <span class="sec-idx" aria-hidden="true">04</span>
+    <div><span class="jp">記号 // 警告 // GLYPH SHEET</span><h2 class="sec-title" id="b04-t">Glyph Sheet</h2></div>
+    <div class="sec-meta"><span class="label">36 GLYPHS</span><span class="micro meta-ne">USE: ICONS / BADGES / EMPTY STATES</span></div>
+  </div>
+
+  <div class="gl-grid" role="list" aria-label="Techwear glyph specimens">
+    <div class="gl" role="listitem" aria-label="Warning triangle"><span class="tag">G-01</span><svg viewBox="0 0 120 120"><polygon class="s" points="60,16 106,100 14,100" stroke-width="7"/><rect class="f" x="56" y="46" width="8" height="28"/><rect class="a" x="56" y="80" width="8" height="8"/></svg></div>
+    <div class="gl" role="listitem" aria-label="Stand clear hazard"><span class="tag">G-02</span><svg viewBox="0 0 120 120"><g class="f"><polygon points="8,66 20,66 38,38 26,38"/><polygon points="30,66 42,66 60,38 48,38"/><polygon points="52,66 64,66 82,38 70,38"/><polygon points="74,66 86,66 104,38 92,38"/></g><rect class="f" x="8" y="72" width="104" height="2"/><text class="t-mono f" x="60" y="86" font-size="7.5" text-anchor="middle">STAND CLEAR FROM THIS AREA</text></svg></div>
+    <div class="gl" role="listitem" aria-label="04"><span class="tag">G-03</span><svg viewBox="0 0 120 120"><text class="t-disp f" x="60" y="78" font-size="52" text-anchor="middle">04</text></svg></div>
+    <div class="gl" role="listitem" aria-label="RX-09 wordmark"><span class="tag">G-04</span><svg viewBox="0 0 120 120"><text class="t-disp f" x="60" y="58" font-size="20" text-anchor="middle">RX-09</text><g class="f"><rect x="16" y="66" width="2" height="12"/><rect x="20" y="66" width="4" height="12"/><rect x="26" y="66" width="1" height="12"/><rect x="29" y="66" width="3" height="12"/><rect x="34" y="66" width="2" height="12"/><rect x="38" y="66" width="5" height="12"/></g><text class="t-mono f" x="48" y="72" font-size="5">MODEL // RX-09</text><text class="t-mono f" x="48" y="79" font-size="5">BUILT TO RUN</text></svg></div>
+    <div class="gl" role="listitem" aria-label="Power cycle bolt"><span class="tag">G-05</span><svg viewBox="0 0 120 120"><path class="s" d="M60 20 A40 40 0 0 1 100 60" stroke-width="8"/><path class="s" d="M60 100 A40 40 0 0 1 20 60" stroke-width="8"/><polygon class="f" points="100,72 88,56 112,56"/><polygon class="f" points="20,48 8,64 32,64"/><polygon class="a" points="66,32 42,64 58,64 52,90 78,54 62,54"/></svg></div>
+    <div class="gl" role="listitem" aria-label="Kanji: street"><span class="tag">G-06</span><svg viewBox="0 0 120 120"><text class="t-dot f" x="60" y="78" font-size="46" text-anchor="middle">通り</text></svg></div>
+
+    <div class="gl" role="listitem" aria-label="RX-09 chevron badge"><span class="tag">G-07</span><svg viewBox="0 0 120 120"><text class="t-disp f" x="60" y="32" font-size="12" text-anchor="middle">RX-09</text><rect class="f" x="18" y="38" width="84" height="4"/><polygon class="f" points="18,48 102,48 60,104"/><polygon class="bgf" points="40,56 80,56 60,84"/><rect class="a" x="54" y="62" width="12" height="8"/></svg></div>
+    <div class="gl" role="listitem" aria-label="Bracket code RX-7364"><span class="tag">G-08</span><svg viewBox="0 0 120 120"><g class="f"><rect x="30" y="34" width="2" height="10"/><rect x="34" y="34" width="4" height="10"/><rect x="40" y="34" width="1" height="10"/><rect x="43" y="34" width="3" height="10"/><rect x="48" y="34" width="2" height="10"/><rect x="52" y="34" width="5" height="10"/><rect x="59" y="34" width="1" height="10"/><rect x="62" y="34" width="3" height="10"/></g><polyline class="s" points="18,52 12,52 12,80 18,80" stroke-width="3"/><polyline class="s" points="102,52 108,52 108,80 102,80" stroke-width="3"/><text class="t-mono f" x="60" y="72" font-size="14" text-anchor="middle">RX-7364</text></svg></div>
+    <div class="gl" role="listitem" aria-label="#01"><span class="tag">G-09</span><svg viewBox="0 0 120 120"><text class="t-disp f" x="60" y="76" font-size="38" text-anchor="middle">#01</text><text class="t-mono f" x="60" y="40" font-size="5" text-anchor="middle">NO ONE CAN TAKE YOUR PLACE</text></svg></div>
+    <div class="gl" role="listitem" aria-label="Kanji: danger"><span class="tag">G-10</span><svg viewBox="0 0 120 120"><text class="t-dot f" x="60" y="80" font-size="50" text-anchor="middle">危険</text></svg></div>
+    <div class="gl" role="listitem" aria-label="Caution removable"><span class="tag">G-11</span><svg viewBox="0 0 120 120"><rect class="a" x="10" y="42" width="26" height="16"/><text class="t-dot oa" x="23" y="54" font-size="10" text-anchor="middle">移動</text><text class="t-disp f" x="40" y="56" font-size="12">CAUTION!</text><rect class="f" x="10" y="62" width="100" height="16"/><text class="t-mono bgf" x="60" y="73" font-size="9" text-anchor="middle">→ REMOVABLE</text></svg></div>
+    <div class="gl" role="listitem" aria-label="Exit route"><span class="tag">G-12</span><svg viewBox="0 0 120 120"><rect class="s" x="10" y="40" width="100" height="36" stroke-width="2"/><polyline class="s" points="22,58 62,58" stroke-width="3"/><polygon class="f" points="62,52 72,58 62,64"/><rect class="s" x="80" y="48" width="20" height="20" stroke-width="3"/><polygon class="a" points="84,52 94,58 84,64"/><text class="t-mono f" x="12" y="86" font-size="5">FOR HIGHWAY AND STREETS ONLY</text></svg></div>
+
+    <div class="gl" role="listitem" aria-label="Drop zone"><span class="tag">G-13</span><svg viewBox="0 0 120 120"><polyline class="s" points="42,30 60,48 78,30" stroke-width="8"/><polyline class="s" points="42,52 60,70 78,52" stroke-width="8"/><rect class="f" x="30" y="80" width="60" height="8"/></svg></div>
+    <div class="gl" role="listitem" aria-label="Removable module"><span class="tag">G-14</span><svg viewBox="0 0 120 120"><polygon class="f" points="12,46 30,46 30,40 40,50 30,60 30,54 12,54"/><text class="t-disp f" x="46" y="56" font-size="10">REMOVABLE</text><text class="t-disp f" x="12" y="74" font-size="16">MODULE</text></svg></div>
+    <div class="gl" role="listitem" aria-label="Sector 01"><span class="tag">G-15</span><svg viewBox="0 0 120 120"><rect class="s" x="16" y="44" width="88" height="30" stroke-width="2" stroke-dasharray="6 4"/><text class="t-mono f" x="60" y="64" font-size="13" text-anchor="middle">SECTOR 01</text></svg></div>
+    <div class="gl" role="listitem" aria-label="Diagonal arrows Q-1"><span class="tag">G-16</span><svg viewBox="0 0 120 120"><polygon class="f" points="14,46 14,76 44,76 36,68 54,50 46,42 28,60 22,54"/><polygon class="a" points="40,36 40,52 56,52"/><text class="t-disp f" x="62" y="74" font-size="22">Q-1</text></svg></div>
+    <div class="gl" role="listitem" aria-label="Keep clear 002"><span class="tag">G-17</span><svg viewBox="0 0 120 120"><text class="t-mono f" x="12" y="30" font-size="6">KEEP THIS AREA CLEAR</text><g class="f"><polygon points="12,34 20,34 28,42 20,42"/><polygon points="28,34 36,34 44,42 36,42"/><polygon points="44,34 52,34 60,42 52,42"/><polygon points="60,34 68,34 76,42 68,42"/></g><polyline class="s" points="18,52 12,52 12,86 18,86" stroke-width="3"/><polyline class="s" points="102,52 108,52 108,86 102,86" stroke-width="3"/><text class="t-disp f" x="60" y="80" font-size="26" text-anchor="middle">002</text></svg></div>
+    <div class="gl" role="listitem" aria-label="Warning kanji triangle"><span class="tag">G-18</span><svg viewBox="0 0 120 120"><text class="t-dot f" x="60" y="40" font-size="18" text-anchor="middle">警告</text><polygon class="s" points="20,48 100,48 60,104" stroke-width="7"/><rect class="a" x="54" y="58" width="12" height="18"/></svg></div>
+
+    <div class="gl" role="listitem" aria-label="Battery plus 5 HP"><span class="tag">G-19</span><svg viewBox="0 0 120 120"><rect class="s" x="14" y="34" width="34" height="16" stroke-width="2"/><rect class="f" x="48" y="38" width="4" height="8"/><rect class="a" x="18" y="38" width="6" height="8"/><rect class="f" x="26" y="38" width="6" height="8"/><rect class="f" x="34" y="38" width="6" height="8"/><text class="t-hero f" x="14" y="88" font-size="36" transform="skewX(-12) translate(14 0)">+5HP</text></svg></div>
+    <div class="gl" role="listitem" aria-label="Down triangles 03"><span class="tag">G-20</span><svg viewBox="0 0 120 120"><polygon class="f" points="10,44 34,44 22,62"/><polygon class="f" points="22,66 46,66 34,84"/><polygon class="a" points="36,44 60,44 48,62"/><text class="t-disp f" x="56" y="82" font-size="30">03</text></svg></div>
+    <div class="gl" role="listitem" aria-label="Spec racing"><span class="tag">G-21</span><svg viewBox="0 0 120 120"><text class="t-disp f" x="12" y="44" font-size="11">RX. 034</text><text class="t-disp f" x="12" y="58" font-size="11">SPEC RACING</text><text class="t-disp f" x="12" y="72" font-size="11">IND.</text><polyline class="s" points="12,84 60,84" stroke-width="2"/><polygon class="s" points="64,78 74,84 64,90" stroke-width="2"/><rect class="s" x="80" y="78" width="28" height="12" stroke-width="2"/></svg></div>
+    <div class="gl" role="listitem" aria-label="One way"><span class="tag">G-22</span><svg viewBox="0 0 120 120"><polygon class="f" points="8,44 92,44 92,36 114,60 92,84 92,76 8,76"/><text class="t-disp bgf" x="50" y="65" font-size="13" text-anchor="middle">ONEWAY</text></svg></div>
+    <div class="gl" role="listitem" aria-label="Danger plate"><span class="tag">G-23</span><svg viewBox="0 0 120 120"><polygon class="f" points="10,30 110,30 110,52 10,52"/><text class="t-disp bgf" x="60" y="47" font-size="15" text-anchor="middle">DANGER</text><polygon class="a" points="40,56 92,56 66,96"/><rect class="s" x="12" y="60" width="10" height="10" stroke-width="2"/><rect class="f" x="24" y="72" width="10" height="10"/></svg></div>
+    <div class="gl" role="listitem" aria-label="No entry 07"><span class="tag">G-24</span><svg viewBox="0 0 120 120"><rect class="s" x="10" y="38" width="44" height="44" stroke-width="7"/><line class="s" x1="16" y1="76" x2="48" y2="44" stroke-width="7"/><text class="t-disp f" x="60" y="80" font-size="40">7</text></svg></div>
+
+    <div class="gl" role="listitem" aria-label="Kanji: warning"><span class="tag">G-25</span><svg viewBox="0 0 120 120"><text class="t-dot f" x="60" y="80" font-size="50" text-anchor="middle">警告</text></svg></div>
+    <div class="gl" role="listitem" aria-label="Rider name plate"><span class="tag">G-26</span><svg viewBox="0 0 120 120"><rect class="s" x="8" y="42" width="104" height="34" stroke-width="2"/><rect class="f" x="8" y="42" width="30" height="34"/><polygon class="bgf" points="14,59 24,51 24,56 32,56 32,62 24,62 24,67"/><text class="t-mono f" x="44" y="56" font-size="8">RIDER NAME</text><line class="s" x1="44" y1="66" x2="104" y2="66" stroke-width="1"/><polygon class="a" points="98,70 104,70 101,74"/></svg></div>
+    <div class="gl" role="listitem" aria-label="Forward hatching"><span class="tag">G-27</span><svg viewBox="0 0 120 120"><g class="s" stroke-width="2"><line x1="14" y1="70" x2="34" y2="40"/><line x1="22" y1="70" x2="42" y2="40"/><line x1="30" y1="70" x2="50" y2="40"/><line x1="38" y1="70" x2="58" y2="40"/><line x1="46" y1="70" x2="66" y2="40"/><line x1="54" y1="70" x2="74" y2="40"/><line x1="62" y1="70" x2="82" y2="40"/><line x1="70" y1="70" x2="90" y2="40"/><line x1="78" y1="70" x2="98" y2="40"/><line x1="86" y1="70" x2="106" y2="40"/></g><text class="t-dot f" x="106" y="88" font-size="12" text-anchor="end">フォワード</text></svg></div>
+    <div class="gl" role="listitem" aria-label="Module cluster"><span class="tag">G-28</span><svg viewBox="0 0 120 120"><g class="f"><rect x="24" y="36" width="14" height="14"/><rect x="44" y="36" width="14" height="14"/><rect x="64" y="36" width="14" height="14"/><rect x="84" y="36" width="14" height="14"/><rect x="14" y="54" width="14" height="14"/><rect x="34" y="54" width="14" height="14"/><rect x="74" y="54" width="14" height="14"/><rect x="24" y="72" width="14" height="14"/><rect x="44" y="72" width="14" height="14"/><rect x="64" y="72" width="14" height="14"/></g><rect class="a" x="54" y="54" width="14" height="14"/></svg></div>
+    <div class="gl" role="listitem" aria-label="Alert brackets"><span class="tag">G-29</span><svg viewBox="0 0 120 120"><g class="s" stroke-width="3"><polyline points="20,36 20,24 32,24"/><polyline points="88,24 100,24 100,36"/><polyline points="100,84 100,96 88,96"/><polyline points="32,96 20,96 20,84"/></g><rect class="a" x="56" y="40" width="8" height="28"/><rect class="f" x="56" y="74" width="8" height="8"/></svg></div>
+    <div class="gl" role="listitem" aria-label="Remove before ride tag"><span class="tag">G-30</span><svg viewBox="0 0 120 120"><text class="t-mono f" x="12" y="40" font-size="6">MODEL: RX-09</text><polygon class="f" points="12,44 100,44 108,52 108,60 12,60"/><text class="t-mono bgf" x="18" y="55" font-size="6">◆ HP</text><polygon class="f" points="12,66 108,66 108,84 20,84 12,76"/><text class="t-mono bgf" x="60" y="78" font-size="7.5" text-anchor="middle">REMOVE BEFORE RIDE</text></svg></div>
+
+    <div class="gl" role="listitem" aria-label="Turn route"><span class="tag">G-31</span><svg viewBox="0 0 120 120"><polyline class="s" points="30,30 30,86 50,86" stroke-width="7"/><polyline class="s" points="90,30 90,60 64,60" stroke-width="7"/><polygon class="f" points="50,76 64,86 50,96"/><polygon class="a" points="64,50 50,60 64,70"/><text class="t-mono f" x="60" y="108" font-size="6" text-anchor="middle">GO STRAIGHT OR RIGHT</text></svg></div>
+    <div class="gl" role="listitem" aria-label="Up one level 4"><span class="tag">G-32</span><svg viewBox="0 0 120 120"><polygon class="s" points="10,34 98,34 110,46 110,86 10,86" stroke-width="3"/><polygon class="f" points="20,60 44,42 44,52 64,52 64,68 44,68 44,78"/><text class="t-disp f" x="72" y="74" font-size="28">4</text><text class="t-mono f" x="60" y="98" font-size="5.5" text-anchor="middle">GO UP ONE LEVEL</text></svg></div>
+    <div class="gl" role="listitem" aria-label="Chevrons RX-09 highway"><span class="tag">G-33</span><svg viewBox="0 0 120 120"><g class="s" stroke-width="4"><polyline points="14,34 22,42 14,50"/><polyline points="28,34 36,42 28,50"/><polyline points="42,34 50,42 42,50"/><polyline points="56,34 64,42 56,50"/></g><polyline class="as" points="70,34 78,42 70,50" stroke-width="4"/><text class="t-disp f" x="12" y="74" font-size="20">RX-09</text><text class="t-dot f" x="12" y="88" font-size="8">高速道路のために</text></svg></div>
+    <div class="gl" role="listitem" aria-label="Arrow"><span class="tag">G-34</span><svg viewBox="0 0 120 120"><polygon class="f" points="12,54 78,54 78,36 108,60 78,84 78,66 12,66"/></svg></div>
+    <div class="gl" role="listitem" aria-label="Engines ready"><span class="tag">G-35</span><svg viewBox="0 0 120 120"><polyline class="s" points="18,34 12,34 12,58" stroke-width="2"/><text class="t-mono f" x="18" y="46" font-size="7">TEST 004. ALL ENGINES</text><text class="t-mono f" x="18" y="56" font-size="7">READY</text><text class="t-mono f" x="18" y="76" font-size="7">CLASS RX-976.</text><text class="t-mono f" x="18" y="86" font-size="7">BATTERY CHARGED</text><polyline class="s" points="102,86 108,86 108,64" stroke-width="2"/><rect class="a" x="96" y="38" width="8" height="8"/></svg></div>
+    <div class="gl" role="listitem" aria-label="Circuit route"><span class="tag">G-36</span><svg viewBox="0 0 120 120"><polyline class="s" points="12,40 40,40 56,56 56,80 108,80" stroke-width="3"/><polyline class="s" points="12,64 28,64 44,80" stroke-width="3"/><rect class="f" x="104" y="76" width="8" height="8"/><rect class="a" x="8" y="36" width="8" height="8"/><rect class="f" x="40" y="76" width="8" height="8"/><rect class="f" x="62" y="72" width="4" height="16"/></svg></div>
+  </div>
+</section>
+
+<!-- ===== BOARD 05 ===== -->
+<section class="sec" id="b05" aria-labelledby="b05-t">
+  <div class="sec-head">
+    <span class="sec-idx" aria-hidden="true">05</span>
+    <div><span class="jp">応用 // WEBSITE TRANSLATION</span><h2 class="sec-title" id="b05-t">Apply to Site</h2></div>
+    <div class="sec-meta"><span class="label">04 → 01 SITE</span><span class="micro meta-ne">REF // rx09-design-system-template.html</span></div>
+  </div>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th scope="col">#</th><th scope="col">Source</th><th scope="col">Pattern</th><th scope="col">Website use</th><th scope="col">Component</th></tr></thead>
+      <tbody>
+        <tr><td><span class="dot-n">01</span></td><td>Page Index</td><td>Number + accent bar + bilingual caption</td><td>Section headers, pagination, breadcrumbs, step counters</td><td><code>&lt;SectionIndex&gt; &lt;Pager&gt;</code></td></tr>
+        <tr><td><span class="dot-n">02</span></td><td>Vertical Poster</td><td>Rotated giant code, dot field, pixel checker, rail labels</td><td>Landing hero, product launch, 404, colophon</td><td><code>&lt;HeroVertical&gt; &lt;DotField&gt; &lt;Rail&gt;</code></td></tr>
+        <tr><td><span class="dot-n">03</span></td><td>Swiss Grid</td><td>Strict modular grid, one accent block, huge numerals</td><td>Content pages, blog, case studies, about</td><td><code>&lt;SwissGrid&gt; &lt;Cell&gt;</code></td></tr>
+        <tr><td><span class="dot-n">04</span></td><td>Glyph Sheet</td><td>Pictograms, plates, kanji, hazard bars</td><td>Icon set, status badges, empty states, alerts</td><td><code>&lt;Glyph&gt; &lt;Plate&gt; &lt;HazardBar&gt;</code></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="comp">
+    <div class="site" aria-label="Composite homepage wireframe">
+      <div class="s-nav"><span class="label">RX-09</span><ul class="label"><li class="on">01 HOME</li><li>02 WORK</li><li>03 INFO</li></ul></div>
+      <div class="s-hero">
+        <span class="s-vt" aria-hidden="true">RX/09</span>
+        <div class="s-hero-r">
+          <svg class="dots" aria-hidden="true"><defs><pattern id="dp2" width="12" height="12" patternUnits="userSpaceOnUse"><rect class="svg-fill-ink" x="5" y="5" width="2" height="2"/></pattern></defs><rect width="100%" height="100%" fill="url(#dp2)"/></svg>
+          <span class="micro">C-01 // HERO // 縦組</span>
+          <h3>Design is information<i>.</i></h3>
+          <a class="s-cta" href="#b01">Enter system &gt;&gt;&gt;</a>
+        </div>
+      </div>
+      <div class="s-idx">
+        <svg width="32" height="20" viewBox="0 0 40 24" aria-hidden="true"><polygon class="svg-fill-accent" points="0,0 16,12 0,24"/><polygon class="svg-fill-accent" points="18,0 34,12 18,24"/></svg>
+        <span class="pg-t" style="font-size:20px">PAGE <b>01/03</b></span><span class="micro">SELECTED WORK</span>
+      </div>
+      <div class="s-cards">
+        <article><span class="micro">#01 // GRID</span><b>01</b><p>Modular grid case study.</p></article>
+        <article><span class="micro">#02 // TYPE</span><b>02</b><p>Type system and readouts.</p></article>
+        <article><span class="micro">#03 // GLYPH</span><b>03</b><p>Pictogram library v1.</p></article>
+      </div>
+      <div class="hazard" aria-hidden="true"></div>
+      <div class="s-foot"><span class="micro">BRAND: RX-09 / MODEL: IDEA-BOARD</span><span class="jp">想像力を動力源</span></div>
+    </div>
+
+    <div class="plates">
+      <div class="plate danger" role="note"><svg viewBox="0 0 24 24" aria-hidden="true"><polygon points="12,3 22,21 2,21" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="miter"/><rect x="11" y="9" width="2" height="6" fill="currentColor"/><rect x="11" y="17" width="2" height="2" fill="currentColor"/></svg><div><b>DANGER</b><span class="jp">危険 // ONE ACCENT</span></div></div>
+      <div class="plate caution" role="note"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"/><line x1="5" y1="19" x2="19" y2="5" stroke="currentColor" stroke-width="2"/></svg><div><b>CAUTION</b><span class="jp" style="color:var(--gray)">注意 // NO ROUNDING</span></div></div>
+      <div class="plate notice" role="note"><svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="4,6 10,12 4,18" fill="none" stroke="currentColor" stroke-width="2"/><polyline points="12,6 18,12 12,18" fill="none" stroke="currentColor" stroke-width="2"/></svg><div><b>NOTICE</b><span class="jp">移動 // 70% EMPTY</span></div></div>
+      <div class="hazard" aria-hidden="true"></div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="foot">
+  <span class="label">BRAND: RX-09 / MODEL: IDEA-BOARD-01</span>
+  <span class="micro">A BLACKBOX GRAFX ORIGINAL SYSTEM <span class="blink" aria-hidden="true">█</span></span>
+</footer>
+
+<script>
+(function(){
+  var d=document.documentElement;
+  var reduced=window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var timers=[];
+
+  /* mode switches */
+  var swT=document.getElementById("sw-theme"),swA=document.getElementById("sw-accent");
+  function sync(){
+    swT.setAttribute("aria-checked",d.getAttribute("data-theme")==="dark"?"true":"false");
+    swA.setAttribute("aria-checked",d.getAttribute("data-accent")==="mono"?"true":"false");
+  }
+  function save(k,v){try{localStorage.setItem(k,v);}catch(e){}}
+  swT.addEventListener("click",function(){var v=d.getAttribute("data-theme")==="dark"?"light":"dark";d.setAttribute("data-theme",v);save("app_theme",v);sync();});
+  swA.addEventListener("click",function(){var v=d.getAttribute("data-accent")==="mono"?"signal":"mono";d.setAttribute("data-accent",v);save("app_accent",v);sync();});
+  sync();
+
+  /* live clock */
+  var clk=document.getElementById("clock");
+  function p2(n){return (n<10?"0":"")+n;}
+  function tickClock(){var t=new Date();clk.textContent=p2(t.getHours())+":"+p2(t.getMinutes())+":"+p2(t.getSeconds());}
+  tickClock();timers.push(setInterval(tickClock,1000));
+
+  /* count-up readouts */
+  function pad(n,l){n=String(n);while(n.length<l)n="0"+n;return n;}
+  if(!reduced){
+    Array.prototype.forEach.call(document.querySelectorAll("[data-count]"),function(el){
+      var end=+el.getAttribute("data-count"),len=+el.getAttribute("data-pad")||3,i=0,steps=12;
+      el.textContent=pad(0,len);
+      var id=setInterval(function(){i++;el.textContent=pad(Math.round(end*i/steps),len);if(i>=steps)clearInterval(id);},60);
+      timers.push(id);
+    });
+  }
+
+  /* telemetry (seeded, stable sequence) */
+  var tel=document.getElementById("telemetry"),seed=1990;
+  function rnd(){seed=(seed*9301+49297)%233280;return seed/233280;}
+  if(!reduced){
+    timers.push(setInterval(function(){tel.textContent=pad(Math.floor(rnd()*100),2)+"."+pad(Math.floor(rnd()*100),2)+"."+pad(Math.floor(rnd()*100),2)+"_";},2500));
+  }
+
+  /* active nav on scroll */
+  var links=document.querySelectorAll(".nav a");
+  if("IntersectionObserver" in window){
+    var io=new IntersectionObserver(function(es){
+      es.forEach(function(e){
+        if(e.isIntersecting){
+          Array.prototype.forEach.call(links,function(a){
+            if(a.getAttribute("data-sec")===e.target.id)a.setAttribute("aria-current","true");else a.removeAttribute("aria-current");
+          });
+        }
+      });
+    },{rootMargin:"-40% 0px -55% 0px"});
+    Array.prototype.forEach.call(document.querySelectorAll(".sec"),function(s){io.observe(s);});
+  }
+
+  window.addEventListener("pagehide",function(){timers.forEach(clearInterval);});
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,1786 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>RX-09 // TECHNICAL HUD DESIGN SYSTEM v2.1 + BAYBAYIN</title>
+<!-- Set theme + accent mode before first paint (no flash) -->
+<script>
+  (function () {
+    var d = document.documentElement;
+    var saved = localStorage.getItem("rx09_theme");
+    var sys = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+    d.setAttribute("data-theme", saved || sys);
+    d.setAttribute("data-accent", localStorage.getItem("rx09_accent") || "signal");
+  })();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;700&family=DotGothic16&family=JetBrains+Mono:wght@400;700;800&family=Rubik+Mono+One&display=swap" rel="stylesheet" />
+<script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<style>
+/* =====================================================
+   00 // RX09 BAYBAYIN FONT (embedded WOFF2 · angular derivative of Noto Sans Tagalog · SIL OFL 1.1)
+   ===================================================== */
+@font-face{font-family:"RX09 Baybayin";src:url(data:font/woff2;base64,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) format("woff2");font-weight:400;font-style:normal;font-display:swap;unicode-range:U+1700-171F,U+1735-1736,U+25CC}
+@font-face{font-family:"RX09 Baybayin";src:url(data:font/woff2;base64,d09GMgABAAAAAAlQAA8AAAAAEzgAAAj4AAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGkQbg2ocOgZgAIEOCpIsjhQBNgIkA4EMC0gABCAFhFAHgmUXJBiBBhvOD1FUk9og+EMCtbiUk/WHFAdjaqMnlsZhh3o1hkVVSoe+fOVf2mct3g/+n9/f/4+5zn6Uvp3IDDF9N0CJDgXMwrWH/dxtHsVJc0uIeZra+6KV5KHgiUQOEKrz/PcXO+/+t7abJoEHlARpM4HWTFIBUYIJ9/9UfYXS4JPswB3uSEc60pHOdKTDhdTTt+4Cd3hDOtyRzr8pm7zxb/RGb8wmbxrltKp0ZYq2MB2D8w4qxIFRf6nxma6t2VWesfVSITa8nseP1lK78/cT4A2QJxQepdy5C03maT+4SQoEl5RYVVfJKiAShlBVVihSpJzs0zQFjuzrNiWEUIuMeWM+3n1NCCMcAChmOAKJI+Il8kiXTmTKIoQBsSBU4gSjqODVCQim0QiGHpftY/juKjeE79GSCk7mk2sN4HvVhDF8HIDvXwBhQ14I13tAgrHErS/Q9Txmm2fGn0giuEfJT5I6joYOMQFuIhIYaBhogBEOlguFkJqMB52SC/NQ/jyUI6gMRLr6G8ZPrER55oFbbnK5LDU8692bV95NYdeqLS5dwKpFJAyfO1NT2bnDkvC2VRqNmTN9Pf/pAtClNqjoD1JlsXYhPGFGo/vzxzCVZB9M2ZHuDRJojXVhti8Z5KcvzDOyO3iFEoFerWRZZRtKCsKnaS3ePgs77IVzhNYRkolYmqv/fyLIJ2OKQSPxqzuw49jYuRAwsOuBdENrtusMYBvSA/rzF6CxCtUNLMTPnJ8zc8vAg0xEAqD3dW8Nr5D3vSj9/2sQs5T33AjAEu0ByGSAAR4Qy0OgHQtcvEgF/B8vjEwH90VC3HzP7CnzHsWIrp2ErYQ++Xcq33E8wAA+5+P3/cp30pD1CmX3TNFixIpbLclAyWHQa48q2CRwl5sEgmcASzqRCNhB1dYAEHkG51IDo2KH86jpyjEPjvLDnWKjt8S5UAcnCsw2CkpND45pVrRJ7b/4bROAdqvTCk/dhSzrIL0MLGRZujM9kJpsf5Z293QXOtDJKu6IRAymKNTXg24L4PlFkKXby2wK2nAL7f691jQChwPYw51sIUPd3c9f9UdIU/sBhrs+C9H+DN4sSj+piTLb7je7LeusheR0r+1Fh2BUi9PLH3Cc9yomUQgvtHf392fZQto+1X0afLIt9Nutvb2npjTyWOpn4so+7M160UjB+KjJ3npn2q7dyrK9MPm1AO30AZ/oPedJN/dSm92wrb2/62CukB1zWY+LM4Cduj+/rP0Q7rag1U0PtC9ulV7oI6WxPf2p2BdAJMp7tsBERoeVyPHOkUAVt2Fny69et+GqazZdxiMbESBVa8fW9+Uu9ZhC5dr2pj4Br7epdWpt5EJCvh8J8jdlqhtZ9y36F6TpnhZAf393A3wJgB8L134lzdJ9kCWbugDPA9ycLvASuKnTX9H/NSwspMn0/J/nyd6y7BZUGhoXj5zecPrFw8ZQVxnpll58nydM2SQZB+4Toa2IirJq4pA0M5hC45SZ61JHYOycr7cLq+x2qM8mNrKQe6eMhlyMBGq4nzAjsB3xF4eUqaZiwkVeWJw3StIcBpVA2GhT6ir5rZGlVVCpusBSuFpUyfdzUUphJ3xSeH71M5HLcyon2os3ZsCGocHQgCK1gQFDUBAsQQwn3EmSB6+skisxdWXjHFX6g0EwjLmQMFDJ3NuywVQfQRMywGRqwfsC13TMpf2cfG7KEeBFVGgNS4kNKjFTPYW4IOeCkda5b4iOdnnOWmvEuM/BgIKMRXptKhC/yGROCRTC+8SwYpHPWAneS6OV1RaMLseo0oQsHaGMiJAbUeabcKdOBG+Cq5xUoZ6PADmsvFbC6yKsnDM2dAErWSXjmbGW8ZGtSlo43fiIplhYwpeOREINoXUTiBESNvUqtBx7XdnBeZwHVMlf2JkjlGERB5YVOXeS+8RH4sds5udzjZtwN9LEeUi0UZLAiE+MNhOVDxop3Oc8V9EZ0EZXNao0Ja4vyNCi5NNQSlBDV2E/YHE4HRs002OqBIWKHa7kdk1ByPji3aePEI5D45rU8JpFAlrhMljMEOfMn3xZ0c5udAEoNmBIA1RrMPqMSBZP7nnyycNPPrTnIXYmtPztZW+sePvsG2jb26JLLzx75I0vo/BGCM2l98GHKubjGB7VZPHPbQhhDINSkGisrR7GADI/3zg2jW8u81b6TW9+cWUTY2N7voE4VX4+ryGDr38dtk0TfIweFfV2MSgcx0citooOEJOBnmgXiJw6R5kf0hOOm3rFLHLwXqWHnFDpAmuiFcQaHjCA9IrnVZBGcuNY3OAH2gTmFAkS0Ew5CtoxlJzs7QkwVp7u/4wh09+Wbd4nwOujP4CPY/XwvxE3dJ9xToM/BoDg8b9y4r/4OzsFDdggJ5uUnaTGt7tyxYzoKJnpL9eh1Iz5cnLD2vbo0dtnXmOz6ybHWvM9yW03SatuSx1lcLYnYnqgEnwhqvrt/t+3TrIl9VjZLFsj5+ffOd+FeaKaL44ejazaMpbbYHRS3AHHd8tfAhpOpUMuaN5ekGpEsr1sVrxY49HoZo0j1/caP+bVRI0/2bXjacOpr/OWEIaK09PRJfCpVqmauEwjFGg1HIQIyA3Bce6r0ihxXUR0XaSv5vkUelFgRnSTKsj0ND3jzUR1GZOQkay5zq6NJBMdL8tcTSe6IeL3FDfMuZwmmbqpUdWh6xnLTOZk03jAmExDcioZQVcpJ3KoPSR9aepUa26kCqV9XKZbZDrF0yk8wViHaJiYQ5nsYCJLsgjcgPjmvN+KyvByf+2OGzH/w5zbAVeauDT6FWY9JTN2HnJ/b37RjqzBVm3TAoDvUUH2yeRAJg9PTn7yV4ACFaRghShUYQpXhCIVpWjFKFZxileCEpWkZKUoVWlKV4YylaVs9+8AzqVdupnETy8HVA7L8xwgRIQYCVJkyFGgRIUaDb7RLw77R4gQIULEHk4XgH+AaDw7j5oliNJ8YH/Pp18+1zhoItHX/5ePT8uhv6+PDWlAZKeTCU0CV/aWrWz4AufizwIcH7tIPxjCmdhGyLJDWfy3rjeoNq0ODtDfRhblNyy3cXF18gk=) format("woff2");font-weight:700;font-style:normal;font-display:swap;unicode-range:U+1700-171F,U+1735-1736,U+25CC}
+/* =====================================================
+   01 // TOKENS
+   ===================================================== */
+:root{
+  --bg:#F2F2F2; --ink:#0A0A0A; --line:#D6D6D6; --gray:#A0A3A0; --slate:#3A4550;
+  --accent:#FF5A1F; --on-accent:#0A0A0A; --field-focus:#FFF4EE;
+  --u:8px;
+  --grain-opacity:.06; --grain-filter:none;
+  --hero:"Chakra Petch","Rubik Mono One",sans-serif;
+  --display:"Rubik Mono One","Orbitron",sans-serif;
+  --mono:"JetBrains Mono","Space Mono",monospace;
+  --dot:"DotGothic16","JetBrains Mono",monospace;
+  --bb:"RX09 Baybayin","Noto Sans Tagalog",sans-serif;
+  color-scheme:light;
+}
+[data-theme="dark"]{
+  --bg:#0D0E0F; --ink:#ECECEC; --line:#2A2D30; --gray:#7F8481;
+  --field-focus:#1A1410; --grain-opacity:.08; --grain-filter:invert(1);
+  color-scheme:dark;
+}
+/* MODE B // PICTOGRAM: accent collapses into ink (global switch or local .mode-b) */
+[data-accent="mono"], .mode-b{ --accent:var(--ink); --on-accent:var(--bg); }
+
+*{box-sizing:border-box;margin:0;padding:0;border-radius:0}
+html{scroll-behavior:smooth}
+html,body,#root{min-height:100%}
+body{background:var(--bg);color:var(--ink);font-family:var(--mono);font-size:13px;line-height:1.5;overflow-x:hidden}
+body::after{
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:9999;opacity:var(--grain-opacity);filter:var(--grain-filter);
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+::selection{background:var(--accent);color:var(--on-accent)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+a{color:inherit}
+svg{max-width:100%}
+
+/* =====================================================
+   02 // PRIMITIVES
+   ===================================================== */
+.label{font-size:10px;letter-spacing:.18em;text-transform:uppercase}
+.micro{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--gray)}
+.b{font-weight:800}
+.display{font-family:var(--display);line-height:.85;letter-spacing:-.02em;text-transform:uppercase}
+.display.giant,.giant{font-family:var(--hero);font-weight:700;letter-spacing:-.045em;line-height:.78;text-transform:uppercase}
+.dot{font-family:var(--dot)}
+.on-accent{color:var(--on-accent)}
+.accent-text{color:var(--accent)}
+.hazard{height:12px;background:repeating-linear-gradient(45deg,var(--ink) 0 8px,var(--bg) 8px 16px)}
+.hazard.orange{background:repeating-linear-gradient(45deg,var(--accent) 0 8px,#0A0A0A 8px 16px)}
+.hazard.thin{height:6px;background:repeating-linear-gradient(-45deg,var(--ink) 0 4px,transparent 4px 8px)}
+.hazard.tall{height:32px}
+.cross{position:absolute;width:24px;height:24px}
+.cross::before,.cross::after{content:"";position:absolute;background:var(--ink)}
+.cross::before{left:50%;top:0;width:1px;height:100%}
+.cross::after{top:50%;left:0;height:1px;width:100%}
+.brackets{position:relative}
+.brackets::before,.brackets::after{content:"";position:absolute;width:12px;height:12px;border:1px solid var(--ink);pointer-events:none}
+.brackets::before{top:-1px;left:-1px;border-right:0;border-bottom:0}
+.brackets::after{bottom:-1px;right:-1px;border-left:0;border-top:0}
+.blink{animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+.svg-ink{stroke:var(--ink)} .svg-gray{stroke:var(--gray)} .svg-fill-ink{fill:var(--ink)} .svg-track{stroke:var(--line)}
+.svg-accent{stroke:var(--accent)} .svg-fill-accent{fill:var(--accent)}
+
+/* =====================================================
+   03 // CONTROLS
+   ===================================================== */
+.btn{
+  font-family:var(--mono);font-weight:800;font-size:12px;letter-spacing:.2em;text-transform:uppercase;
+  border:1px solid var(--ink);background:var(--ink);color:var(--bg);padding:14px 20px;cursor:pointer;
+  box-shadow:4px 4px 0 var(--ink);transition:0s;display:inline-flex;gap:12px;align-items:center;justify-content:space-between;text-decoration:none
+}
+.btn:hover{background:var(--bg);color:var(--ink)}
+.btn:active{transform:translate(4px,4px);box-shadow:none}
+.btn.accent{background:var(--accent);color:var(--on-accent);border-color:var(--ink)}
+.btn.accent:hover{background:var(--ink);color:var(--accent)}
+.btn.ghost{background:transparent;color:var(--ink);box-shadow:none}
+.btn.ghost:hover{background:var(--ink);color:var(--bg)}
+.btn.sm{padding:8px 12px;font-size:10px;box-shadow:2px 2px 0 var(--ink)}
+.btn.lg{padding:20px 28px;font-size:14px}
+.btn.cut{clip-path:polygon(0 0,calc(100% - 14px) 0,100% 14px,100% 100%,0 100%);box-shadow:none}
+.btn[disabled]{opacity:.35;cursor:not-allowed;box-shadow:none}
+.btn[disabled]:hover{background:var(--ink);color:var(--bg)}
+
+.mode-switch{font-family:var(--mono);font-size:10px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;
+  display:inline-flex;border:1px solid var(--ink);background:transparent;color:var(--ink);cursor:pointer;padding:0;white-space:nowrap}
+.mode-switch span{padding:7px 10px;transition:0s}
+.mode-switch span.on{background:var(--accent);color:var(--on-accent)}
+[data-accent="mono"] .mode-switch span.on{background:var(--ink);color:var(--bg)}
+.mode-switch:hover span:not(.on){background:var(--ink);color:var(--bg)}
+
+.field{display:flex;flex-direction:column;gap:6px}
+.field input,.field select,.field textarea{font-family:var(--mono);font-size:14px;padding:12px;border:1px solid var(--ink);background:var(--bg);color:var(--ink);width:100%}
+.field textarea{resize:vertical;min-height:80px}
+.field input::placeholder,.field textarea::placeholder{color:var(--gray)}
+.field input:focus,.field select:focus,.field textarea:focus{outline:2px solid var(--accent);outline-offset:0;background:var(--field-focus)}
+.field .hint{font-size:9px;letter-spacing:.16em;color:var(--gray);text-transform:uppercase}
+.field.invalid input{border-color:var(--accent);border-left-width:8px}
+.field.invalid .hint{color:var(--accent)}
+.err{background:var(--ink);color:var(--bg);border-left:8px solid var(--accent);padding:10px 12px;font-size:11px;letter-spacing:.12em;text-transform:uppercase}
+
+.chk{appearance:none;width:18px;height:18px;border:1px solid var(--ink);background:var(--bg);cursor:pointer;display:inline-grid;place-content:center;flex:none}
+.chk:checked{background:var(--ink)}
+.chk:checked::after{content:"X";color:var(--bg);font:800 11px var(--mono)}
+.rad{appearance:none;width:14px;height:14px;border:1px solid var(--ink);transform:rotate(45deg);cursor:pointer;margin:2px;flex:none;background:var(--bg)}
+.rad:checked{background:var(--accent);box-shadow:inset 0 0 0 3px var(--bg)}
+.opt{display:flex;gap:10px;align-items:center;cursor:pointer;font-size:11px;letter-spacing:.14em;text-transform:uppercase}
+
+.toggle{appearance:none;width:48px;height:22px;border:1px solid var(--ink);position:relative;cursor:pointer;background:var(--bg);flex:none}
+.toggle::after{content:"";position:absolute;top:2px;left:2px;width:18px;height:16px;background:var(--ink)}
+.toggle:checked{background:var(--accent)}
+.toggle:checked::after{left:26px;background:var(--on-accent)}
+
+.range{appearance:none;width:100%;height:20px;background:transparent;cursor:pointer}
+.range::-webkit-slider-runnable-track{height:2px;background:var(--ink)}
+.range::-moz-range-track{height:2px;background:var(--ink)}
+.range::-webkit-slider-thumb{appearance:none;width:12px;height:20px;background:var(--accent);border:1px solid var(--ink);margin-top:-9px}
+.range::-moz-range-thumb{width:12px;height:20px;background:var(--accent);border:1px solid var(--ink);border-radius:0}
+
+.tabs{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;border:1px solid var(--ink)}
+.tabs button{font-family:var(--mono);font-size:11px;letter-spacing:.18em;padding:12px 8px;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;border:0;background:transparent;color:var(--ink);cursor:pointer;text-transform:uppercase;font-weight:700;transition:0s}
+.tabs button:hover{background:var(--line)}
+.tabs button[aria-selected="true"]{background:var(--ink);color:var(--bg)}
+.tabs button + button{border-left:1px solid var(--ink)}
+
+.chip{display:inline-block;padding:2px 8px;border:1px solid var(--ink);font-size:9px;letter-spacing:.18em;text-transform:uppercase;font-weight:700}
+.chip.ok{background:var(--ink);color:var(--bg)}
+.chip.warn{background:var(--accent);color:var(--on-accent);border-color:var(--accent)}
+.chip.cut{clip-path:polygon(6px 0,100% 0,calc(100% - 6px) 100%,0 100%);padding:2px 12px}
+
+.seg{display:grid;grid-template-columns:repeat(20,1fr);gap:3px;height:16px}
+.seg i{border:1px solid var(--ink)}
+.seg i.on{background:var(--ink)}
+.seg i.hot{background:var(--accent);border-color:var(--accent)}
+
+details.acc{border:1px solid var(--ink);border-top:0}
+details.acc:first-of-type{border-top:1px solid var(--ink)}
+details.acc summary{list-style:none;cursor:pointer;padding:12px 14px;display:flex;justify-content:space-between;font-size:11px;letter-spacing:.16em;text-transform:uppercase;font-weight:700}
+details.acc summary::-webkit-details-marker{display:none}
+details.acc summary::after{content:"[+]";color:var(--gray)}
+details.acc[open] summary{background:var(--ink);color:var(--bg)}
+details.acc[open] summary::after{content:"[−]";color:var(--accent)}
+details.acc p{padding:12px 14px;font-size:12px}
+
+[data-tip]{position:relative}
+[data-tip]:hover::after,[data-tip]:focus-visible::after{
+  content:attr(data-tip);position:absolute;left:0;bottom:calc(100% + 8px);background:var(--ink);color:var(--bg);
+  padding:6px 10px;font:700 9px var(--mono);letter-spacing:.16em;white-space:nowrap;z-index:5;border-left:4px solid var(--accent)
+}
+
+/* Toasts + modal */
+.toasts{position:fixed;right:16px;bottom:16px;z-index:200;display:flex;flex-direction:column;gap:8px;max-width:min(340px,calc(100vw - 32px))}
+.toast{background:var(--ink);color:var(--bg);border-left:8px solid var(--accent);padding:12px 14px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;box-shadow:4px 4px 0 var(--accent);animation:toastIn .2s steps(3)}
+@keyframes toastIn{from{transform:translateX(24px);opacity:0}}
+.overlay{position:fixed;inset:0;background:rgba(10,10,10,.72);z-index:150;display:grid;place-items:center;padding:16px}
+.modal{background:var(--bg);color:var(--ink);border:1px solid var(--ink);box-shadow:8px 8px 0 var(--accent);width:min(480px,100%);clip-path:polygon(0 0,calc(100% - 24px) 0,100% 24px,100% 100%,24px 100%,0 calc(100% - 24px))}
+.modal-head{background:var(--ink);color:var(--bg);padding:12px 16px;display:flex;justify-content:space-between;align-items:center}
+.modal-head button{background:transparent;border:1px solid var(--bg);color:var(--bg);font:700 10px var(--mono);padding:4px 8px;cursor:pointer}
+.modal-body{padding:24px;display:grid;gap:16px}
+
+/* =====================================================
+   04 // SHOWCASE LAYOUT
+   ===================================================== */
+.topnav{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--ink);display:flex;align-items:stretch;min-height:48px}
+.brand-mini{background:var(--ink);color:var(--bg);padding:8px 32px 8px 16px;clip-path:polygon(0 0,100% 0,calc(100% - 16px) 100%,0 100%);font:700 22px var(--hero);letter-spacing:-.03em;display:flex;align-items:center;gap:8px;cursor:pointer;border:0}
+.links{display:flex;overflow-x:auto;flex:1;scrollbar-width:none}
+.links::-webkit-scrollbar{display:none}
+.links a{display:flex;align-items:center;gap:6px;padding:0 12px;font-size:10px;letter-spacing:.16em;text-decoration:none;white-space:nowrap;border-right:1px solid var(--line);text-transform:uppercase;transition:0s}
+.links a span{color:var(--gray)}
+.links a:hover{background:var(--ink);color:var(--bg)}
+.links a.active{background:var(--accent);color:var(--on-accent);font-weight:800}
+.links a.active span,.links a:hover span{color:inherit}
+.nav-tools{display:flex;gap:8px;align-items:center;padding:0 12px;border-left:1px solid var(--ink)}
+
+.sec{border-bottom:1px solid var(--ink);padding:64px 32px;position:relative;scroll-margin-top:48px;overflow:hidden}
+.sec-head{display:grid;grid-template-columns:auto 1fr auto;gap:24px;align-items:end;border-bottom:1px solid var(--ink);padding-bottom:16px;margin-bottom:32px}
+.sec-idx{font:400 56px/1 var(--dot);color:var(--accent)}
+.sec-title{font:700 clamp(36px,5.5vw,72px)/.82 var(--hero);text-transform:uppercase;letter-spacing:-.035em}
+.sec-meta{text-align:right}
+.lead{max-width:640px;font-size:13px;margin-bottom:32px}
+.lead b{background:var(--ink);color:var(--bg);padding:0 4px}
+
+.cells{display:grid;border-top:1px solid var(--ink);border-left:1px solid var(--ink)}
+.cells > *{border-right:1px solid var(--ink);border-bottom:1px solid var(--ink);padding:20px;position:relative}
+.cells .tag{position:absolute;top:8px;right:10px}
+.c2{grid-template-columns:repeat(2,1fr)} .c3{grid-template-columns:repeat(3,1fr)} .c4{grid-template-columns:repeat(4,1fr)}
+.auto{grid-template-columns:repeat(auto-fill,minmax(260px,1fr))}
+.stack{display:grid;gap:16px}
+.row{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+.cell-title{font-size:10px;letter-spacing:.18em;text-transform:uppercase;font-weight:800;margin-bottom:16px;display:flex;gap:8px;align-items:center}
+.cell-title::before{content:"";width:8px;height:8px;background:var(--accent)}
+
+/* Cover */
+.cover{min-height:calc(100vh - 48px);display:flex;flex-direction:column;justify-content:space-between;padding:32px}
+.cover .giant{font-size:clamp(80px,24vw,400px)}
+.cover-top{display:flex;justify-content:space-between;gap:24px;position:relative;z-index:1;flex-wrap:wrap}
+.cover-mid{position:relative;z-index:1;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:24px;margin:48px 0}
+.readout-diag{transform:translateX(72px) rotate(38deg);transform-origin:left top;min-height:160px;display:flex;flex-direction:column;gap:22px;font:700 13px var(--mono);letter-spacing:.1em}
+.readout-diag span::before{content:"";display:inline-block;width:12px;height:12px;background:var(--ink);margin-right:8px;vertical-align:-1px}
+.tri-cluster{display:grid;grid-template-columns:repeat(2,14px);gap:4px}
+
+/* Color */
+.swatches{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));border-top:1px solid var(--ink);border-left:1px solid var(--ink)}
+.swatch{border-right:1px solid var(--ink);border-bottom:1px solid var(--ink);cursor:pointer;background:transparent;text-align:left;color:var(--ink);font-family:var(--mono);padding:0}
+.swatch .chipc{height:120px;border-bottom:1px solid var(--ink);position:relative}
+.swatch .info{padding:12px;display:grid;gap:2px}
+.swatch:hover .info{background:var(--ink);color:var(--bg)}
+.ratio{display:flex;height:40px;border:1px solid var(--ink);margin-top:24px}
+.ratio div{display:flex;align-items:center;padding:0 8px;font-size:9px;letter-spacing:.16em;font-weight:800;overflow:hidden;white-space:nowrap}
+
+/* Type */
+.spec{display:grid;grid-template-columns:200px 1fr;border-top:1px solid var(--ink)}
+.spec > div{padding:20px 0;border-bottom:1px solid var(--line)}
+.spec .meta{padding-right:16px}
+.scale-row{display:grid;grid-template-columns:80px 80px 1fr;align-items:baseline;gap:16px;padding:10px 0;border-bottom:1px solid var(--line)}
+.tester{border:1px solid var(--ink);padding:24px;display:grid;gap:16px}
+.tester-tabs{flex:1 1 280px;max-width:420px}
+.tester-out{min-height:140px;display:flex;align-items:center;overflow:hidden;word-break:break-all;border-top:1px solid var(--line);padding-top:16px}
+
+/* Grid */
+.unit-bars{display:grid;gap:10px}
+.unit-bars div{display:grid;grid-template-columns:60px 1fr;align-items:center;gap:12px}
+.unit-bars i{display:block;height:16px;background:var(--ink)}
+.col12{display:grid;grid-template-columns:repeat(12,1fr);gap:8px;height:140px}
+.col12 div{background:var(--line);display:flex;align-items:flex-end;justify-content:center;padding:6px;font:700 10px var(--mono)}
+.col12 div.sp{background:var(--accent);color:var(--on-accent);grid-column:span 4}
+.col12 div.sp8{background:var(--ink);color:var(--bg);grid-column:span 8}
+
+/* Shapes */
+.shape-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:24px}
+.shape{height:120px;background:var(--ink);display:flex;align-items:flex-end;padding:10px;color:var(--bg);font:700 10px var(--mono);letter-spacing:.14em}
+.shape.o{background:var(--accent);color:var(--on-accent)}
+.shape.outline{background:transparent;border:1px solid var(--ink);color:var(--ink)}
+
+/* Glyphs */
+.glyphs{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));border-top:1px solid var(--ink);border-left:1px solid var(--ink)}
+.glyph{border-right:1px solid var(--ink);border-bottom:1px solid var(--ink);padding:16px 8px 10px;display:flex;flex-direction:column;align-items:center;gap:12px;background:transparent;color:var(--ink);cursor:pointer;font-family:var(--mono)}
+.glyph:hover{background:var(--ink);color:var(--bg)}
+.glyph:hover .micro{color:var(--accent)}
+
+/* Warning plates */
+.plate{border:2px solid var(--ink);display:grid;grid-template-columns:auto 1fr}
+.plate .sym{background:var(--ink);color:var(--bg);padding:16px;display:grid;place-items:center}
+.plate .txt{padding:12px 16px}
+.plate .word{font:700 32px/.9 var(--hero);letter-spacing:-.02em}
+.plate.danger .sym{background:var(--accent);color:var(--on-accent)}
+.plate.danger{border-color:var(--accent)}
+.plate.inverse{background:var(--ink);color:var(--bg)}
+.plate.inverse .sym{background:var(--bg);color:var(--ink)}
+
+/* Data */
+.readout{font-family:var(--display);font-size:44px;line-height:1}
+.readout.accent{color:var(--on-accent);background:var(--accent);padding:4px 8px;align-self:flex-start;display:inline-block}
+.lcd{font:400 48px/1 var(--dot);letter-spacing:.04em}
+.meters{display:flex;gap:14px;align-items:flex-end;height:120px}
+.meter{width:14px;height:100%;border:1px solid var(--ink);position:relative}
+.meter i{position:absolute;left:2px;right:2px;bottom:2px;background:var(--ink);transition:height .6s steps(6)}
+.meter.hot i{background:var(--accent)}
+table{width:100%;border-collapse:collapse;font-size:11px}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line)}
+th{font-weight:700;letter-spacing:.18em;text-transform:uppercase;border-bottom:1px solid var(--ink);font-size:10px}
+tbody tr:hover{background:var(--ink);color:var(--bg)}
+.terminal{background:#0A0A0A;color:#ECECEC;padding:16px;font-size:12px;min-height:220px;border-left:8px solid var(--accent)}
+.terminal .p{color:var(--accent)}
+[data-accent="mono"] .terminal .p{color:#ECECEC}
+
+/* Motion */
+.scan-box{height:180px;border:1px solid var(--ink);position:relative;overflow:hidden;display:grid;place-items:center}
+.scan-box::after{content:"";position:absolute;left:0;right:0;height:2px;background:var(--accent);top:0;animation:scan 2.4s linear infinite}
+@keyframes scan{to{top:100%}}
+.ticker{overflow:hidden;white-space:nowrap;border:1px solid var(--ink);background:var(--ink);color:var(--bg)}
+.ticker span{display:inline-block;padding:8px 0;animation:tick 30s linear infinite;font-size:10px;letter-spacing:.25em}
+@keyframes tick{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.step-anim{width:24px;height:24px;background:var(--accent);animation:stepmove 2s steps(8) infinite alternate}
+@keyframes stepmove{to{transform:translateX(200px) rotate(180deg)}}
+
+/* Samples */
+.sample-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:32px}
+.sample{display:grid;gap:12px;align-content:start}
+.sample-cap{display:flex;justify-content:space-between;border-top:1px solid var(--ink);padding-top:8px}
+
+.poster{aspect-ratio:1;container-type:inline-size;position:relative;overflow:hidden;border:1px solid var(--ink);background:var(--bg)}
+.poster > *{position:absolute}
+.poster .p-logo{top:0;left:0;width:32cqw;height:8cqw;background:var(--ink);color:var(--bg);clip-path:polygon(0 0,100% 0,82% 100%,0 100%);display:flex;align-items:center;padding-left:2.5cqw;font:700 5cqw var(--hero);letter-spacing:-.05em}
+.poster .p-credit{top:2cqw;right:2cqw;display:flex;gap:1cqw;font:700 1.1cqw/1.3 var(--mono);letter-spacing:.08em}
+.poster .p-jp{top:13.5cqw;left:29cqw;font-size:1.6cqw;display:flex;gap:1cqw;align-items:center}
+.poster .p-warn{top:19cqw;left:2cqw;width:5cqw}
+.poster .p-id{top:25cqw;left:2cqw;font:800 1.5cqw/1.25 var(--mono);text-transform:uppercase}
+.poster .p-id b{font-size:3.4cqw;display:block;line-height:1.1}
+.poster .p-read{top:35cqw;left:64cqw;transform:rotate(38deg);transform-origin:left top;display:flex;flex-direction:column;gap:3cqw;font:700 1.1cqw var(--mono)}
+.poster .p-read span::before{content:"";display:inline-block;width:1.3cqw;height:1.3cqw;background:var(--ink);margin-right:.8cqw}
+.poster .p-font{top:61cqw;left:57cqw;font:800 1.6cqw/1.3 var(--mono)}
+.poster .p-bb{top:66cqw;left:58cqw;width:30cqw;height:12cqw}
+.poster .p-bb .ghost{position:absolute;inset:0;font:700 10cqw/1 var(--hero);color:transparent;-webkit-text-stroke:1px var(--accent);letter-spacing:-.04em}
+.poster .p-bb .solid{position:absolute;left:3cqw;top:3cqw;font:700 4.6cqw/1 var(--hero);color:var(--accent);letter-spacing:-.02em}
+.poster .p-meters{top:63cqw;left:27cqw;display:flex;gap:2cqw;height:12cqw}
+.poster .p-meters i{width:.9cqw;height:100%;border:1px solid var(--ink);position:relative;display:block}
+.poster .p-meters i::after{content:"";position:absolute;left:1px;right:1px;bottom:1px;background:var(--ink);height:var(--h)}
+.poster .p-giant{left:2cqw;bottom:-2.5cqw;font:700 30cqw/.8 var(--hero);letter-spacing:-.06em}
+.poster .p-tag{right:2cqw;bottom:2cqw;font:700 1.2cqw var(--mono)}
+.poster .p-sa{top:60cqw;left:13cqw;transform:rotate(45deg);font:700 1.2cqw var(--mono)}
+
+.label-card{border:2px solid var(--ink);background:var(--bg)}
+.label-head{background:var(--ink);color:var(--bg);display:flex;justify-content:space-between;padding:8px 12px}
+.label-body{display:grid;grid-template-columns:1.3fr 1fr}
+.label-body > div{padding:16px}
+.label-body > div + div{border-left:1px solid var(--ink)}
+.spec-table{width:100%;font-size:10px}
+.spec-table td{padding:5px 0;border-bottom:1px dashed var(--line)}
+.spec-table td:last-child{text-align:right;font-weight:800}
+.label-foot{border-top:1px solid var(--ink);display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:16px;padding:12px}
+
+.picto-sheet{display:grid;grid-template-columns:repeat(4,1fr);border:2px solid var(--ink);background:var(--bg)}
+.picto{border-right:1px solid var(--ink);border-bottom:1px solid var(--ink);padding:14px 10px;display:flex;flex-direction:column;align-items:center;gap:8px;position:relative;text-align:center}
+.picto:nth-child(4n){border-right:0}
+.picto .ix{position:absolute;top:4px;left:6px;font-size:8px;letter-spacing:.14em}
+.picto .en{font:800 9px var(--mono);letter-spacing:.14em}
+.picto .jp{font-size:10px}
+
+.pricing{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.tier{border:1px solid var(--ink);padding:20px;display:grid;gap:14px;align-content:start;clip-path:polygon(0 0,calc(100% - 20px) 0,100% 20px,100% 100%,0 100%)}
+.tier.feat{background:var(--ink);color:var(--bg)}
+.tier.feat .btn{background:var(--accent);color:var(--on-accent);border-color:var(--accent);box-shadow:none}
+.tier ul{list-style:none;display:grid;gap:6px;font-size:11px}
+.tier li::before{content:"[X] ";color:var(--accent);font-weight:800}
+.tier .price{font:700 48px/1 var(--hero);letter-spacing:-.04em}
+
+.err-page{background:var(--ink);color:var(--bg);padding:32px;position:relative;overflow:hidden;min-height:340px;display:flex;flex-direction:column;justify-content:space-between}
+.err-page .giant{font-size:clamp(44px,10vw,140px);color:var(--bg)}
+.err-page .btn{background:var(--accent);color:var(--on-accent);border-color:var(--accent);box-shadow:4px 4px 0 var(--bg)}
+
+.phone{width:min(300px,100%);height:600px;border:2px solid var(--ink);margin:0 auto;display:flex;flex-direction:column;clip-path:polygon(0 0,calc(100% - 28px) 0,100% 28px,100% 100%,28px 100%,0 calc(100% - 28px));background:var(--bg)}
+.phone-status{display:flex;justify-content:space-between;padding:10px 16px;border-bottom:1px solid var(--ink);font:700 10px var(--mono)}
+.phone-body{flex:1;padding:16px;display:grid;gap:14px;align-content:start;overflow:hidden}
+.phone-list > div{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--line);font-size:11px}
+.phone-nav{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--ink)}
+.phone-nav span{padding:12px 0;text-align:center;font:700 9px var(--mono);letter-spacing:.14em}
+.phone-nav span.on{background:var(--accent);color:var(--on-accent)}
+
+.launch{border:1px solid var(--ink);padding:24px;display:grid;gap:16px;position:relative;overflow:hidden;min-height:220px;align-content:space-between}
+.launch .giant{font-size:64px}
+
+pre.code{background:#0A0A0A;color:#ECECEC;padding:20px;font:12px/1.6 var(--mono);overflow-x:auto;border-left:8px solid var(--accent)}
+pre.code .k{color:#FF5A1F}
+[data-accent="mono"] pre.code .k{color:#ECECEC;text-decoration:underline}
+
+.footer{border-top:1px solid var(--ink);padding:24px 32px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;align-items:center}
+
+/* =====================================================
+   05 // AUTH + DASHBOARD DEMOS
+   ===================================================== */
+.auth{min-height:100vh;display:grid;grid-template-columns:1.2fr 1fr}
+.auth-art{position:relative;border-right:1px solid var(--ink);overflow:hidden;padding:32px;display:flex;flex-direction:column;justify-content:space-between;min-height:560px}
+.auth-art .giant{font-size:clamp(72px,17vw,260px)}
+.logo-plate{background:var(--ink);color:var(--bg);padding:14px 40px 14px 20px;display:inline-block;clip-path:polygon(0 0,100% 0,calc(100% - 24px) 100%,0 100%)}
+.auth-panel{padding:72px 40px 48px;display:flex;flex-direction:column;justify-content:center;gap:24px;position:relative}
+.auth-tools{position:absolute;top:24px;left:40px;right:24px;display:flex;justify-content:space-between;gap:8px}
+form{display:flex;flex-direction:column;gap:16px}
+.warn{display:flex;gap:12px;align-items:center}
+
+.app{display:grid;grid-template-columns:240px 1fr;min-height:100vh}
+.side{border-right:1px solid var(--ink);display:flex;flex-direction:column}
+.side .brand{background:var(--ink);color:var(--bg);padding:20px;clip-path:polygon(0 0,100% 0,100% calc(100% - 20px),calc(100% - 20px) 100%,0 100%)}
+.nav{list-style:none;border-top:1px solid var(--ink);margin-top:24px}
+.nav button{width:100%;text-align:left;font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink);padding:14px 20px;border:0;border-bottom:1px solid var(--line);background:transparent;cursor:pointer;display:flex;gap:12px;transition:0s}
+.nav button:hover{background:var(--ink);color:var(--bg)}
+.nav button[aria-current="page"]{background:var(--accent);color:var(--on-accent);font-weight:800}
+.nav .idx{color:var(--gray)}
+.nav button[aria-current="page"] .idx,.nav button:hover .idx{color:inherit}
+.side-foot{margin-top:auto;padding:20px;border-top:1px solid var(--ink)}
+.main{display:flex;flex-direction:column;min-width:0}
+.topbar{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--ink);padding:12px 24px;gap:16px;flex-wrap:wrap}
+.topbar-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.content{padding:24px;display:grid;gap:24px}
+.hero{position:relative;border:1px solid var(--ink);padding:24px;overflow:hidden;min-height:200px;display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap}
+.hero .giant{font-size:clamp(40px,10vw,160px);overflow-wrap:anywhere}
+.hero .block{position:absolute;right:0;top:0;width:38%;height:100%;background:var(--accent);clip-path:polygon(30% 0,100% 0,100% 100%,0 100%);z-index:0}
+.hero > *:not(.block){position:relative;z-index:1}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--ink);border-left:1px solid var(--ink)}
+.cell{border-right:1px solid var(--ink);border-bottom:1px solid var(--ink);padding:16px;position:relative;min-height:140px;display:flex;flex-direction:column;justify-content:space-between}
+.cell .tag{position:absolute;top:8px;right:10px}
+.cell.inverse{background:var(--ink);color:var(--bg)}
+.span2{grid-column:span 2}
+
+/* =====================================================
+   06 // RESPONSIVE + MOTION
+   ===================================================== */
+@media (max-width:1100px){
+  .sample-grid{grid-template-columns:1fr}
+  .c4{grid-template-columns:repeat(2,1fr)}
+}
+@media (max-width:960px){
+  .auth{grid-template-columns:1fr}
+  .auth-art{min-height:320px;border-right:0;border-bottom:1px solid var(--ink)}
+  .app{grid-template-columns:1fr}
+  .side{border-right:0;border-bottom:1px solid var(--ink)}
+  .nav{display:grid;grid-template-columns:repeat(2,1fr);margin-top:0}
+  .nav button{border-right:1px solid var(--line)}
+  .side-foot{display:none}
+  .grid{grid-template-columns:repeat(2,1fr)}
+  .c3{grid-template-columns:1fr}
+  .pricing{grid-template-columns:1fr}
+  .spec{grid-template-columns:1fr}
+  .spec .meta{padding-bottom:0;border-bottom:0}
+  .nav-tools .mode-switch:last-child{display:none}
+}
+@media (max-width:640px){
+  .sec{padding:48px 16px}
+  .sec-head{grid-template-columns:1fr}
+  .sec-meta{text-align:left}
+  .c2,.c4,.grid{grid-template-columns:1fr}
+  .span2{grid-column:span 1}
+  .picto-sheet{grid-template-columns:repeat(2,1fr)}
+  .picto:nth-child(4n){border-right:1px solid var(--ink)}
+  .picto:nth-child(2n){border-right:0}
+  .label-body{grid-template-columns:1fr}
+  .label-body > div + div{border-left:0;border-top:1px solid var(--ink)}
+  .auth-panel{padding:72px 20px 32px}
+  .auth-tools{left:20px;right:20px}
+  .cover{padding:16px}
+  .scale-row{grid-template-columns:60px 1fr}
+  .scale-row .px{display:none}
+    .tabs button{font-size:10px;letter-spacing:.08em;padding:10px 4px}
+    .label-foot{grid-template-columns:1fr}
+    .err-page{padding:24px}
+    .hero-meta{display:none}
+    .brand-mini .micro{display:none}
+    .readout-diag{transform:translateX(56px) rotate(38deg)}
+    .tester-tabs{max-width:none}
+}
+/* =====================================================
+   BAYBAYIN MODULE // 12
+   ===================================================== */
+.rx-bb{font-family:var(--bb);line-height:1.5;text-transform:none!important;letter-spacing:0!important}
+.rx-bb--bold{font-weight:700}
+.bb-conv{grid-template-columns:minmax(0,1fr) minmax(0,2fr)}
+.bb-out{min-height:150px;display:flex;align-items:center;overflow-x:auto;padding:8px 0;border-top:1px solid var(--line)}
+.bb-out svg{height:var(--bb-h,120px);width:auto;max-width:none;flex:none}
+.bb-uni{font-size:32px;font-weight:700;word-break:break-all;border-top:1px solid var(--line);padding-top:8px;min-height:64px}
+.bb-tok{color:var(--gray);word-break:break-all}
+.bb-tbl td{border:1px solid var(--ink);padding:6px 10px;vertical-align:middle}
+.bb-tbl th{border:1px solid var(--ink);background:var(--ink);color:var(--bg);font-size:9px;letter-spacing:.18em;padding:6px 10px;text-align:left;font-weight:400}
+.bb-tbl td.k{font-weight:800;width:72px;background:var(--line);letter-spacing:.12em}
+.bb-tbl .g{font-size:44px;font-weight:700;line-height:1.3;display:block}
+.bb-tbl tr:hover td{background:var(--field-focus)}
+.bb-tbl button{all:unset;cursor:pointer;display:block}
+.bb-tbl button:focus-visible{outline:2px solid var(--accent)}
+.bb-cat .g{font-size:56px;font-weight:700;line-height:1.2;font-family:var(--bb)}
+.bb-cat .glyph:hover .g{color:var(--accent)}
+.bb-hero{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1fr);border:1px solid var(--ink);margin-bottom:32px}
+.bb-hero > div{padding:20px;min-width:0}
+.bb-hero .big{font-size:clamp(56px,10vw,128px);font-weight:700;line-height:1.15;color:var(--ink)}
+.bb-block{background:var(--accent);color:var(--on-accent);clip-path:polygon(18% 0,100% 0,100% 100%,0 100%);padding-left:64px!important;display:flex;flex-direction:column;justify-content:space-between;gap:16px}
+.bb-block .lcd{font-size:44px}
+@media (max-width:760px){.bb-conv,.bb-hero{grid-template-columns:1fr}.bb-block{clip-path:none;padding-left:20px!important}}
+
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation:none!important;transition:none!important}
+}
+</style>
+</head>
+<body>
+<div id="root"></div>
+
+<!-- RX09 BAYBAYIN SVG ENGINE // window.RX09Baybayin -->
+<script>
+/*! RX09 Baybayin SVG Engine v1.0 | glyph outlines: angular derivative of Noto Sans Tagalog (SIL OFL 1.1) */
+(function(root){
+"use strict";
+var DATA={"unitsHeight":1300,"baselineY":1000,"units":{"a":{"d":"M196 904 220 648H84V528H236V504H84V392H188L92 296L116 184L292 280L348 392H508V504H364L324 824L356 896L460 832L780 376L908 336L1028 400L1076 480L972 528L908 464L836 488L548 920L340 1032Z","w":1066,"u":"ᜀ"},"i":{"d":"M96 392 328 480 808 392 1056 504 984 600 744 520 320 600 64 512ZM96 800H288L408 616H488L536 720L608 616H688L776 800H952L1016 904L760 936L632 800L512 912L440 816L360 904L224 952L32 904Z","w":1063,"u":"ᜁ"},"u":{"d":"M48 992 88 872 296 904 392 856 400 752 208 712V600L360 576L392 504L328 464L152 496L104 384L360 344L520 448L512 584L448 640L520 696L544 832L456 976L280 1024Z","w":587,"u":"ᜂ"},"e":{"d":"M96 392 328 480 808 392 1056 504 984 600 744 520 320 600 64 512ZM96 800H288L408 616H488L536 720L608 616H688L776 800H952L1016 904L760 936L632 800L512 912L440 816L360 904L224 952L32 904Z","w":1063,"u":"ᜁ"},"o":{"d":"M48 992 88 872 296 904 392 856 400 752 208 712V600L360 576L392 504L328 464L152 496L104 384L360 344L520 448L512 584L448 640L520 696L544 832L456 976L280 1024Z","w":587,"u":"ᜂ"},"ka":{"d":"M51 904 131 808 299 888 475 824V592L227 648L59 544L131 456L307 528L747 368L1011 424L963 536L779 488L603 552V776L843 728L1011 784L963 888L755 848L291 1008Z","w":1036,"u":"ᜃ"},"ki":{"d":"M51 904 131 808 299 888 475 824V592L227 648L59 544L131 456L307 528L747 368L1011 424L963 536L779 488L603 552V776L843 728L1011 784L963 888L755 848L291 1008Z M439 240 527 144 615 240 527 336Z","w":1036,"u":"ᜃᜒ"},"ku":{"d":"M51 904 131 808 299 888 475 824V592L227 648L59 544L131 456L307 528L747 368L1011 424L963 536L779 488L603 552V776L843 728L1011 784L963 888L755 848L291 1008Z M487 1080 575 984 655 1080 575 1176Z","w":1036,"u":"ᜃᜓ"},"k":{"d":"M51 904 131 808 299 888 475 824V592L227 648L59 544L131 456L307 528L747 368L1011 424L963 536L779 488L603 552V776L843 728L1011 784L963 888L755 848L291 1008Z M517 1160H445V1064H517V992H621V1064H685V1160H621V1232H517Z","w":1036,"u":"ᜃ᜔"},"k_p":{"d":"M51 904 131 808 299 888 475 824V592L227 648L59 544L131 456L307 528L747 368L1011 424L963 536L779 488L603 552V776L843 728L1011 784L963 888L755 848L291 1008Z M1220 560V896L1172 1040L1012 1152L716 1160V1040L972 1032L1076 960L1100 560Z","w":1284,"u":"ᜃ᜕"},"ke":{"d":"M51 904 131 808 299 888 475 824V592L227 648L59 544L131 456L307 528L747 368L1011 424L963 536L779 488L603 552V776L843 728L1011 784L963 888L755 848L291 1008Z M439 240 527 144 615 240 527 336Z","w":1036,"u":"ᜃᜒ"},"ko":{"d":"M51 904 131 808 299 888 475 824V592L227 648L59 544L131 456L307 528L747 368L1011 424L963 536L779 488L603 552V776L843 728L1011 784L963 888L755 848L291 1008Z M487 1080 575 984 655 1080 575 1176Z","w":1036,"u":"ᜃᜓ"},"ga":{"d":"M48 992 88 872 296 904 392 856 400 752 208 712V600L360 576L392 504L328 464L152 496L104 384L336 336L472 392H664L736 528L752 864L872 912V1040L640 952L608 544L552 496L520 504L512 592L448 648L536 720L520 904L424 992L280 1024Z","w":889,"u":"ᜄ"},"gi":{"d":"M48 992 88 872 296 904 392 856 400 752 208 712V600L360 576L392 504L328 464L152 496L104 384L336 336L472 392H664L736 528L752 864L872 912V1040L640 952L608 544L552 496L520 504L512 592L448 648L536 720L520 904L424 992L280 1024Z M351 240 439 144 527 240 439 336Z","w":889,"u":"ᜄᜒ"},"gu":{"d":"M48 992 88 872 296 904 392 856 400 752 208 712V600L360 576L392 504L328 464L152 496L104 384L336 336L472 392H664L736 528L752 864L872 912V1040L640 952L608 544L552 496L520 504L512 592L448 648L536 720L520 904L424 992L280 1024Z M493 1080 581 984 661 1080 581 1176Z","w":889,"u":"ᜄᜓ"},"g":{"d":"M48 992 88 872 296 904 392 856 400 752 208 712V600L360 576L392 504L328 464L152 496L104 384L336 336L472 392H664L736 528L752 864L872 912V1040L640 952L608 544L552 496L520 504L512 592L448 648L536 720L520 904L424 992L280 1024Z M523 1160H451V1064H523V992H627V1064H691V1160H627V1232H523Z","w":889,"u":"ᜄ᜔"},"g_p":{"d":"M48 992 88 872 296 904 392 856 400 752 208 712V600L360 576L392 504L328 464L152 496L104 384L336 336L472 392H664L736 528L752 864L872 912V1040L640 952L608 544L552 496L520 504L512 592L448 648L536 720L520 904L424 992L280 1024Z M1073 560V896L1025 1040L865 1152L569 1160V1040L825 1032L929 960L953 560Z","w":1137,"u":"ᜄ᜕"},"ge":{"d":"M48 992 88 872 296 904 392 856 400 752 208 712V600L360 576L392 504L328 464L152 496L104 384L336 336L472 392H664L736 528L752 864L872 912V1040L640 952L608 544L552 496L520 504L512 592L448 648L536 720L520 904L424 992L280 1024Z M351 240 439 144 527 240 439 336Z","w":889,"u":"ᜄᜒ"},"go":{"d":"M48 992 88 872 296 904 392 856 400 752 208 712V600L360 576L392 504L328 464L152 496L104 384L336 336L472 392H664L736 528L752 864L872 912V1040L640 952L608 544L552 496L520 504L512 592L448 648L536 720L520 904L424 992L280 1024Z M493 1080 581 984 661 1080 581 1176Z","w":889,"u":"ᜄᜓ"},"nga":{"d":"M108 840 380 832 436 744 388 592 180 632 68 576 52 440 180 320 252 424 180 480V496L444 472L556 640L804 528L916 552L988 632V816L844 944L748 976L716 864L844 800L876 712L804 648L564 768L460 936L212 944L188 1024H68Z","w":1063,"u":"ᜅ"},"ngi":{"d":"M108 840 380 832 436 744 388 592 180 632 68 576 52 440 180 320 252 424 180 480V496L444 472L556 640L804 528L916 552L988 632V816L844 944L748 976L716 864L844 800L876 712L804 648L564 768L460 936L212 944L188 1024H68Z M439 240 527 144 615 240 527 336Z","w":1063,"u":"ᜅᜒ"},"ngu":{"d":"M108 840 380 832 436 744 388 592 180 632 68 576 52 440 180 320 252 424 180 480V496L444 472L556 640L804 528L916 552L988 632V816L844 944L748 976L716 864L844 800L876 712L804 648L564 768L460 936L212 944L188 1024H68Z M512 1080 600 984 680 1080 600 1176Z","w":1063,"u":"ᜅᜓ"},"ng":{"d":"M108 840 380 832 436 744 388 592 180 632 68 576 52 440 180 320 252 424 180 480V496L444 472L556 640L804 528L916 552L988 632V816L844 944L748 976L716 864L844 800L876 712L804 648L564 768L460 936L212 944L188 1024H68Z M542 1160H470V1064H542V992H646V1064H710V1160H646V1232H542Z","w":1063,"u":"ᜅ᜔"},"ng_p":{"d":"M108 840 380 832 436 744 388 592 180 632 68 576 52 440 180 320 252 424 180 480V496L444 472L556 640L804 528L916 552L988 632V816L844 944L748 976L716 864L844 800L876 712L804 648L564 768L460 936L212 944L188 1024H68Z M1247 560V896L1199 1040L1039 1152L743 1160V1040L999 1032L1103 960L1127 560Z","w":1311,"u":"ᜅ᜕"},"nge":{"d":"M108 840 380 832 436 744 388 592 180 632 68 576 52 440 180 320 252 424 180 480V496L444 472L556 640L804 528L916 552L988 632V816L844 944L748 976L716 864L844 800L876 712L804 648L564 768L460 936L212 944L188 1024H68Z M439 240 527 144 615 240 527 336Z","w":1063,"u":"ᜅᜒ"},"ngo":{"d":"M108 840 380 832 436 744 388 592 180 632 68 576 52 440 180 320 252 424 180 480V496L444 472L556 640L804 528L916 552L988 632V816L844 944L748 976L716 864L844 800L876 712L804 648L564 768L460 936L212 944L188 1024H68Z M512 1080 600 984 680 1080 600 1176Z","w":1063,"u":"ᜅᜓ"},"ta":{"d":"M212 728 68 720 84 496 188 584 180 624 188 632 604 368 788 344 988 384 932 488 716 472 500 568 332 760 244 1024H108Z","w":1027,"u":"ᜆ"},"ti":{"d":"M212 728 68 720 84 496 188 584 180 624 188 632 604 368 788 344 988 384 932 488 716 472 500 568 332 760 244 1024H108Z M439 240 527 144 615 240 527 336Z","w":1027,"u":"ᜆᜒ"},"tu":{"d":"M212 728 68 720 84 496 188 584 180 624 188 632 604 368 788 344 988 384 932 488 716 472 500 568 332 760 244 1024H108Z M487 1080 575 984 655 1080 575 1176Z","w":1027,"u":"ᜆᜓ"},"t":{"d":"M212 728 68 720 84 496 188 584 180 624 188 632 604 368 788 344 988 384 932 488 716 472 500 568 332 760 244 1024H108Z M517 1160H445V1064H517V992H621V1064H685V1160H621V1232H517Z","w":1027,"u":"ᜆ᜔"},"t_p":{"d":"M212 728 68 720 84 496 188 584 180 624 188 632 604 368 788 344 988 384 932 488 716 472 500 568 332 760 244 1024H108Z M1211 560V896L1163 1040L1003 1152L707 1160V1040L963 1032L1067 960L1091 560Z","w":1275,"u":"ᜆ᜕"},"te":{"d":"M212 728 68 720 84 496 188 584 180 624 188 632 604 368 788 344 988 384 932 488 716 472 500 568 332 760 244 1024H108Z M439 240 527 144 615 240 527 336Z","w":1027,"u":"ᜆᜒ"},"to":{"d":"M212 728 68 720 84 496 188 584 180 624 188 632 604 368 788 344 988 384 932 488 716 472 500 568 332 760 244 1024H108Z M487 1080 575 984 655 1080 575 1176Z","w":1027,"u":"ᜆᜓ"},"da":{"d":"M195 920 115 832V672L179 568L51 496L115 400L339 480L819 392L1075 504L1003 600L763 512L315 592L235 728L243 784L291 824L819 744L1075 848L1003 944L763 864L323 944Z","w":1100,"u":"ᜇ"},"di":{"d":"M195 920 115 832V672L179 568L51 496L115 400L339 480L819 392L1075 504L1003 600L763 512L315 592L235 728L243 784L291 824L819 744L1075 848L1003 944L763 864L323 944Z M478 240 566 144 654 240 566 336Z","w":1100,"u":"ᜇᜒ"},"du":{"d":"M195 920 115 832V672L179 568L51 496L115 400L339 480L819 392L1075 504L1003 600L763 512L315 592L235 728L243 784L291 824L819 744L1075 848L1003 944L763 864L323 944Z M500 1080 588 984 668 1080 588 1176Z","w":1100,"u":"ᜇᜓ"},"d":{"d":"M195 920 115 832V672L179 568L51 496L115 400L339 480L819 392L1075 504L1003 600L763 512L315 592L235 728L243 784L291 824L819 744L1075 848L1003 944L763 864L323 944Z M530 1160H458V1064H530V992H634V1064H698V1160H634V1232H530Z","w":1100,"u":"ᜇ᜔"},"d_p":{"d":"M195 920 115 832V672L179 568L51 496L115 400L339 480L819 392L1075 504L1003 600L763 512L315 592L235 728L243 784L291 824L819 744L1075 848L1003 944L763 864L323 944Z M1284 560V896L1236 1040L1076 1152L780 1160V1040L1036 1032L1140 960L1164 560Z","w":1348,"u":"ᜇ᜕"},"de":{"d":"M195 920 115 832V672L179 568L51 496L115 400L339 480L819 392L1075 504L1003 600L763 512L315 592L235 728L243 784L291 824L819 744L1075 848L1003 944L763 864L323 944Z M478 240 566 144 654 240 566 336Z","w":1100,"u":"ᜇᜒ"},"do":{"d":"M195 920 115 832V672L179 568L51 496L115 400L339 480L819 392L1075 504L1003 600L763 512L315 592L235 728L243 784L291 824L819 744L1075 848L1003 944L763 864L323 944Z M500 1080 588 984 668 1080 588 1176Z","w":1100,"u":"ᜇᜓ"},"na":{"d":"M314 1040 434 904 346 808 434 736 346 648 434 560 386 472 298 520 226 648 242 1024H106L74 712L210 432L482 344L642 392L762 512L826 864L794 1024H658L698 792L666 624L578 504L522 480L578 576L498 648L602 728L498 816L594 896L426 1096Z","w":902,"u":"ᜈ"},"ni":{"d":"M314 1040 434 904 346 808 434 736 346 648 434 560 386 472 298 520 226 648 242 1024H106L74 712L210 432L482 344L642 392L762 512L826 864L794 1024H658L698 792L666 624L578 504L522 480L578 576L498 648L602 728L498 816L594 896L426 1096Z M361 240 449 144 537 240 449 336Z","w":902,"u":"ᜈᜒ"},"nu":{"d":"M314 1040 434 904 346 808 434 736 346 648 434 560 386 472 298 520 226 648 242 1024H106L74 712L210 432L482 344L642 392L762 512L826 864L794 1024H658L698 792L666 624L578 504L522 480L578 576L498 648L602 728L498 816L594 896L426 1096Z M385 1168 473 1072 553 1168 473 1264Z","w":902,"u":"ᜈᜓ"},"n":{"d":"M314 1040 434 904 346 808 434 736 346 648 434 560 386 472 298 520 226 648 242 1024H106L74 712L210 432L482 344L642 392L762 512L826 864L794 1024H658L698 792L666 624L578 504L522 480L578 576L498 648L602 728L498 816L594 896L426 1096Z M415 1248H343V1152H415V1080H519V1152H583V1248H519V1320H415Z","w":902,"u":"ᜈ᜔"},"n_p":{"d":"M314 1040 434 904 346 808 434 736 346 648 434 560 386 472 298 520 226 648 242 1024H106L74 712L210 432L482 344L642 392L762 512L826 864L794 1024H658L698 792L666 624L578 504L522 480L578 576L498 648L602 728L498 816L594 896L426 1096Z M1086 560V896L1038 1040L878 1152L582 1160V1040L838 1032L942 960L966 560Z","w":1150,"u":"ᜈ᜕"},"ne":{"d":"M314 1040 434 904 346 808 434 736 346 648 434 560 386 472 298 520 226 648 242 1024H106L74 712L210 432L482 344L642 392L762 512L826 864L794 1024H658L698 792L666 624L578 504L522 480L578 576L498 648L602 728L498 816L594 896L426 1096Z M361 240 449 144 537 240 449 336Z","w":902,"u":"ᜈᜒ"},"no":{"d":"M314 1040 434 904 346 808 434 736 346 648 434 560 386 472 298 520 226 648 242 1024H106L74 712L210 432L482 344L642 392L762 512L826 864L794 1024H658L698 792L666 624L578 504L522 480L578 576L498 648L602 728L498 816L594 896L426 1096Z M385 1168 473 1072 553 1168 473 1264Z","w":902,"u":"ᜈᜓ"},"pa":{"d":"M202 920 218 648H58V528L338 560L322 864L378 896L514 800L818 376L954 336L1074 400L1122 480L1010 528L954 464L898 472L802 600L914 776L802 832L730 704L546 944L354 1032Z","w":1122,"u":"ᜉ"},"pi":{"d":"M202 920 218 648H58V528L338 560L322 864L378 896L514 800L818 376L954 336L1074 400L1122 480L1010 528L954 464L898 472L802 600L914 776L802 832L730 704L546 944L354 1032Z M439 240 527 144 615 240 527 336Z","w":1122,"u":"ᜉᜒ"},"pu":{"d":"M202 920 218 648H58V528L338 560L322 864L378 896L514 800L818 376L954 336L1074 400L1122 480L1010 528L954 464L898 472L802 600L914 776L802 832L730 704L546 944L354 1032Z M538 1080 626 984 706 1080 626 1176Z","w":1122,"u":"ᜉᜓ"},"p":{"d":"M202 920 218 648H58V528L338 560L322 864L378 896L514 800L818 376L954 336L1074 400L1122 480L1010 528L954 464L898 472L802 600L914 776L802 832L730 704L546 944L354 1032Z M568 1160H496V1064H568V992H672V1064H736V1160H672V1232H568Z","w":1122,"u":"ᜉ᜔"},"p_p":{"d":"M202 920 218 648H58V528L338 560L322 864L378 896L514 800L818 376L954 336L1074 400L1122 480L1010 528L954 464L898 472L802 600L914 776L802 832L730 704L546 944L354 1032Z M1306 560V896L1258 1040L1098 1152L802 1160V1040L1058 1032L1162 960L1186 560Z","w":1370,"u":"ᜉ᜕"},"pe":{"d":"M202 920 218 648H58V528L338 560L322 864L378 896L514 800L818 376L954 336L1074 400L1122 480L1010 528L954 464L898 472L802 600L914 776L802 832L730 704L546 944L354 1032Z M439 240 527 144 615 240 527 336Z","w":1122,"u":"ᜉᜒ"},"po":{"d":"M202 920 218 648H58V528L338 560L322 864L378 896L514 800L818 376L954 336L1074 400L1122 480L1010 528L954 464L898 472L802 600L914 776L802 832L730 704L546 944L354 1032Z M538 1080 626 984 706 1080 626 1176Z","w":1122,"u":"ᜉᜓ"},"ba":{"d":"M136 992 64 872 144 544 384 352 656 384 824 624 792 912 640 1024 512 1016 440 960 264 1024ZM464 792 560 896 664 864 704 672 600 496 432 472 272 584 192 832 216 888 264 904Z","w":903,"u":"ᜊ"},"bi":{"d":"M136 992 64 872 144 544 384 352 656 384 824 624 792 912 640 1024 512 1016 440 960 264 1024ZM464 792 560 896 664 864 704 672 600 496 432 472 272 584 192 832 216 888 264 904Z M439 240 527 144 615 240 527 336Z","w":903,"u":"ᜊᜒ"},"bu":{"d":"M136 992 64 872 144 544 384 352 656 384 824 624 792 912 640 1024 512 1016 440 960 264 1024ZM464 792 560 896 664 864 704 672 600 496 432 472 272 584 192 832 216 888 264 904Z M468 1159 556 1063 636 1159 556 1255Z","w":903,"u":"ᜊᜓ"},"b":{"d":"M136 992 64 872 144 544 384 352 656 384 824 624 792 912 640 1024 512 1016 440 960 264 1024ZM464 792 560 896 664 864 704 672 600 496 432 472 272 584 192 832 216 888 264 904Z M498 1239H426V1143H498V1071H602V1143H666V1239H602V1311H498Z","w":903,"u":"ᜊ᜔"},"b_p":{"d":"M136 992 64 872 144 544 384 352 656 384 824 624 792 912 640 1024 512 1016 440 960 264 1024ZM464 792 560 896 664 864 704 672 600 496 432 472 272 584 192 832 216 888 264 904Z M1087 560V896L1039 1040L879 1152L583 1160V1040L839 1032L943 960L967 560Z","w":1151,"u":"ᜊ᜕"},"be":{"d":"M136 992 64 872 144 544 384 352 656 384 824 624 792 912 640 1024 512 1016 440 960 264 1024ZM464 792 560 896 664 864 704 672 600 496 432 472 272 584 192 832 216 888 264 904Z M439 240 527 144 615 240 527 336Z","w":903,"u":"ᜊᜒ"},"bo":{"d":"M136 992 64 872 144 544 384 352 656 384 824 624 792 912 640 1024 512 1016 440 960 264 1024ZM464 792 560 896 664 864 704 672 600 496 432 472 272 584 192 832 216 888 264 904Z M468 1159 556 1063 636 1159 556 1255Z","w":903,"u":"ᜊᜓ"},"ma":{"d":"M250 992 202 888 218 592H58V472L314 488L338 584L610 608L794 360L922 344L1018 392L1074 480L970 528L906 464L834 488L554 912L354 1032ZM434 856 538 712H330L322 848L362 896Z","w":1082,"u":"ᜋ"},"mi":{"d":"M250 992 202 888 218 592H58V472L314 488L338 584L610 608L794 360L922 344L1018 392L1074 480L970 528L906 464L834 488L554 912L354 1032ZM434 856 538 712H330L322 848L362 896Z M439 240 527 144 615 240 527 336Z","w":1082,"u":"ᜋᜒ"},"mu":{"d":"M250 992 202 888 218 592H58V472L314 488L338 584L610 608L794 360L922 344L1018 392L1074 480L970 528L906 464L834 488L554 912L354 1032ZM434 856 538 712H330L322 848L362 896Z M525 1080 613 984 693 1080 613 1176Z","w":1082,"u":"ᜋᜓ"},"m":{"d":"M250 992 202 888 218 592H58V472L314 488L338 584L610 608L794 360L922 344L1018 392L1074 480L970 528L906 464L834 488L554 912L354 1032ZM434 856 538 712H330L322 848L362 896Z M555 1160H483V1064H555V992H659V1064H723V1160H659V1232H555Z","w":1082,"u":"ᜋ᜔"},"m_p":{"d":"M250 992 202 888 218 592H58V472L314 488L338 584L610 608L794 360L922 344L1018 392L1074 480L970 528L906 464L834 488L554 912L354 1032ZM434 856 538 712H330L322 848L362 896Z M1266 560V896L1218 1040L1058 1152L762 1160V1040L1018 1032L1122 960L1146 560Z","w":1330,"u":"ᜋ᜕"},"me":{"d":"M250 992 202 888 218 592H58V472L314 488L338 584L610 608L794 360L922 344L1018 392L1074 480L970 528L906 464L834 488L554 912L354 1032ZM434 856 538 712H330L322 848L362 896Z M439 240 527 144 615 240 527 336Z","w":1082,"u":"ᜋᜒ"},"mo":{"d":"M250 992 202 888 218 592H58V472L314 488L338 584L610 608L794 360L922 344L1018 392L1074 480L970 528L906 464L834 488L554 912L354 1032ZM434 856 538 712H330L322 848L362 896Z M525 1080 613 984 693 1080 613 1176Z","w":1082,"u":"ᜋᜓ"},"ya":{"d":"M202 928 226 648H58V528L338 560L330 864L378 896L522 792L810 376L946 336L1058 392L1098 512L1034 632L778 648L786 624L586 912L354 1032ZM850 536 930 544 962 520 954 472H898Z","w":1081,"u":"ᜌ"},"yi":{"d":"M202 928 226 648H58V528L338 560L330 864L378 896L522 792L810 376L946 336L1058 392L1098 512L1034 632L778 648L786 624L586 912L354 1032ZM850 536 930 544 962 520 954 472H898Z M471 240 559 144 647 240 559 336Z","w":1081,"u":"ᜌᜒ"},"yu":{"d":"M202 928 226 648H58V528L338 560L330 864L378 896L522 792L810 376L946 336L1058 392L1098 512L1034 632L778 648L786 624L586 912L354 1032ZM850 536 930 544 962 520 954 472H898Z M531 1080 619 984 699 1080 619 1176Z","w":1081,"u":"ᜌᜓ"},"y":{"d":"M202 928 226 648H58V528L338 560L330 864L378 896L522 792L810 376L946 336L1058 392L1098 512L1034 632L778 648L786 624L586 912L354 1032ZM850 536 930 544 962 520 954 472H898Z M561 1160H489V1064H561V992H665V1064H729V1160H665V1232H561Z","w":1081,"u":"ᜌ᜔"},"y_p":{"d":"M202 928 226 648H58V528L338 560L330 864L378 896L522 792L810 376L946 336L1058 392L1098 512L1034 632L778 648L786 624L586 912L354 1032ZM850 536 930 544 962 520 954 472H898Z M1265 560V896L1217 1040L1057 1152L761 1160V1040L1017 1032L1121 960L1145 560Z","w":1329,"u":"ᜌ᜕"},"ye":{"d":"M202 928 226 648H58V528L338 560L330 864L378 896L522 792L810 376L946 336L1058 392L1098 512L1034 632L778 648L786 624L586 912L354 1032ZM850 536 930 544 962 520 954 472H898Z M471 240 559 144 647 240 559 336Z","w":1081,"u":"ᜌᜒ"},"yo":{"d":"M202 928 226 648H58V528L338 560L330 864L378 896L522 792L810 376L946 336L1058 392L1098 512L1034 632L778 648L786 624L586 912L354 1032ZM850 536 930 544 962 520 954 472H898Z M531 1080 619 984 699 1080 619 1176Z","w":1081,"u":"ᜌᜓ"},"ra":{"d":"M323 944 195 920 115 832V672L179 568L51 496L115 400L339 480L819 392L1075 504L1003 600L763 512L315 592L235 728L243 784L291 824L547 784L523 672L635 648L667 768L819 744L1075 848L1003 944L763 864L699 872L723 984L611 1016L579 896Z","w":1100,"u":"ᜍ"},"ri":{"d":"M323 944 195 920 115 832V672L179 568L51 496L115 400L339 480L819 392L1075 504L1003 600L763 512L315 592L235 728L243 784L291 824L547 784L523 672L635 648L667 768L819 744L1075 848L1003 944L763 864L699 872L723 984L611 1016L579 896Z M478 240 566 144 654 240 566 336Z","w":1100,"u":"ᜍᜒ"},"ru":{"d":"M323 944 195 920 115 832V672L179 568L51 496L115 400L339 480L819 392L1075 504L1003 600L763 512L315 592L235 728L243 784L291 824L547 784L523 672L635 648L667 768L819 744L1075 848L1003 944L763 864L699 872L723 984L611 1016L579 896Z M500 1080 588 984 668 1080 588 1176Z","w":1100,"u":"ᜍᜓ"},"r":{"d":"M323 944 195 920 115 832V672L179 568L51 496L115 400L339 480L819 392L1075 504L1003 600L763 512L315 592L235 728L243 784L291 824L547 784L523 672L635 648L667 768L819 744L1075 848L1003 944L763 864L699 872L723 984L611 1016L579 896Z M530 1160H458V1064H530V992H634V1064H698V1160H634V1232H530Z","w":1100,"u":"ᜍ᜔"},"r_p":{"d":"M323 944 195 920 115 832V672L179 568L51 496L115 400L339 480L819 392L1075 504L1003 600L763 512L315 592L235 728L243 784L291 824L547 784L523 672L635 648L667 768L819 744L1075 848L1003 944L763 864L699 872L723 984L611 1016L579 896Z M1284 560V896L1236 1040L1076 1152L780 1160V1040L1036 1032L1140 960L1164 560Z","w":1348,"u":"ᜍ᜕"},"re":{"d":"M323 944 195 920 115 832V672L179 568L51 496L115 400L339 480L819 392L1075 504L1003 600L763 512L315 592L235 728L243 784L291 824L547 784L523 672L635 648L667 768L819 744L1075 848L1003 944L763 864L699 872L723 984L611 1016L579 896Z M478 240 566 144 654 240 566 336Z","w":1100,"u":"ᜍᜒ"},"ro":{"d":"M323 944 195 920 115 832V672L179 568L51 496L115 400L339 480L819 392L1075 504L1003 600L763 512L315 592L235 728L243 784L291 824L547 784L523 672L635 648L667 768L819 744L1075 848L1003 944L763 864L699 872L723 984L611 1016L579 896Z M500 1080 588 984 668 1080 588 1176Z","w":1100,"u":"ᜍᜓ"},"la":{"d":"M380 984 492 864 404 800 484 704 412 648 428 560 236 600 28 504 108 408 316 480 708 336 956 392 908 504 692 464 556 536 540 600 652 696 564 776 660 856 484 1040Z","w":965,"u":"ᜎ"},"li":{"d":"M380 984 492 864 404 800 484 704 412 648 428 560 236 600 28 504 108 408 316 480 708 336 956 392 908 504 692 464 556 536 540 600 652 696 564 776 660 856 484 1040Z M439 240 527 144 615 240 527 336Z","w":965,"u":"ᜎᜒ"},"lu":{"d":"M380 984 492 864 404 800 484 704 412 648 428 560 236 600 28 504 108 408 316 480 708 336 956 392 908 504 692 464 556 536 540 600 652 696 564 776 660 856 484 1040Z M455 1129 543 1033 623 1129 543 1225Z","w":965,"u":"ᜎᜓ"},"l":{"d":"M380 984 492 864 404 800 484 704 412 648 428 560 236 600 28 504 108 408 316 480 708 336 956 392 908 504 692 464 556 536 540 600 652 696 564 776 660 856 484 1040Z M485 1209H413V1113H485V1041H589V1113H653V1209H589V1281H485Z","w":965,"u":"ᜎ᜔"},"l_p":{"d":"M380 984 492 864 404 800 484 704 412 648 428 560 236 600 28 504 108 408 316 480 708 336 956 392 908 504 692 464 556 536 540 600 652 696 564 776 660 856 484 1040Z M1149 560V896L1101 1040L941 1152L645 1160V1040L901 1032L1005 960L1029 560Z","w":1213,"u":"ᜎ᜕"},"le":{"d":"M380 984 492 864 404 800 484 704 412 648 428 560 236 600 28 504 108 408 316 480 708 336 956 392 908 504 692 464 556 536 540 600 652 696 564 776 660 856 484 1040Z M439 240 527 144 615 240 527 336Z","w":965,"u":"ᜎᜒ"},"lo":{"d":"M380 984 492 864 404 800 484 704 412 648 428 560 236 600 28 504 108 408 316 480 708 336 956 392 908 504 692 464 556 536 540 600 652 696 564 776 660 856 484 1040Z M455 1129 543 1033 623 1129 543 1225Z","w":965,"u":"ᜎᜓ"},"wa":{"d":"M202 920 226 648H58V528L338 560L330 864L426 888L586 720L626 496L570 432L402 488L314 416L466 304L642 312L762 456L730 712L578 936L378 1032Z","w":813,"u":"ᜏ"},"wi":{"d":"M202 920 226 648H58V528L338 560L330 864L426 888L586 720L626 496L570 432L402 488L314 416L466 304L642 312L762 456L730 712L578 936L378 1032Z M488 191 576 95 664 191 576 287Z","w":813,"u":"ᜏᜒ"},"wu":{"d":"M202 920 226 648H58V528L338 560L330 864L426 888L586 720L626 496L570 432L402 488L314 416L466 304L642 312L762 456L730 712L578 936L378 1032Z M405 1110 493 1014 573 1110 493 1206Z","w":813,"u":"ᜏᜓ"},"w":{"d":"M202 920 226 648H58V528L338 560L330 864L426 888L586 720L626 496L570 432L402 488L314 416L466 304L642 312L762 456L730 712L578 936L378 1032Z M435 1190H363V1094H435V1022H539V1094H603V1190H539V1262H435Z","w":813,"u":"ᜏ᜔"},"w_p":{"d":"M202 920 226 648H58V528L338 560L330 864L426 888L586 720L626 496L570 432L402 488L314 416L466 304L642 312L762 456L730 712L578 936L378 1032Z M997 560V896L949 1040L789 1152L493 1160V1040L749 1032L853 960L877 560Z","w":1061,"u":"ᜏ᜕"},"we":{"d":"M202 920 226 648H58V528L338 560L330 864L426 888L586 720L626 496L570 432L402 488L314 416L466 304L642 312L762 456L730 712L578 936L378 1032Z M488 191 576 95 664 191 576 287Z","w":813,"u":"ᜏᜒ"},"wo":{"d":"M202 920 226 648H58V528L338 560L330 864L426 888L586 720L626 496L570 432L402 488L314 416L466 304L642 312L762 456L730 712L578 936L378 1032Z M405 1110 493 1014 573 1110 493 1206Z","w":813,"u":"ᜏᜓ"},"sa":{"d":"M515 920 715 896 787 848 763 760 587 728V624L763 568V488L683 464L595 512L283 1024H171V456H19V336L291 376L299 760L547 392L723 336L875 416L899 576L835 664L915 736L907 904L779 1008L515 1040Z","w":974,"u":"ᜐ"},"si":{"d":"M515 920 715 896 787 848 763 760 587 728V624L763 568V488L683 464L595 512L283 1024H171V456H19V336L291 376L299 760L547 392L723 336L875 416L899 576L835 664L915 736L907 904L779 1008L515 1040Z M439 240 527 144 615 240 527 336Z","w":974,"u":"ᜐᜒ"},"su":{"d":"M515 920 715 896 787 848 763 760 587 728V624L763 568V488L683 464L595 512L283 1024H171V456H19V336L291 376L299 760L547 392L723 336L875 416L899 576L835 664L915 736L907 904L779 1008L515 1040Z M557 1159 645 1063 725 1159 645 1255Z","w":974,"u":"ᜐᜓ"},"s":{"d":"M515 920 715 896 787 848 763 760 587 728V624L763 568V488L683 464L595 512L283 1024H171V456H19V336L291 376L299 760L547 392L723 336L875 416L899 576L835 664L915 736L907 904L779 1008L515 1040Z M587 1239H515V1143H587V1071H691V1143H755V1239H691V1311H587Z","w":974,"u":"ᜐ᜔"},"s_p":{"d":"M515 920 715 896 787 848 763 760 587 728V624L763 568V488L683 464L595 512L283 1024H171V456H19V336L291 376L299 760L547 392L723 336L875 416L899 576L835 664L915 736L907 904L779 1008L515 1040Z M1158 560V896L1110 1040L950 1152L654 1160V1040L910 1032L1014 960L1038 560Z","w":1222,"u":"ᜐ᜕"},"se":{"d":"M515 920 715 896 787 848 763 760 587 728V624L763 568V488L683 464L595 512L283 1024H171V456H19V336L291 376L299 760L547 392L723 336L875 416L899 576L835 664L915 736L907 904L779 1008L515 1040Z M439 240 527 144 615 240 527 336Z","w":974,"u":"ᜐᜒ"},"so":{"d":"M515 920 715 896 787 848 763 760 587 728V624L763 568V488L683 464L595 512L283 1024H171V456H19V336L291 376L299 760L547 392L723 336L875 416L899 576L835 664L915 736L907 904L779 1008L515 1040Z M557 1159 645 1063 725 1159 645 1255Z","w":974,"u":"ᜐᜓ"},"ha":{"d":"M52 704 84 584 316 672 796 584 1052 688 980 784 732 704 316 792Z","w":1101,"u":"ᜑ"},"hi":{"d":"M52 704 84 584 316 672 796 584 1052 688 980 784 732 704 316 792Z M483 240 571 144 659 240 571 336Z","w":1101,"u":"ᜑᜒ"},"hu":{"d":"M52 704 84 584 316 672 796 584 1052 688 980 784 732 704 316 792Z M455 1080 543 984 623 1080 543 1176Z","w":1101,"u":"ᜑᜓ"},"h":{"d":"M52 704 84 584 316 672 796 584 1052 688 980 784 732 704 316 792Z M485 1160H413V1064H485V992H589V1064H653V1160H589V1232H485Z","w":1101,"u":"ᜑ᜔"},"h_p":{"d":"M52 704 84 584 316 672 796 584 1052 688 980 784 732 704 316 792Z M1285 560V896L1237 1040L1077 1152L781 1160V1040L1037 1032L1141 960L1165 560Z","w":1349,"u":"ᜑ᜕"},"he":{"d":"M52 704 84 584 316 672 796 584 1052 688 980 784 732 704 316 792Z M483 240 571 144 659 240 571 336Z","w":1101,"u":"ᜑᜒ"},"ho":{"d":"M52 704 84 584 316 672 796 584 1052 688 980 784 732 704 316 792Z M455 1080 543 984 623 1080 543 1176Z","w":1101,"u":"ᜑᜓ"},"|":{"d":"M234 224H362L146 1168H18Z","w":381,"u":"᜵"},"||":{"d":"M522 224 298 1168H178L394 224ZM362 224 146 1168H18L234 224Z","w":540,"u":"᜶"}," ":{"d":"","w":312,"u":" "}}};
+var U=DATA.units, H=DATA.unitsHeight;
+var V="aeiou";
+// Modern-chart convention for letters not native to Baybayin
+function normalize(s){
+  return String(s).toLowerCase().normalize("NFC")
+   .replace(/\u00f1/g,"ny")
+   .replace(/c(?=[ei])/g,"s").replace(/c/g,"k").replace(/q/g,"k")
+   .replace(/f/g,"p").replace(/v/g,"b").replace(/z/g,"s")
+   .replace(/x/g,"ks").replace(/j/g,"dy");
+}
+// Latin -> array of unit keys (e.g. "ba","ng","i","|"," ")
+function tokenize(text,opt){
+  opt=opt||{}; var s=normalize(text), out=[], i=0, kill=opt.killer==="pamudpod"?"_p":"";
+  while(i<s.length){
+    var ch=s[i], c=null;
+    if(s.substr(i,2)==="ng"){c="ng";}
+    else if("kgtdnpbmyrlwsh".indexOf(ch)>-1){c=ch;}
+    if(c){
+      var nx=s[i+c.length];
+      if(nx&&V.indexOf(nx)>-1){out.push(c+nx); i+=c.length+1;}
+      else {out.push(c+kill); i+=c.length;}
+    } else if(V.indexOf(ch)>-1){out.push(ch); i++;}
+    else if(/\s/.test(ch)){ if(out.length&&out[out.length-1]!==" ") out.push(" "); i++;}
+    else if(".!?;".indexOf(ch)>-1){out.push("||"); i++;}
+    else if(",:".indexOf(ch)>-1){out.push("|"); i++;}
+    else i++;
+  }
+  return out;
+}
+// Latin -> Unicode Baybayin (U+1700 block). Display with the RX09 Baybayin font.
+function transliterate(text,opt){return tokenize(text,opt).map(function(k){return U[k]?U[k].u:"";}).join("");}
+// Latin -> standalone SVG markup (pure vector, no font needed)
+function toSVG(text,opt){
+  opt=opt||{}; var toks=tokenize(text,opt), x=0, paths=[], track=opt.tracking||0;
+  toks.forEach(function(k){var g=U[k]; if(!g)return; if(g.d) paths.push('<path transform="translate('+x+' 0)" d="'+g.d+'"/>'); x+=g.w+track;});
+  x=Math.max(1,x-track);
+  var h=opt.height||64, w=Math.round(h*x/H*100)/100;
+  var t=String(text).replace(/[<>&"]/g,"");
+  return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 '+x+' '+H+'" width="'+w+'" height="'+h+'" role="img" aria-label="'+t+'"><title>'+t+'</title><g fill="'+(opt.color||"currentColor")+'">'+paths.join("")+'</g></svg>';
+}
+function render(el,text,opt){el.innerHTML=toSVG(text,opt);return el;}
+var api={tokenize:tokenize,transliterate:transliterate,toSVG:toSVG,render:render,units:U,version:"1.0.0"};
+if(typeof module==="object"&&module.exports) module.exports=api; else root.RX09Baybayin=api;
+})(typeof self!=="undefined"?self:this);
+</script>
+
+<script type="text/babel">
+const { useState, useEffect, useRef, useCallback } = React;
+const reduced = () => window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+/* =====================================================
+   STORE + THEME
+   ===================================================== */
+const store = {
+  users(){ return JSON.parse(localStorage.getItem("rx09_users") || "[]"); },
+  save(u){ localStorage.setItem("rx09_users", JSON.stringify(u)); },
+  session(){ return JSON.parse(localStorage.getItem("rx09_session") || "null"); },
+  setSession(s){ s ? localStorage.setItem("rx09_session", JSON.stringify(s)) : localStorage.removeItem("rx09_session"); }
+};
+
+function useDocAttr(attr, key, fallback) {
+  const [v, setV] = useState(document.documentElement.getAttribute(attr) || fallback);
+  useEffect(() => { document.documentElement.setAttribute(attr, v); localStorage.setItem(key, v); }, [v]);
+  return [v, setV];
+}
+
+function ThemeSwitch({ theme, setTheme }) {
+  const dark = theme === "dark";
+  return (
+    <button className="mode-switch" role="switch" aria-checked={dark} aria-label="Toggle dark mode"
+            onClick={() => setTheme(dark ? "light" : "dark")}>
+      <span className={!dark ? "on" : ""}>DAY</span><span className={dark ? "on" : ""}>夜 NIGHT</span>
+    </button>
+  );
+}
+function AccentSwitch({ accent, setAccent }) {
+  const mono = accent === "mono";
+  return (
+    <button className="mode-switch" role="switch" aria-checked={mono} aria-label="Toggle pictogram mode (no accent)"
+            onClick={() => setAccent(mono ? "signal" : "mono")}>
+      <span className={!mono ? "on" : ""}>A·SIGNAL</span><span className={mono ? "on" : ""}>B·PICTO</span>
+    </button>
+  );
+}
+
+/* =====================================================
+   GLYPH KIT (24px grid, 2px stroke, square caps)
+   ===================================================== */
+const G = {
+  CROSSHAIR: <><path d="M12 2v20M2 12h20"/><rect x="8" y="8" width="8" height="8"/></>,
+  BRACKET:   <path d="M3 9V3h6M15 3h6v6M21 15v6h-6M9 21H3v-6"/>,
+  CHECK_X:   <><rect x="3" y="3" width="18" height="18"/><path d="M7 7l10 10M17 7L7 17"/></>,
+  TRIANGLES: <path d="M3 4h7L3 11zM14 4h7l-7 7zM3 13h7l-7 7zM14 13h7l-7 7z"/>,
+  CHEVRONS:  <path d="M3 6l6 6-6 6M10 6l6 6-6 6M17 6l4 6-4 6"/>,
+  WARNING:   <><path d="M12 3l10 18H2z"/><path d="M12 10v5M12 17.5v1"/></>,
+  GLOBE:     <><circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="12" rx="4" ry="9"/><path d="M3 12h18M5 7h14M5 17h14"/></>,
+  BARCODE:   <path d="M3 4v16M6 4v16M7.5 4v16M11 4v16M14 4v16M15.5 4v16M19 4v16M21 4v16"/>,
+  ARROW:     <path d="M19 5L5 19M5 9v10h10"/>,
+  POWER:     <><path d="M12 2v9"/><path d="M6.3 6.3a8 8 0 1 0 11.4 0"/></>,
+  BATTERY:   <><path d="M2 7h17v10H2zM19 10h3v4h-3"/><path d="M5 10v4M8 10v4M11 10v4"/></>,
+  MODULE:    <><rect x="7" y="7" width="10" height="10"/><path d="M10 2v5M14 2v5M10 17v5M14 17v5M2 10h5M2 14h5M17 10h5M17 14h5"/></>,
+  ROUTE:     <><path d="M3 18h6l6-12h6"/><rect x="1" y="16" width="4" height="4"/><circle cx="21" cy="6" r="2"/></>,
+  SIGNAL:    <path d="M4 20v-4M9 20v-8M14 20v-12M19 20V4"/>,
+  LOCK:      <><path d="M5 11h14v10H5z"/><path d="M8 11V5l2-2h4l2 2v6"/><path d="M12 15v2"/></>,
+  BOLT:      <path d="M13 2L4 14h7l-2 8 11-13h-7z"/>,
+  HEX:       <><path d="M12 2l8.7 5v10L12 22l-8.7-5V7z"/><circle cx="12" cy="12" r="3"/></>,
+  MOVE:      <path d="M12 2v20M2 12h20M12 2l-3 3M12 2l3 3M12 22l-3-3M12 22l3-3M2 12l3-3M2 12l3 3M22 12l-3-3M22 12l-3 3"/>,
+  NO_ENTRY:  <><path d="M7 2h10l5 5v10l-5 5H7l-5-5V7z"/><path d="M6 12h12"/></>,
+  DATA:      <><path d="M4 4h16v5H4zM4 9.5h16v5H4zM4 15h16v5H4z"/><path d="M7 6.5h2M7 12h2M7 17.5h2"/></>,
+};
+function Glyph({ name, size = 24, color }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color || "currentColor"}
+         strokeWidth="2" strokeLinecap="square" strokeLinejoin="miter" aria-hidden="true">{G[name]}</svg>
+  );
+}
+
+function CircuitTrace({ style, dense }) {
+  // preserveAspectRatio="none" stretches the 600x600 grid to any box.
+  // Strokes with non-scaling-stroke keep their pixel size, so nodes and bars are drawn
+  // as strokes (zero-length round caps = true circles) instead of filled shapes.
+  const ns = { vectorEffect: "non-scaling-stroke" };
+  return (
+    <svg aria-hidden="true" viewBox="0 0 600 600" preserveAspectRatio="none"
+         style={{ position:"absolute", inset:0, width:"100%", height:"100%", maxWidth:"none", pointerEvents:"none", ...style }}>
+      <g fill="none" strokeWidth="1" className="svg-ink">
+        <path d="M0 60 H160 L260 160 H380 L560 340" {...ns} />
+        <path d="M60 230 H110 L190 310 L320 440 V600" {...ns} />
+        <path d="M300 0 L420 120 H520 L600 200" {...ns} />
+        {dense && <path d="M600 420 H520 L460 480 V600" {...ns} />}
+      </g>
+      <g fill="none" strokeWidth="1" className="svg-gray">
+        <path d="M0 380 H70 L150 460 V600" {...ns} />
+        <path d="M400 0 L470 70 H600" {...ns} />
+        {dense && <path d="M0 520 H200 L260 460 H360" {...ns} />}
+      </g>
+      <g fill="none" strokeWidth="7" strokeLinecap="butt" className="svg-ink">
+        <path d="M190 90 L230 130" {...ns} />
+        <path d="M235 355 L275 395" {...ns} />
+      </g>
+      <g fill="none" strokeWidth="9" strokeLinecap="round" className="svg-ink">
+        <path d="M560 340 h0" {...ns} />
+        <path d="M60 230 h0" {...ns} />
+        <path d="M594 194 h0" {...ns} />
+        {dense && <path d="M360 460 h0" {...ns} />}
+      </g>
+    </svg>
+  );
+}
+function WarnTriangle({ size = 44 }) {
+  return (
+    <svg width={size} height={typeof size === "number" ? size * 0.88 : undefined} viewBox="0 0 50 44" aria-hidden="true" style={{ display:"block", height:"auto" }}>
+      <polygon points="25,2 48,42 2,42" style={{ fill:"var(--accent)" }} />
+      <rect x="23" y="14" width="4" height="15" style={{ fill:"var(--on-accent)" }} />
+      <rect x="23" y="33" width="4" height="4" style={{ fill:"var(--on-accent)" }} />
+    </svg>
+  );
+}
+
+function Triangles() {
+  return (
+    <div className="tri-cluster" aria-hidden="true">
+      {[0,1,2,3].map(i => (
+        <svg key={i} width="14" height="14" viewBox="0 0 14 14"><path d="M1 1h12L1 13z" fill="none" className="svg-ink" /></svg>
+      ))}
+    </div>
+  );
+}
+
+/* Seeded random for stable barcodes / QR */
+function seeded(seed) { let s = seed; return () => (s = (s * 9301 + 49297) % 233280) / 233280; }
+
+function Barcode({ width = 160, height = 40, seed = 7 }) {
+  const r = seeded(seed); const bars = []; let x = 0;
+  while (x < width) { const w = 1 + Math.floor(r() * 3); if (r() > .4) bars.push(<rect key={x} x={x} y="0" width={w} height={height} />); x += w + 1; }
+  return <svg width={width} height={height} viewBox={`0 0 ${width} ${height}`} className="svg-fill-ink" aria-hidden="true">{bars}</svg>;
+}
+
+function MatrixCode({ size = 84, seed = 3 }) {
+  const n = 21, c = size / n, r = seeded(seed), cells = [];
+  const finder = (x, y) => (x < 7 && y < 7) || (x >= n - 7 && y < 7) || (x < 7 && y >= n - 7);
+  for (let y = 0; y < n; y++) for (let x = 0; x < n; x++) {
+    let on;
+    if (finder(x, y)) { const fx = x % (n - 7) , fy = y % (n - 7); const lx = x >= n - 7 ? x - (n - 7) : x, ly = y >= n - 7 ? y - (n - 7) : y;
+      on = lx === 0 || lx === 6 || ly === 0 || ly === 6 || (lx >= 2 && lx <= 4 && ly >= 2 && ly <= 4); }
+    else on = r() > .52;
+    if (on) cells.push(<rect key={x + "-" + y} x={x * c} y={y * c} width={c} height={c} />);
+  }
+  return <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} className="svg-fill-ink" aria-hidden="true">{cells}</svg>;
+}
+
+function Gauge({ value, label = "CORE LOAD %" }) {
+  const r = 52, c = 2 * Math.PI * r, arc = c * (240 / 360), filled = arc * (value / 100), hot = value > 80;
+  return (
+    <svg viewBox="0 0 140 120" width="100%" style={{ maxWidth:180 }} role="img" aria-label={`${label} ${value}`}>
+      <g transform="rotate(150 70 70)" fill="none" strokeWidth="10">
+        <circle cx="70" cy="70" r={r} className="svg-track" strokeDasharray={`${arc} ${c}`} />
+        <circle cx="70" cy="70" r={r} style={{ stroke: hot ? "var(--accent)" : "var(--ink)", transition:"stroke-dasharray .6s steps(8)" }} strokeDasharray={`${filled} ${c}`} />
+      </g>
+      {Array.from({ length: 13 }).map((_, i) => { const a = (150 + i * 20) * Math.PI / 180;
+        return <line key={i} className="svg-ink" x1={70 + 62 * Math.cos(a)} y1={70 + 62 * Math.sin(a)} x2={70 + 67 * Math.cos(a)} y2={70 + 67 * Math.sin(a)} />; })}
+      <text x="70" y="78" textAnchor="middle" className="svg-fill-ink" fontFamily="Chakra Petch" fontWeight="700" fontSize="28">{String(value).padStart(2,"0")}</text>
+      <text x="70" y="96" textAnchor="middle" className="svg-fill-ink" fontFamily="JetBrains Mono" fontSize="7" letterSpacing="2">{label}</text>
+    </svg>
+  );
+}
+
+function Sparkline({ data, w = 300, h = 80 }) {
+  const max = Math.max(...data), min = Math.min(...data);
+  const pts = data.map((d, i) => `${(i / (data.length - 1)) * w},${h - 6 - ((d - min) / (max - min || 1)) * (h - 12)}`);
+  const last = pts[pts.length - 1].split(",");
+  return (
+    <svg viewBox={`0 0 ${w} ${h}`} width="100%" height={h} preserveAspectRatio="none" aria-hidden="true">
+      {[0.25,0.5,0.75].map(y => <line key={y} x1="0" x2={w} y1={h*y} y2={h*y} className="svg-track" strokeDasharray="2 4" />)}
+      <polyline points={pts.join(" ")} fill="none" className="svg-ink" strokeWidth="1.5" vectorEffect="non-scaling-stroke" />
+      <rect x={last[0] - 4} y={last[1] - 4} width="8" height="8" className="svg-fill-accent" />
+    </svg>
+  );
+}
+
+function Count({ to, pad = 3, className }) {
+  const [n, setN] = useState(0);
+  useEffect(() => {
+    if (reduced()) { setN(to); return; }
+    let f = 0; const id = setInterval(() => { f++; setN(Math.round(to * f / 20)); if (f >= 20) clearInterval(id); }, 40);
+    return () => clearInterval(id);
+  }, [to]);
+  return <span className={className}>{String(n).padStart(pad, "0")}</span>;
+}
+
+function Clock() {
+  const [t, setT] = useState(new Date());
+  useEffect(() => { const id = setInterval(() => setT(new Date()), 1000); return () => clearInterval(id); }, []);
+  return <span>{t.toLocaleTimeString("en-GB")}</span>;
+}
+
+function useTelemetry(ms = 2500) {
+  const [load, setLoad] = useState(64);
+  const [bars, setBars] = useState([70, 45, 88, 30, 60, 92]);
+  const [spark, setSpark] = useState(() => Array.from({ length: 24 }, (_, i) => 40 + Math.sin(i / 2) * 20 + i));
+  useEffect(() => {
+    const id = setInterval(() => {
+      setLoad(Math.floor(40 + Math.random() * 55));
+      setBars(b => b.map(() => Math.floor(15 + Math.random() * 85)));
+      setSpark(s => [...s.slice(1), Math.max(5, s[s.length - 1] + (Math.random() - .5) * 30)]);
+    }, ms);
+    return () => clearInterval(id);
+  }, []);
+  return { load, bars, spark };
+}
+
+function Meters({ bars }) {
+  return (
+    <div className="meters" role="img" aria-label={"Levels: " + bars.join(", ")}>
+      {bars.map((b, i) => (
+        <div key={i} style={{ display:"flex", flexDirection:"column", alignItems:"center", gap:6, height:"100%" }}>
+          <div className={"meter" + (b > 85 ? " hot" : "")}><i style={{ height:`calc(${b}% - 4px)` }} /></div>
+          <span className="micro">C{i + 1}</span>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function SegBar({ value, total = 20 }) {
+  const on = Math.round(value / 100 * total);
+  return <div className="seg" role="progressbar" aria-valuenow={value} aria-valuemin="0" aria-valuemax="100">
+    {Array.from({ length: total }).map((_, i) => <i key={i} className={i < on ? (i >= total - 3 ? "hot" : "on") : ""} />)}
+  </div>;
+}
+
+function SecHead({ idx, title, jp, meta }) {
+  return (
+    <header className="sec-head">
+      <span className="sec-idx" aria-hidden="true">{idx}</span>
+      <div><p className="micro" style={{ marginBottom:8 }}>{jp}</p><h2 className="sec-title">{title}</h2></div>
+      <div className="sec-meta"><p className="micro">{meta}</p><p className="micro">//:{idx}0 · RX-09</p></div>
+    </header>
+  );
+}
+
+/* =====================================================
+   SHOWCASE SECTIONS
+   ===================================================== */
+const SECTIONS = [
+  ["cover","00","COVER"],["color","01","COLOR"],["type","02","TYPE"],["grid","03","GRID"],["shape","04","SHAPE"],
+  ["glyphs","05","GLYPHS"],["warning","06","HAZARD"],["components","07","CONTROLS"],["data","08","DATA"],
+  ["motion","09","MOTION"],["samples","10","SAMPLES"],["tokens","11","TOKENS"],["baybayin","12","BAYBAYIN"],
+];
+
+function Cover({ go }) {
+  return (
+    <section id="cover" className="sec cover" aria-label="Cover">
+      <CircuitTrace dense />
+      <div className="cross" style={{ top:"30%", right:"8%" }} /><div className="cross" style={{ top:"55%", right:"8%" }} />
+      <div className="cover-top">
+        <div className="stack" style={{ gap:12 }}>
+          <WarnTriangle size={52} />
+          <div>
+            <p style={{ font:"800 32px/1 var(--mono)" }}>RX-09</p>
+            <p className="label b" style={{ marginTop:6 }}>TECHNICAL HUD<br />DESIGN SYSTEM v2.0</p>
+          </div>
+        </div>
+        <div className="row" style={{ alignSelf:"flex-start" }}>
+          <Glyph name="GLOBE" /><span style={{ fontSize:16 }}>想像力を動力源</span><span className="rx-bb rx-bb--bold" lang="tl-Tglg" style={{ fontSize:22 }} aria-label="Baybayin">ᜊᜌ᜔ᜊᜌᜒᜈ᜔</span>
+        </div>
+        <div style={{ textAlign:"right" }}>
+          <div className="row" style={{ justifyContent:"flex-end" }}><Glyph name="CHECK_X" /><p className="label b">A BLACKBOX GRAFX<br/>ORIGINAL SYSTEM</p></div>
+          <div className="row" style={{ justifyContent:"flex-end", marginTop:16, gap:4 }}>
+            <Glyph name="CHECK_X" size={16} /><Glyph name="CHECK_X" size={16} /><Glyph name="CHECK_X" size={16} />
+          </div>
+        </div>
+      </div>
+      <div className="cover-mid">
+        <div className="readout-diag" aria-hidden="true"><span>00.15</span><span>00.05</span><span>00.19.90<b className="blink">_</b></span></div>
+        <div className="stack" style={{ alignContent:"start" }}>
+          <p className="micro">INDEX // 13 MODULES</p>
+          <p className="label">Colors · Type · Grid · Shapes · Glyphs · Hazard · Controls · Data · Motion · Samples · Tokens · Baybayin</p>
+          <div className="row">
+            <button className="btn accent" onClick={() => go("color")}><span>ENTER SYSTEM</span><span>&gt;&gt;&gt;</span></button>
+            <button className="btn ghost" onClick={() => go("samples")}><span>VIEW SAMPLES</span></button>
+          </div>
+        </div>
+        <div className="stack" style={{ justifyItems:"end", alignContent:"start" }}>
+          <Triangles />
+          <p className="micro">SA/CT_II · 52001 · SECURITY PROTOCOL ACTIVE</p>
+        </div>
+      </div>
+      <div style={{ position:"relative", zIndex:1 }}>
+        <div className="row" style={{ justifyContent:"space-between", alignItems:"flex-end" }}>
+          <h1 className="giant">RX-09</h1>
+          <p className="micro">//:009 ▸ SCROLL</p>
+        </div>
+        <div className="hazard" style={{ marginTop:16 }} />
+      </div>
+    </section>
+  );
+}
+
+const COLORS = [
+  ["--bg","#F2F2F2","PAPER","BACKGROUND · NEVER PURE WHITE","#F2F2F2"],
+  ["--ink","#0A0A0A","INK","TEXT · BORDERS · BLOCKS","#0A0A0A"],
+  ["--line","#D6D6D6","LIGHT LINE","DIVIDERS · TRACKS","#D6D6D6"],
+  ["--gray","#A0A3A0","MID-GRAY","MICRO LABELS · SECONDARY ROUTES","#A0A3A0"],
+  ["--slate","#3A4550","SLATE","PANELS ONLY","#3A4550"],
+  ["--accent","#FF5A1F","SIGNAL ORANGE","WARNINGS · CTA · KEY DATA · 5–10%","#FF5A1F"],
+];
+const DARK = [["--bg","#0D0E0F"],["--ink","#ECECEC"],["--line","#2A2D30"],["--gray","#7F8481"],["--slate","#3A4550"],["--accent","#FF5A1F"]];
+
+function ColorSec({ notify }) {
+  const copy = (hex) => { navigator.clipboard && navigator.clipboard.writeText(hex); notify(`COPIED ${hex} TO CLIPBOARD`); };
+  return (
+    <section id="color" className="sec">
+      <SecHead idx="01" title="Color" jp="色 // カラー" meta="STRICT PALETTE · ONE ACCENT" />
+      <p className="lead">Five neutrals and <b>one</b> signal accent. Orange is reserved for warnings, logos, key numbers, active states and calls to action. Click a swatch to copy its value.</p>
+      <div className="swatches">
+        {COLORS.map(([tok, hex, name, use, fill]) => (
+          <button key={tok} className="swatch" onClick={() => copy(hex)} aria-label={`Copy ${name} ${hex}`}>
+            <div className="chipc" style={{ background:fill }}>
+              {tok === "--accent" && <div className="hazard" style={{ position:"absolute", bottom:0, left:0, right:0, background:"repeating-linear-gradient(45deg,#0A0A0A 0 8px,transparent 8px 16px)" }} />}
+            </div>
+            <div className="info">
+              <span className="label b">{name}</span>
+              <span style={{ font:"700 18px var(--hero)" }}>{hex}</span>
+              <span className="micro">{tok} · {use}</span>
+            </div>
+          </button>
+        ))}
+      </div>
+      <p className="micro" style={{ margin:"32px 0 8px" }}>NIGHT OPS // DARK MODE MAPPING</p>
+      <div className="row" style={{ gap:0, border:"1px solid var(--ink)" }}>
+        {DARK.map(([t, h]) => (
+          <div key={t} style={{ flex:1, minWidth:100, borderRight:"1px solid var(--ink)" }}>
+            <div style={{ height:48, background:h }} />
+            <p className="micro" style={{ padding:8, color:"var(--ink)" }}>{t}<br/>{h}</p>
+          </div>
+        ))}
+      </div>
+      <p className="micro" style={{ margin:"32px 0 0" }}>COMPOSITION RATIO</p>
+      <div className="ratio">
+        <div style={{ flex:70, background:"var(--bg)" }}>70% EMPTY SPACE</div>
+        <div style={{ flex:22, background:"var(--ink)", color:"var(--bg)" }}>22% INK DETAIL</div>
+        <div style={{ flex:8, background:"var(--accent)", color:"var(--on-accent)" }}>8%</div>
+      </div>
+    </section>
+  );
+}
+
+const SCALE = [["DISPLAY XL","160+","var(--hero)",700,"RX-09"],["DISPLAY","64","var(--hero)",700,"MODULE UNIT"],["SECTION","32","var(--display)",400,"SYSTEM"],
+  ["READOUT","48","var(--dot)",400,"00.19.90"],["BODY","13","var(--mono)",400,"Operator access granted."],["LABEL","10","var(--mono)",700,"SECURITY PROTOCOL ACTIVE"],["MICRO","9","var(--mono)",400,"SA/CT_II · 52001 · //:000"]];
+const FONTS = [["Chakra Petch","var(--hero)",700],["Rubik Mono One","var(--display)",400],["JetBrains Mono","var(--mono)",800],["DotGothic16","var(--dot)",400],["Baybayin RX09","var(--bb)",700]];
+
+function TypeSec() {
+  const [txt, setTxt] = useState("RX-09 UNIT");
+  const [size, setSize] = useState(96);
+  const [font, setFont] = useState(0);
+  return (
+    <section id="type" className="sec">
+      <SecHead idx="02" title="Typography" jp="書体 // タイポグラフィ" meta="5 FAMILIES · 7 LEVELS" />
+      <div className="spec">
+        <div className="meta"><p className="label b">CHAKRA PETCH 700</p><p className="micro">HERO · GIANT IDENTIFIER<br/>TRACKING −0.045EM · LH .78</p></div>
+        <div><p className="giant" style={{ fontSize:"clamp(64px,10vw,140px)" }}>RX-09 AB</p><p style={{ font:"500 20px var(--hero)", marginTop:12 }}>ABCDEFGHIJKLMNOPQRSTUVWXYZ 0123456789</p></div>
+        <div className="meta"><p className="label b">RUBIK MONO ONE</p><p className="micro">SECTION DISPLAY · READOUTS</p></div>
+        <div><p className="display" style={{ fontSize:"clamp(28px,4vw,48px)" }}>STAND CLEAR</p><p className="display" style={{ fontSize:16, marginTop:12 }}>ABCDEFGHIJKLM 0123456789</p></div>
+        <div className="meta"><p className="label b">JETBRAINS MONO</p><p className="micro">LABELS · BODY · UI</p></div>
+        <div><p style={{ font:"800 22px var(--mono)", letterSpacing:".18em" }}>SECURITY PROTOCOL ACTIVE</p><p style={{ marginTop:8 }}>The quick operator jumps over the idle module. 0123456789 // [ ] &lt;&gt; ▲ ■</p></div>
+        <div className="meta"><p className="label b">DOTGOTHIC16</p><p className="micro">DOT-MATRIX NUMERALS · 日本語</p></div>
+        <div><p className="lcd" style={{ fontSize:"clamp(36px,6vw,72px)" }}>00.19.90<span className="blink accent-text">_</span></p><p className="dot" style={{ fontSize:20, marginTop:8 }}>想像力を動力源 · 警告 · 危険 · 移動 · システム</p></div>
+        <div className="meta"><p className="label b">RX09 BAYBAYIN 400 / 700</p><p className="micro">CULTURE SCRIPT · U+1700<br/>POLYGON ONLY · NO CURVES</p></div>
+        <div><p className="rx-bb rx-bb--bold" lang="tl-Tglg" style={{ fontSize:"clamp(40px,7vw,88px)", lineHeight:1.2 }}>ᜊᜌ᜔ᜊᜌᜒᜈ᜔</p><p className="rx-bb" lang="tl-Tglg" style={{ fontSize:28, marginTop:8 }}>ᜀ ᜁ ᜂ ᜃ ᜄ ᜅ ᜆ ᜇ ᜈ ᜉ ᜊ ᜋ ᜌ ᜍ ᜎ ᜏ ᜐ ᜑ ᜵ ᜶</p></div>
+      </div>
+
+      <p className="micro" style={{ margin:"48px 0 8px" }}>TYPE SCALE // HIERARCHY: DISPLAY &gt; SECTION &gt; LABEL &gt; MICRO</p>
+      <div>
+        {SCALE.map(([n, px, f, w, s]) => (
+          <div className="scale-row" key={n}>
+            <span className="label b">{n}</span><span className="micro px">{px}PX</span>
+            <span style={{ fontFamily:f, fontWeight:w, fontSize:Math.min(+px || 160, 72), lineHeight:1, textTransform:n==="BODY"?"none":"uppercase", letterSpacing: +px <= 10 ? ".18em" : (f.includes("hero") ? "-.04em" : 0), whiteSpace:"nowrap", overflow:"hidden", textOverflow:"ellipsis" }}>{s}</span>
+          </div>
+        ))}
+      </div>
+
+      <div className="tester brackets" style={{ marginTop:48 }}>
+        <div className="row" style={{ justifyContent:"space-between" }}>
+          <p className="cell-title" style={{ margin:0 }}>TYPE TESTER</p>
+          <div className="tabs tester-tabs" role="tablist">
+            {FONTS.map(([n], i) => <button key={n} role="tab" aria-selected={font === i} onClick={() => setFont(i)}>{n.split(" ")[0]}</button>)}
+          </div>
+        </div>
+        <div className="row" style={{ alignItems:"flex-end" }}>
+          <div className="field" style={{ flex:2, minWidth:200 }}>
+            <label className="label" htmlFor="tt">Sample text</label>
+            <input id="tt" value={txt} onChange={e => setTxt(e.target.value)} />
+          </div>
+          <div className="field" style={{ flex:1, minWidth:160 }}>
+            <label className="label" htmlFor="ts">Size // {size}px</label>
+            <input id="ts" type="range" className="range" min="16" max="200" value={size} onChange={e => setSize(+e.target.value)} />
+          </div>
+        </div>
+        {font === 4
+          ? <div className="tester-out rx-bb rx-bb--bold" lang="tl-Tglg" style={{ fontSize:size, lineHeight:1.3 }}>{window.RX09Baybayin.transliterate(txt) || " "}</div>
+          : <div className="tester-out" style={{ fontFamily:FONTS[font][1], fontWeight:FONTS[font][2], fontSize:size, lineHeight:.9, letterSpacing: font === 0 ? "-.04em" : 0, textTransform:"uppercase" }}>{txt || " "}</div>}
+        {font === 4 && <p className="micro">AUTO-TRANSLITERATED LATIN → BAYBAYIN // {window.RX09Baybayin.tokenize(txt).map(k => k === " " ? "/" : k).join(" · ").toUpperCase()}</p>}
+      </div>
+    </section>
+  );
+}
+
+function GridSec() {
+  return (
+    <section id="grid" className="sec">
+      <SecHead idx="03" title="Grid & Space" jp="格子 // グリッド" meta="8PX UNIT · VISIBLE DIVIDERS" />
+      <div className="cells c2">
+        <div>
+          <p className="cell-title">SPACING UNITS</p>
+          <div className="unit-bars">
+            {[8,16,24,32,64,128].map(u => <div key={u}><span className="label b">{u}PX</span><i style={{ width:u * 2 }} /></div>)}
+          </div>
+          <p className="micro" style={{ marginTop:16 }}>×1 ×2 ×3 ×4 ×8 ×16 OF --u</p>
+        </div>
+        <div>
+          <p className="cell-title">STROKE WEIGHTS</p>
+          <div className="stack">
+            <div className="row"><span className="label" style={{ width:80 }}>1PX THIN</span><span style={{ flex:1, height:1, background:"var(--ink)" }} /></div>
+            <div className="row"><span className="label" style={{ width:80 }}>2PX BOLD</span><span style={{ flex:1, height:2, background:"var(--ink)" }} /></div>
+            <div className="row"><span className="label" style={{ width:80 }}>BAR ■</span><span style={{ flex:1, display:"flex", alignItems:"center" }}><span style={{ flex:1, height:1, background:"var(--ink)" }} /><span style={{ width:48, height:8, background:"var(--ink)" }} /><span style={{ flex:1, height:1, background:"var(--ink)" }} /></span></div>
+            <div className="row"><span className="label" style={{ width:80 }}>DASH</span><span style={{ flex:1, borderTop:"1px dashed var(--gray)" }} /></div>
+          </div>
+        </div>
+        <div className="span2" style={{ gridColumn:"1 / -1" }}>
+          <p className="cell-title">12-COLUMN MODULAR GRID</p>
+          <div className="col12">{Array.from({ length: 12 }).map((_, i) => <div key={i}>{String(i + 1).padStart(2,"0")}</div>)}</div>
+          <div className="col12" style={{ height:56, marginTop:8 }}><div className="sp8">SPAN 8 // CONTENT</div><div className="sp">SPAN 4 // DATA</div></div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+const SHAPES = [
+  ["CHAMFER TR","polygon(0 0,calc(100% - 24px) 0,100% 24px,100% 100%,0 100%)",""],
+  ["CHAMFER ×2","polygon(0 0,calc(100% - 24px) 0,100% 24px,100% 100%,24px 100%,0 calc(100% - 24px))","o"],
+  ["TAB CUT","polygon(0 0,100% 0,calc(100% - 32px) 100%,0 100%)",""],
+  ["STEPPED","polygon(0 0,60% 0,60% 16px,100% 16px,100% 100%,0 100%)",""],
+  ["60° BLADE","polygon(0 0,100% 0,100% 100%,35% 100%)","o"],
+  ["NOTCHED","polygon(0 0,100% 0,100% 40%,calc(100% - 12px) 50%,100% 60%,100% 100%,0 100%)",""],
+  ["HEX PLATE","polygon(16px 0,calc(100% - 16px) 0,100% 50%,calc(100% - 16px) 100%,16px 100%,0 50%)",""],
+  ["120° ARROW","polygon(0 0,75% 0,100% 50%,75% 100%,0 100%,25% 50%)","o"],
+];
+function ShapeSec() {
+  return (
+    <section id="shape" className="sec">
+      <SecHead idx="04" title="Shape Language" jp="形状 // シェイプ" meta="45° · 60° · 120° · RADIUS 0" />
+      <p className="lead">All containers use <b>clip-path: polygon()</b>. Corners are cut, never rounded. Large flat blocks can break the frame.</p>
+      <div className="shape-grid">
+        {SHAPES.map(([n, cp, o]) => (
+          <div key={n} className="stack" style={{ gap:8 }}>
+            <div className={"shape " + o} style={{ clipPath:cp }}>{n}</div>
+            <code className="micro" style={{ wordBreak:"break-all" }}>{cp.slice(0, 48)}…</code>
+          </div>
+        ))}
+        <div className="stack" style={{ gap:8 }}>
+          <div className="shape outline brackets">CORNER BRACKETS</div>
+          <code className="micro">.brackets</code>
+        </div>
+        <div className="stack" style={{ gap:8 }}>
+          <div className="shape outline" style={{ boxShadow:"4px 4px 0 var(--ink)" }}>HARD SHADOW</div>
+          <code className="micro">box-shadow: 4px 4px 0 var(--ink)</code>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function GlyphSec({ notify }) {
+  return (
+    <section id="glyphs" className="sec">
+      <SecHead idx="05" title="Glyph Library" jp="記号 // グリフ" meta={`${Object.keys(G).length} ICONS · 24PX · 2PX STROKE`} />
+      <p className="lead">Flat, geometric, chamfered vectors on a 24px grid. Square caps, miter joins, <b>currentColor</b> so they follow theme and state.</p>
+      <div className="glyphs">
+        {Object.keys(G).map((k, i) => (
+          <button key={k} className="glyph" onClick={() => notify(`<Glyph name="${k}" />`)} data-tip="CLICK FOR USAGE">
+            <span className="micro" style={{ alignSelf:"flex-start" }}>G-{String(i + 1).padStart(2,"0")}</span>
+            <Glyph name={k} size={36} />
+            <span className="label b">{k}</span>
+          </button>
+        ))}
+      </div>
+      <div className="row" style={{ marginTop:32, gap:32 }}>
+        <div className="stack" style={{ gap:4 }}><p className="micro">SIZES</p><div className="row">{[16,24,32,48].map(s => <Glyph key={s} name="WARNING" size={s} />)}</div></div>
+        <div className="stack" style={{ gap:4 }}><p className="micro">ON ACCENT</p><div className="row" style={{ background:"var(--accent)", color:"var(--on-accent)", padding:8 }}><Glyph name="BOLT" /><Glyph name="POWER" /><Glyph name="LOCK" /></div></div>
+        <div className="stack" style={{ gap:4 }}><p className="micro">ON INK</p><div className="row" style={{ background:"var(--ink)", color:"var(--bg)", padding:8 }}><Glyph name="MODULE" /><Glyph name="SIGNAL" /><Glyph name="DATA" /></div></div>
+        <div className="stack" style={{ gap:4 }}><p className="micro">ASCII MARKS</p><p style={{ font:"800 18px var(--mono)", letterSpacing:".1em" }}>&gt;&gt;&gt; &lt;&lt;&lt; [X] △△ ───■─── //:000</p></div>
+      </div>
+    </section>
+  );
+}
+
+function WarningSec() {
+  return (
+    <section id="warning" className="sec">
+      <SecHead idx="06" title="Hazard & Warning" jp="警告 // ハザード" meta="DANGER · CAUTION · NOTICE" />
+      <div className="cells c3">
+        <div className="stack">
+          <p className="cell-title">PLATES</p>
+          <div className="plate danger"><div className="sym"><Glyph name="WARNING" size={36} /></div><div className="txt"><p className="word">DANGER</p><p className="micro" style={{ color:"var(--ink)" }}>危険 · HIGH VOLTAGE INSIDE</p></div></div>
+          <div className="plate"><div className="sym"><Glyph name="BOLT" size={36} /></div><div className="txt"><p className="word">CAUTION</p><p className="micro" style={{ color:"var(--ink)" }}>注意 · STAND CLEAR</p></div></div>
+          <div className="plate inverse"><div className="sym"><Glyph name="LOCK" size={36} /></div><div className="txt"><p className="word">NOTICE</p><p className="micro">通知 · AUTHORIZED ONLY</p></div></div>
+        </div>
+        <div className="stack">
+          <p className="cell-title">HAZARD STRIPES</p>
+          <div className="hazard" /><p className="micro">.hazard</p>
+          <div className="hazard orange" /><p className="micro">.hazard.orange</p>
+          <div className="hazard thin" /><p className="micro">.hazard.thin</p>
+          <div className="hazard tall orange" /><p className="micro">.hazard.tall.orange</p>
+        </div>
+        <div className="stack">
+          <p className="cell-title">INLINE ALERTS</p>
+          <p className="err" role="alert">▲ ERR_06 // ACCESS DENIED</p>
+          <div style={{ border:"1px solid var(--ink)", borderLeft:"8px solid var(--ink)", padding:"10px 12px" }} className="label">■ INFO // FIRMWARE 0.9.4 AVAILABLE</div>
+          <div style={{ background:"var(--accent)", color:"var(--on-accent)", padding:"10px 12px" }} className="label b">▲ BATTERY BELOW 20% — DOCK UNIT</div>
+          <div className="row"><WarnTriangle size={56} /><WarnTriangle size={32} /><WarnTriangle size={20} /></div>
+          <div className="row"><span className="chip warn">WARN</span><span className="chip ok">OK</span><span className="chip">IDLE</span><span className="chip cut">MODULE</span></div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function ComponentSec({ notify, openModal }) {
+  const [tab, setTab] = useState(0);
+  const [toggles, setToggles] = useState({ a:true, b:false });
+  const [lvl, setLvl] = useState(65);
+  const [radio, setRadio] = useState("AUTO");
+  return (
+    <section id="components" className="sec">
+      <SecHead idx="07" title="Controls" jp="操作 // コンポーネント" meta="BUTTONS · FORMS · FEEDBACK" />
+      <div className="cells c3">
+        <div className="stack">
+          <span className="micro tag">C-01</span>
+          <p className="cell-title">BUTTONS</p>
+          <button className="btn"><span>PRIMARY</span><span>&gt;&gt;</span></button>
+          <button className="btn accent"><span>ACCENT / CTA</span><span>&gt;&gt;&gt;</span></button>
+          <button className="btn ghost"><span>GHOST</span><span>[ ]</span></button>
+          <button className="btn cut"><span>CHAMFER CUT</span><span>▸</span></button>
+          <div className="row"><button className="btn sm">SM</button><button className="btn sm accent">SM</button><button className="btn" disabled>DISABLED</button></div>
+          <button className="btn lg accent"><span>LARGE // LAUNCH</span><Glyph name="ARROW" size={18} /></button>
+        </div>
+        <div className="stack">
+          <span className="micro tag">C-02</span>
+          <p className="cell-title">INPUTS</p>
+          <div className="field"><label className="label" htmlFor="c1">Unit Name</label><input id="c1" placeholder="RX-09" /><span className="hint">3–12 CHARS · UPPERCASE</span></div>
+          <div className="field invalid"><label className="label" htmlFor="c2">Serial</label><input id="c2" defaultValue="52OO1" /><span className="hint">▲ INVALID FORMAT // DIGITS ONLY</span></div>
+          <div className="field"><label className="label" htmlFor="c3">Class</label><select id="c3"><option>GRM-976</option><option>MK-01</option><option>GR-64</option></select></div>
+          <div className="field"><label className="label" htmlFor="c4">Notes</label><textarea id="c4" placeholder="ENTER LOG MESSAGE_" /></div>
+        </div>
+        <div className="stack">
+          <span className="micro tag">C-03</span>
+          <p className="cell-title">SELECTION</p>
+          <label className="opt"><input type="checkbox" className="chk" defaultChecked /> THERMAL SHIELD</label>
+          <label className="opt"><input type="checkbox" className="chk" /> STEALTH MODE</label>
+          <div className="row" role="radiogroup" aria-label="Drive mode">
+            {["AUTO","MANUAL","STANDBY"].map(r => <label key={r} className="opt"><input type="radio" className="rad" name="drv" checked={radio === r} onChange={() => setRadio(r)} /> {r}</label>)}
+          </div>
+          <label className="opt"><input type="checkbox" className="toggle" checked={toggles.a} onChange={e => setToggles({ ...toggles, a:e.target.checked })} /> AUTO-REFRESH · {toggles.a ? "ON" : "OFF"}</label>
+          <label className="opt"><input type="checkbox" className="toggle" checked={toggles.b} onChange={e => setToggles({ ...toggles, b:e.target.checked })} /> ALARM RELAY · {toggles.b ? "ON" : "OFF"}</label>
+          <div className="field"><label className="label" htmlFor="lv">Output Level // {lvl}%</label><input id="lv" type="range" className="range" value={lvl} onChange={e => setLvl(+e.target.value)} /></div>
+          <SegBar value={lvl} />
+        </div>
+
+        <div className="stack">
+          <span className="micro tag">C-04</span>
+          <p className="cell-title">TABS</p>
+          <div className="tabs" role="tablist">{["01 UNIT","02 POWER","03 LOG"].map((t, i) => <button key={t} role="tab" aria-selected={tab === i} onClick={() => setTab(i)}>{t}</button>)}</div>
+          <div style={{ border:"1px solid var(--ink)", borderTop:0, padding:16, minHeight:90 }}>
+            {tab === 0 && <><p className="display" style={{ fontSize:24 }}>RX-09</p><p className="micro">CLASS GRM-976 · ONLINE</p></>}
+            {tab === 1 && <><p className="lcd" style={{ fontSize:36 }}>48.0V</p><p className="micro">DC BUS · NOMINAL</p></>}
+            {tab === 2 && <p className="label">08:41:22 MODULE CHECK COMPLETE<br/>08:33:05 BATTERY BELOW 20%</p>}
+          </div>
+        </div>
+        <div className="stack">
+          <span className="micro tag">C-05</span>
+          <p className="cell-title">ACCORDION</p>
+          <div>
+            <details className="acc" open><summary>01 // SYSTEM BOOT</summary><p>Power-on self test, sensor calibration and module handshake.</p></details>
+            <details className="acc"><summary>02 // SAFETY INTERLOCK</summary><p>Unit halts when any operator enters the hazard perimeter.</p></details>
+            <details className="acc"><summary>03 // MAINTENANCE</summary><p>Replace filter cartridges every 500 operating hours.</p></details>
+          </div>
+        </div>
+        <div className="stack">
+          <span className="micro tag">C-06</span>
+          <p className="cell-title">FEEDBACK</p>
+          <button className="btn" onClick={() => notify("▲ UNIT RX-09 // COMMAND ACKNOWLEDGED")}><span>TRIGGER TOAST</span><span>[!]</span></button>
+          <button className="btn accent" onClick={openModal}><span>OPEN MODAL</span><span>[□]</span></button>
+          <button className="btn ghost" data-tip="SA/CT_II // TOOLTIP"><span>HOVER TOOLTIP</span><span>[?]</span></button>
+          <div className="row"><span className="chip ok">ONLINE</span><span className="chip warn">ALERT</span><span className="chip">OFFLINE</span></div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+const LOGS = [
+  { id:"//:009", unit:"RX-09", event:"MODULE CHECK COMPLETE", t:"08:41:22", s:"OK" },
+  { id:"//:008", unit:"GR-64", event:"BATTERY BELOW 20%",     t:"08:33:05", s:"WARN" },
+  { id:"//:007", unit:"RX-07", event:"FIRMWARE SYNC",         t:"08:12:47", s:"OK" },
+  { id:"//:006", unit:"MK-01", event:"THERMAL LIMIT REACHED", t:"07:58:10", s:"WARN" },
+  { id:"//:005", unit:"RX-09", event:"OPERATOR LOGIN",        t:"07:40:00", s:"OK" },
+];
+const TERM = ["boot --unit RX-09","» loading kernel modules ........ OK","» calibrating gyro array ........ OK","» thermal envelope 41.2°C ....... OK","» link to control hub 10.0.9.1 .. OK","warn: battery cell C3 at 18%","» SYSTEM READY // 想像力を動力源"];
+
+function Terminal() {
+  const [n, setN] = useState(reduced() ? TERM.length : 0);
+  useEffect(() => {
+    if (reduced()) return;
+    const id = setInterval(() => setN(v => (v >= TERM.length + 3 ? 0 : v + 1)), 700);
+    return () => clearInterval(id);
+  }, []);
+  return (
+    <div className="terminal" role="log" aria-label="Boot log">
+      {TERM.slice(0, n).map((l, i) => <div key={i}><span className="p">{i === 0 ? "rx@09:~$ " : ""}</span>{l}</div>)}
+      <span className="blink">█</span>
+    </div>
+  );
+}
+
+function DataSec() {
+  const { load, bars, spark } = useTelemetry();
+  return (
+    <section id="data" className="sec">
+      <SecHead idx="08" title="Data Display" jp="計測 // データ" meta="READOUTS · GAUGES · LOGS" />
+      <div className="cells c4">
+        <div><span className="micro tag">#01</span><p className="label">UNITS ONLINE</p><Count to={24} pad={2} className="readout" /><p className="micro">OF 32 REGISTERED</p></div>
+        <div><span className="micro tag">#02</span><p className="label">ACTIVE ALERTS</p><Count to={3} pad={2} className="readout accent" /><p className="micro">▲ REQUIRES ATTENTION</p></div>
+        <div><span className="micro tag">#03</span><p className="label">UPTIME</p><p className="lcd">719<span className="micro">HRS</span></p><p className="micro">00.19.90_</p></div>
+        <div style={{ display:"grid", placeItems:"center" }}><span className="micro tag">#04</span><Gauge value={load} /></div>
+        <div className="span2"><span className="micro tag">#05</span><p className="cell-title">POWER CELLS // 6 CH</p><Meters bars={bars} /></div>
+        <div className="span2"><span className="micro tag">#06</span><p className="cell-title">THROUGHPUT // LIVE</p><Sparkline data={spark} /><div className="row" style={{ justifyContent:"space-between" }}><span className="micro">T-24</span><span className="label b">{Math.round(spark[spark.length - 1])} U/S</span><span className="micro">NOW</span></div></div>
+        <div className="span2" style={{ padding:0 }}>
+          <div style={{ overflowX:"auto" }}>
+            <table>
+              <thead><tr><th>IDX</th><th>UNIT</th><th>EVENT</th><th>TIME</th><th>STATUS</th></tr></thead>
+              <tbody>{LOGS.map(l => <tr key={l.id}><td>{l.id}</td><td><b>{l.unit}</b></td><td>{l.event}</td><td>{l.t}</td><td><span className={"chip " + (l.s === "OK" ? "ok" : "warn")}>{l.s}</span></td></tr>)}</tbody>
+            </table>
+          </div>
+        </div>
+        <div className="span2" style={{ padding:0 }}><Terminal /></div>
+      </div>
+    </section>
+  );
+}
+
+function MotionSec() {
+  return (
+    <section id="motion" className="sec">
+      <SecHead idx="09" title="Motion" jp="動作 // モーション" meta="STEPPED · INSTANT · REDUCED-MOTION SAFE" />
+      <p className="lead">Motion is mechanical: <b>steps()</b> timing, instant hover inversion, no easing blur. Everything stops when the OS requests reduced motion.</p>
+      <div className="cells c3">
+        <div><p className="cell-title">SCANLINE SWEEP</p><div className="scan-box"><p className="giant" style={{ fontSize:64 }}>SCAN</p></div></div>
+        <div className="stack"><p className="cell-title">STEPPED TRANSFORM</p><div style={{ height:60, display:"flex", alignItems:"center" }}><div className="step-anim" /></div><p className="micro">animation: … steps(8)</p>
+          <p className="cell-title" style={{ marginTop:16 }}>BLINK CURSOR</p><p className="lcd" style={{ fontSize:36 }}>READY<span className="blink accent-text">_</span></p></div>
+        <div className="stack"><p className="cell-title">COUNT-UP READOUT</p><Count to={976} className="readout" /><p className="cell-title" style={{ marginTop:16 }}>INSTANT INVERT</p><button className="btn ghost"><span>HOVER ME</span><span>transition: 0s</span></button></div>
+        <div style={{ gridColumn:"1 / -1" }}><p className="cell-title">TICKER</p><div className="ticker" aria-hidden="true"><span>{"SYSTEM NOMINAL ◆ STAND CLEAR FROM THIS AREA ◆ REMOVABLE MODULE ◆ BATTERY CHARGED +5HP ◆ 危険 DANGER ◆ ".repeat(6)}</span></div></div>
+      </div>
+    </section>
+  );
+}
+
+/* ---------- SAMPLE IMPLEMENTATIONS ---------- */
+function Poster() {
+  return (
+    <div className="poster" role="img" aria-label="RX-09 poster sample">
+      <svg viewBox="0 0 100 100" preserveAspectRatio="none" style={{ inset:0, width:"100%", height:"100%", maxWidth:"none" }} aria-hidden="true">
+        <g fill="none" className="svg-ink" strokeWidth="1">
+          <path d="M18 8 H22 L30 16 H45 L54 25 L66 37 H78 L93 52 V87" vectorEffect="non-scaling-stroke" />
+          <path d="M19 29 H22 L28 35 L38 45 L44 50 L51 57 V75" vectorEffect="non-scaling-stroke" />
+          <path d="M47 0 L56 9 L83 28" vectorEffect="non-scaling-stroke" />
+          <path d="M10 59 L21 70 V75" vectorEffect="non-scaling-stroke" />
+        </g>
+        <g fill="none" className="svg-gray" strokeWidth="1">
+          <path d="M0 37 H15 L23 45 V58 L34 69 V75" vectorEffect="non-scaling-stroke" />
+          <path d="M67 0 L80 11 H92 L96 8 H100" vectorEffect="non-scaling-stroke" />
+          <path d="M59 32 V40 L86 66 V75" vectorEffect="non-scaling-stroke" />
+        </g>
+        <g fill="none" strokeWidth="5" strokeLinecap="butt" className="svg-ink">
+          <path d="M48 19 L52 23" vectorEffect="non-scaling-stroke" /><path d="M58 4 L62 7" vectorEffect="non-scaling-stroke" />
+          <path d="M42 45 L46 49" vectorEffect="non-scaling-stroke" />
+        </g>
+        <g fill="none" strokeWidth="7" strokeLinecap="round" className="svg-ink">
+          <path d="M93 87 h0" vectorEffect="non-scaling-stroke" /><path d="M83 28 h0" vectorEffect="non-scaling-stroke" />
+          <path d="M19 29 h0" vectorEffect="non-scaling-stroke" /><path d="M10 59 h0" vectorEffect="non-scaling-stroke" />
+        </g>
+      </svg>
+      <div className="p-logo">RX</div>
+      <div className="p-credit"><Glyph name="CHECK_X" size={14} /><span>A BLACKBOX GRAFX<br/>ORIGINAL FONT</span></div>
+      <div className="p-jp"><Glyph name="GLOBE" size={16} /><span>想像力を動力源</span></div>
+      <div className="p-warn"><WarnTriangle size="100%" /></div>
+      <div className="p-id"><b>RX-09</b>INSPIRED BY<br/>INDUSTRIAL<br/>MECHA SYSTEMS</div>
+      <div className="p-read"><span>00.15</span><span>00.05</span><span>00.19.90_</span></div>
+      <div className="p-sa">SA/CT_II</div>
+      <div className="p-meters"><i style={{ "--h":"70%" }} /><i style={{ "--h":"40%" }} /><i style={{ "--h":"55%" }} /></div>
+      <div className="p-font">A BLACKBOX GRAFX<br/>ORIGINAL FONT</div>
+      <div className="p-bb"><span className="ghost">GRAFX</span><span className="solid">BLACKBOX</span></div>
+      <div className="cross" style={{ top:"29%", right:"4%" }} /><div className="cross" style={{ top:"54%", right:"4%" }} />
+      <div className="p-giant">RX-09</div>
+      <div className="p-tag">//:009</div>
+    </div>
+  );
+}
+
+function ProductLabel() {
+  return (
+    <div className="label-card">
+      <div className="label-head"><span className="label b">RX-09 // MODULE UNIT</span><span className="label">取扱注意</span></div>
+      <div className="label-body">
+        <div className="stack" style={{ gap:12 }}>
+          <p className="giant" style={{ fontSize:72 }}>RX-09</p>
+          <table className="spec-table"><tbody>
+            {[["MODEL","RX-09 / GRM-976"],["SERIAL","52001-RX-0091"],["WEIGHT","42.0 KG"],["POWER","48V DC / 12A"],["IP RATING","IP67"],["MFG DATE","2026.10"]].map(([k, v]) =>
+              <tr key={k}><td className="micro" style={{ color:"var(--ink)" }}>{k}</td><td>{v}</td></tr>)}
+          </tbody></table>
+        </div>
+        <div className="stack" style={{ gap:12, alignContent:"start" }}>
+          <div className="plate danger" style={{ gridTemplateColumns:"auto 1fr" }}><div className="sym" style={{ padding:8 }}><Glyph name="BOLT" size={24} /></div><div className="txt" style={{ padding:"6px 10px" }}><p style={{ font:"700 18px var(--hero)" }}>HIGH VOLTAGE</p><p className="micro" style={{ color:"var(--ink)" }}>高電圧</p></div></div>
+          <div className="row" style={{ gap:8 }}><Glyph name="LOCK" /><Glyph name="MODULE" /><Glyph name="NO_ENTRY" /><Glyph name="POWER" /></div>
+          <MatrixCode />
+          <p className="micro">SCAN FOR SERVICE MANUAL</p>
+        </div>
+      </div>
+      <div className="hazard orange" />
+      <div className="label-foot"><Barcode /><p className="micro">BRAND: BLACKBOX / MODEL: RX-09<br/>MADE IN SECTOR 7</p><span className="chip ok">CE · UL</span></div>
+    </div>
+  );
+}
+
+const PICTOS = [["WARNING","警告"],["BOLT","高電圧"],["NO_ENTRY","立入禁止"],["MOVE","移動"],["POWER","電源"],["LOCK","施錠"],["MODULE","モジュール"],["SIGNAL","信号"],["BATTERY","電池"],["CROSSHAIR","照準"],["HEX","システム"],["ROUTE","経路"]];
+function PictoSheet() {
+  return (
+    <div className="picto-sheet mode-b">
+      {PICTOS.map(([g, jp], i) => (
+        <div className="picto" key={g}>
+          <span className="ix micro" style={{ color:"var(--ink)" }}>P-{String(i + 1).padStart(2,"0")}</span>
+          <Glyph name={g} size={44} />
+          <span className="en">{g.replace("_"," ")}</span>
+          <span className="jp">{jp}</span>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function Pricing() {
+  const T = [["UNIT-S","09","PER OPERATOR / MO",["1 UNIT","BASIC TELEMETRY","EMAIL ALERTS"]],
+             ["UNIT-M","29","PER OPERATOR / MO",["10 UNITS","LIVE DASHBOARD","ROLE ACCESS","AUDIT TRAIL"]],
+             ["UNIT-X","99","PER OPERATOR / MO",["UNLIMITED","ON-PREM AI","SSO HUB","24×7 SUPPORT"]]];
+  return (
+    <div className="pricing">
+      {T.map(([n, p, s, f], i) => (
+        <div key={n} className={"tier" + (i === 1 ? " feat" : "")}>
+          <div className="row" style={{ justifyContent:"space-between" }}><span className="label b">{n}</span>{i === 1 && <span className="chip warn">RECOMMENDED</span>}</div>
+          <p className="price">${p}</p><p className="micro">{s}</p>
+          <ul>{f.map(x => <li key={x}>{x}</li>)}</ul>
+          <button className={"btn " + (i === 1 ? "" : "ghost")}><span>SELECT</span><span>&gt;&gt;</span></button>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function ErrorPage() {
+  return (
+    <div className="err-page">
+      <div className="row" style={{ justifyContent:"space-between", position:"relative", zIndex:1 }}><span className="label" style={{ color:"var(--accent)" }}>▲ SYSTEM FAULT</span><span className="micro">//:404</span></div>
+      <div style={{ position:"relative", zIndex:1 }}>
+        <p className="giant">ERR_404</p>
+        <p className="label" style={{ margin:"12px 0 20px" }}>UNIT NOT FOUND // 見つかりません</p>
+        <button className="btn"><span>RETURN TO BASE</span><span>&lt;&lt;&lt;</span></button>
+      </div>
+      <div className="hazard orange" style={{ position:"absolute", left:0, right:0, bottom:0 }} />
+    </div>
+  );
+}
+
+function Phone() {
+  return (
+    <div className="phone" aria-label="Mobile app sample">
+      <div className="phone-status"><span>RX//09</span><span>●●● 5G ▮▮▮</span></div>
+      <div className="phone-body">
+        <div className="row" style={{ justifyContent:"space-between" }}><WarnTriangle size={28} /><span className="micro">SA/CT_II</span></div>
+        <p className="giant" style={{ fontSize:64 }}>RX-09</p>
+        <div style={{ border:"1px solid var(--ink)", padding:12 }}><p className="micro">CORE TEMP</p><p className="lcd" style={{ fontSize:40 }}>41.2°</p><SegBar value={62} /></div>
+        <div className="phone-list">{[["GYRO","OK"],["THRUST","OK"],["CELL C3","18%"]].map(([a, b]) => <div key={a}><span className="label">{a}</span><span className={"chip " + (b === "OK" ? "ok" : "warn")}>{b}</span></div>)}</div>
+        <button className="btn accent"><span>DEPLOY</span><span>&gt;&gt;&gt;</span></button>
+      </div>
+      <div className="phone-nav"><span className="on">HOME</span><span>UNITS</span><span>LOG</span><span>SYS</span></div>
+    </div>
+  );
+}
+
+function SamplesSec({ setView }) {
+  return (
+    <section id="samples" className="sec">
+      <SecHead idx="10" title="Sample Builds" jp="実装例 // サンプル" meta="POSTER · LABEL · SHEET · UI" />
+      <div className="sample-grid">
+        <div className="sample"><Poster /><div className="sample-cap"><span className="label b">S-01 // POSTER</span><span className="micro">CONTAINER-QUERY SCALED</span></div></div>
+        <div className="sample"><ProductLabel /><div className="sample-cap"><span className="label b">S-02 // PRODUCT LABEL</span><span className="micro">SPEC · BARCODE · MATRIX</span></div>
+          <div style={{ marginTop:24 }}><PictoSheet /></div><div className="sample-cap"><span className="label b">S-03 // PICTOGRAM SHEET</span><span className="micro">MODE B · NO ACCENT</span></div></div>
+        <div className="sample" style={{ gridColumn:"1 / -1" }}><Pricing /><div className="sample-cap"><span className="label b">S-04 // PRICING TIERS</span><span className="micro">CHAMFERED CARDS</span></div></div>
+        <div className="sample"><ErrorPage /><div className="sample-cap"><span className="label b">S-05 // ERROR PAGE</span><span className="micro">INVERSE PANEL</span></div>
+          <div className="launch" style={{ marginTop:24 }}>
+            <CircuitTrace style={{ opacity:.3 }} />
+            <div style={{ position:"relative" }}><p className="micro">S-07 // LIVE DEMO</p><p className="giant">AUTH</p><p className="label">LOGIN + SIGN UP · VALIDATION · SESSION</p></div>
+            <button className="btn accent" style={{ position:"relative" }} onClick={() => setView("auth")}><span>LAUNCH LOGIN DEMO</span><span>&gt;&gt;&gt;</span></button>
+          </div>
+          <div className="launch" style={{ marginTop:24 }}>
+            <div className="hero block" style={{ display:"none" }} />
+            <div><p className="micro">S-08 // LIVE DEMO</p><p className="giant">DASH</p><p className="label">SIDEBAR · READOUTS · GAUGE · EVENT LOG</p></div>
+            <button className="btn" onClick={() => setView(store.session() ? "dashboard" : "auth")}><span>LAUNCH DASHBOARD</span><span>&gt;&gt;&gt;</span></button>
+          </div>
+        </div>
+        <div className="sample"><Phone /><div className="sample-cap"><span className="label b">S-06 // MOBILE APP</span><span className="micro">300 × 600 FRAME</span></div></div>
+      </div>
+    </section>
+  );
+}
+
+const TOKENS_CSS = `:root{
+  --bg:#F2F2F2; --ink:#0A0A0A; --line:#D6D6D6; --gray:#A0A3A0;
+  --slate:#3A4550; --accent:#FF5A1F; --on-accent:#0A0A0A; --u:8px;
+  --hero:"Chakra Petch",sans-serif;      /* 700 · giant identifiers */
+  --display:"Rubik Mono One",sans-serif; /* section display */
+  --mono:"JetBrains Mono",monospace;     /* labels · body */
+  --dot:"DotGothic16",monospace;         /* dot-matrix readouts */
+  --bb:"RX09 Baybayin",sans-serif;       /* baybayin · U+1700 */
+}
+[data-theme="dark"]{ --bg:#0D0E0F; --ink:#ECECEC; --line:#2A2D30; --gray:#7F8481; }
+[data-accent="mono"]{ --accent:var(--ink); --on-accent:var(--bg); }  /* MODE B */
+
+.btn{border:1px solid var(--ink);box-shadow:4px 4px 0 var(--ink);transition:0s}
+.chamfer{clip-path:polygon(0 0,calc(100% - 16px) 0,100% 16px,100% 100%,0 100%)}
+.hazard{background:repeating-linear-gradient(45deg,var(--ink) 0 8px,var(--bg) 8px 16px)}`;
+
+function TokensSec({ notify }) {
+  return (
+    <section id="tokens" className="sec">
+      <SecHead idx="11" title="Tokens & Rules" jp="規則 // トークン" meta="COPY INTO ANY PROJECT" />
+      <div className="cells c2">
+        <div style={{ padding:0 }}>
+          <div className="topbar"><span className="label b">tokens.css</span><button className="btn sm" onClick={() => { navigator.clipboard && navigator.clipboard.writeText(TOKENS_CSS); notify("TOKENS COPIED // READY TO PASTE"); }}>COPY</button></div>
+          <pre className="code">{TOKENS_CSS}</pre>
+        </div>
+        <div className="stack">
+          <p className="cell-title">COMPOSITION CHECKLIST</p>
+          {["One giant identifier headline","One orange accent element (Mode A)","One data readout","One warning / hazard element","3+ circuit routes ending in nodes","2+ crosshairs or corner brackets","5–10 micro technical labels","One Japanese label","One footer credit line","≈70% whitespace"].map(c =>
+            <label className="opt" key={c}><input type="checkbox" className="chk" defaultChecked /> {c}</label>)}
+          <p className="cell-title" style={{ marginTop:16 }}>NEVER</p>
+          <p className="label" style={{ lineHeight:2 }}>
+            {["ROUNDED UI","GRADIENTS","BLUR / GLOW","PASTELS","EMOJI","GLASSMORPHISM","2ND ACCENT"].map(n => <span key={n} className="chip" style={{ marginRight:6, textDecoration:"line-through" }}>{n}</span>)}
+          </p>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* =====================================================
+   12 // BAYBAYIN TYPE SYSTEM
+   ===================================================== */
+const BB_CONS = [["k","KA"],["g","GA"],["ng","NGA"],["t","TA"],["d","DA"],["n","NA"],["p","PA"],["b","BA"],["m","MA"],["y","YA"],["r","RA"],["l","LA"],["w","WA"],["s","SA"],["h","HA"]];
+const BB_ROWS = [["", "VOWEL", ["a","i","u",null]]].concat(BB_CONS.map(c => [c[0], c[1], [c[0]+"a", c[0]+"i", c[0]+"u", c[0]]]));
+const BB_GLYPHS = [[0x1700,"A"],[0x1701,"I / E"],[0x1702,"U / O"],[0x1703,"KA"],[0x1704,"GA"],[0x1705,"NGA"],[0x1706,"TA"],[0x1707,"DA / RA"],[0x1708,"NA"],[0x1709,"PA"],[0x170A,"BA"],[0x170B,"MA"],[0x170C,"YA"],[0x170D,"RA"],[0x170E,"LA"],[0x170F,"WA"],[0x1710,"SA"],[0x1711,"HA"],[0x1712,"KUDLIT E/I"],[0x1713,"KUDLIT O/U"],[0x1714,"KRUS-KUDLIT"],[0x1715,"PAMUDPOD"],[0x171F,"ARCHAIC RA"],[0x1735,"DANDA"],[0x1736,"DOUBLE DANDA"]];
+const bbLabel = (k) => k === "a" ? "A" : k === "i" ? "E/I" : k === "u" ? "O/U" : k.length && !/[aiu]$/.test(k) ? k.toUpperCase() + " +" : k.toUpperCase().replace(/I$/, "E/I").replace(/U$/, "O/U");
+const BB_USAGE = `<!-- Font: type Unicode Baybayin -->
+<p class="rx-bb rx-bb--bold">ᜊᜌ᜔ᜊᜌᜒᜈ᜔</p>
+
+<!-- SVG engine: Latin in, vector out (no font needed) -->
+<span id="logo"></span>
+<script>
+  RX09Baybayin.render(document.getElementById('logo'), 'Pilipinas', { height: 96 });
+  RX09Baybayin.transliterate('Baybayin');               // "ᜊᜌ᜔ᜊᜌᜒᜈ᜔"
+  RX09Baybayin.toSVG('Kultura', { color: '#FF5A1F' });  // SVG string
+  RX09Baybayin.tokenize('Salamat');                     // ["sa","la","ma","t"]
+<\/script>
+
+/* React */
+<span className="rx-bb" lang="tl-Tglg">{RX09Baybayin.transliterate(name)}</span>`;
+
+function BaybayinSec({ notify }) {
+  const B = window.RX09Baybayin;
+  const [txt, setTxt] = useState("Maraming salamat");
+  const [killer, setKiller] = useState("krus");
+  const [h, setH] = useState(120);
+  const opt = { killer, height: h };
+  const src = txt.slice(0, 200);
+  const svg = B.toSVG(src || " ", opt);
+  const uni = B.transliterate(src, opt);
+  const toks = B.tokenize(src, opt);
+
+  const download = () => {
+    const s = B.toSVG(src || "baybayin", { killer, height: 256, color: "#0A0A0A" });
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(new Blob([s], { type: "image/svg+xml" }));
+    a.download = "rx09-baybayin-" + ((src.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "")) || "text") + ".svg";
+    a.click(); setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+    notify("[X] SVG EXPORTED // " + a.download.toUpperCase());
+  };
+  const copy = (s, msg) => {
+    (navigator.clipboard ? navigator.clipboard.writeText(s) : Promise.reject())
+      .then(() => notify(msg), () => notify("[!] COPY BLOCKED — SELECT MANUALLY"));
+  };
+
+  return (
+    <section id="baybayin" className="sec">
+      <SecHead idx="12" title="Baybayin" jp="文字 // ᜊᜌ᜔ᜊᜌᜒᜈ᜔" meta="CULTURE MODULE PH-001 · U+1700" />
+
+      <div className="bb-hero">
+        <div>
+          <p className="micro">//:012 · BRAND: RX-09 / MODEL: BYBYN-01 · 危険 · SA/CT_II</p>
+          <p className="big rx-bb rx-bb--bold" lang="tl-Tglg" aria-label="Baybayin">ᜊᜌ᜔ᜊᜌᜒᜈ᜔</p>
+          <p className="lead" style={{ marginTop:8 }}>Angular derivative of the Tagalog script — every outline reduced to <b>straight polygon segments</b>. Use the <b>font</b> for Unicode text, the <b>SVG engine</b> for logos and exports.</p>
+        </div>
+        <div className="bb-block">
+          <p className="label b">[!] ANGULAR TYPE SYSTEM<br/>NO CURVES // POLYGON ONLY</p>
+          <p className="lcd">U+1700</p>
+          <p className="label b">25 GLYPHS · 78 SYLLABLES<br/>2 WEIGHTS · WOFF2 EMBEDDED<br/>STATUS: ACTIVE<span className="blink">_</span></p>
+        </div>
+      </div>
+
+      <div className="cells bb-conv">
+        <div className="stack">
+          <p className="cell-title">01 // LATIN INPUT</p>
+          <div className="field"><label className="label" htmlFor="bb-in">[ SOURCE ]</label>
+            <input id="bb-in" value={txt} maxLength={200} autoComplete="off" onChange={e => setTxt(e.target.value)} />
+            <span className="hint">{src.length}/200 · C→K/S · F→P · J→DY · Q→K · V→B · X→KS · Z→S · Ñ→NY</span></div>
+          <div className="field"><label className="label" htmlFor="bb-kill">[ VOWEL KILLER ]</label>
+            <select id="bb-kill" value={killer} onChange={e => setKiller(e.target.value)}>
+              <option value="krus">KRUS-KUDLIT + (U+1714)</option>
+              <option value="pamudpod">PAMUDPOD (U+1715)</option>
+            </select></div>
+          <div className="field"><label className="label" htmlFor="bb-h">SVG HEIGHT // {h}PX</label>
+            <input id="bb-h" type="range" className="range" min="48" max="200" value={h} onChange={e => setH(+e.target.value)} /></div>
+          <div className="row">
+            <button type="button" className="btn accent" onClick={download}><span>DOWNLOAD SVG</span><span>&gt;&gt;</span></button>
+            <button type="button" className="btn ghost" onClick={() => copy(uni, "[X] UNICODE COPIED")}>COPY UNICODE</button>
+            <button type="button" className="btn ghost" onClick={() => copy(svg, "[X] SVG MARKUP COPIED")}>COPY SVG</button>
+          </div>
+        </div>
+        <div className="stack">
+          <p className="cell-title">02 // VECTOR OUTPUT · SVG ENGINE · NO FONT</p>
+          <div className="bb-out" style={{ "--bb-h": h + "px" }} aria-live="polite" dangerouslySetInnerHTML={{ __html: svg }} />
+          <p className="cell-title">03 // UNICODE OUTPUT · RX09 BAYBAYIN 700</p>
+          <div className="bb-uni rx-bb rx-bb--bold" lang="tl-Tglg">{uni || " "}</div>
+          <p className="micro bb-tok">TOKENS [{toks.length}]: {toks.map(k => k === " " ? "/" : k).join(" · ").toUpperCase() || "—"}</p>
+        </div>
+      </div>
+
+      <p className="micro" style={{ margin:"48px 0 8px" }}>SYLLABLE CHART // KUDLIT ABOVE = E/I · KUDLIT BELOW = O/U · + KILLS VOWEL · CLICK TO COPY</p>
+      <div style={{ overflowX:"auto" }}>
+        <table className="bb-tbl" style={{ minWidth:640 }}>
+          <thead><tr><th>CONS.</th><th>-A</th><th>-E / -I</th><th>-O / -U</th><th>KILLED (+)</th></tr></thead>
+          <tbody>
+            {BB_ROWS.map(([c, name, keys]) => (
+              <tr key={name}>
+                <td className="k">{name}</td>
+                {keys.map((k, i) => !k
+                  ? <td key={i}><span className="micro">—</span></td>
+                  : <td key={i}><button type="button" onClick={() => copy(B.units[k].u, "[X] COPIED " + bbLabel(k))} aria-label={"Copy " + bbLabel(k)}>
+                      <span className="g rx-bb" lang="tl-Tglg">{B.units[k].u}</span><span className="micro">{bbLabel(k)}</span>
+                    </button></td>)}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <p className="micro" style={{ margin:"48px 0 8px" }}>GLYPH CATALOG // UNICODE U+1700–U+1736 · {BB_GLYPHS.length} CODEPOINTS</p>
+      <div className="glyphs bb-cat">
+        {BB_GLYPHS.map(([cp, n]) => {
+          const mark = cp >= 0x1712 && cp <= 0x1715;
+          const ch = (mark ? "\u25CC" : "") + String.fromCodePoint(cp);
+          const hex = "U+" + cp.toString(16).toUpperCase();
+          return (
+            <button key={cp} type="button" className="glyph" onClick={() => copy(String.fromCodePoint(cp), "[X] COPIED " + hex + " " + n)} data-tip="CLICK TO COPY">
+              <span className="micro" style={{ alignSelf:"flex-start" }}>{hex}</span>
+              <span className="g" lang="tl-Tglg">{ch}</span>
+              <span className="label b">{n}</span>
+            </button>
+          );
+        })}
+      </div>
+
+      <div className="cells c2" style={{ marginTop:48 }}>
+        <div style={{ padding:0 }}>
+          <div className="topbar"><span className="label b">baybayin-usage.html</span><button type="button" className="btn sm" onClick={() => copy(BB_USAGE, "USAGE COPIED // READY TO PASTE")}>COPY</button></div>
+          <pre className="code">{BB_USAGE}</pre>
+        </div>
+        <div className="stack">
+          <p className="cell-title">API // window.RX09Baybayin v{B.version}</p>
+          <table className="spec-table"><tbody>
+            <tr><td>tokenize(text, opt)</td><td>→ UNIT KEYS</td></tr>
+            <tr><td>transliterate(text, opt)</td><td>→ UNICODE</td></tr>
+            <tr><td>toSVG(text, opt)</td><td>→ SVG STRING</td></tr>
+            <tr><td>render(el, text, opt)</td><td>→ INJECT SVG</td></tr>
+            <tr><td>opt.killer</td><td>"krus" · "pamudpod"</td></tr>
+            <tr><td>opt.height / color / tracking</td><td>SVG ONLY</td></tr>
+          </tbody></table>
+          <p className="cell-title" style={{ marginTop:16 }}>RULES</p>
+          {["Baybayin is flavor + identity — keep Latin as the readable content","Never uppercase or letter-space Baybayin (.rx-bb resets it)","Use the SVG engine for logos, plates and exports","Use lang=\"tl-Tglg\" on every Baybayin run","Accent only on the block or one key glyph"].map(r =>
+            <p key={r} className="label" style={{ lineHeight:1.8 }}>[X] {r}</p>)}
+          <p className="micro" style={{ marginTop:8 }}>OUTLINES DERIVED FROM NOTO SANS TAGALOG · SIL OFL 1.1</p>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Modal({ onClose }) {
+  const ref = useRef(null);
+  useEffect(() => {
+    ref.current && ref.current.focus();
+    const k = (e) => e.key === "Escape" && onClose();
+    window.addEventListener("keydown", k); return () => window.removeEventListener("keydown", k);
+  }, []);
+  return (
+    <div className="overlay" onClick={onClose}>
+      <div className="modal" role="dialog" aria-modal="true" aria-labelledby="mt" onClick={e => e.stopPropagation()}>
+        <div className="modal-head"><span id="mt" className="label b">▲ CONFIRM // 確認</span><button ref={ref} onClick={onClose} aria-label="Close">[X] ESC</button></div>
+        <div className="modal-body">
+          <p className="giant" style={{ fontSize:56 }}>PURGE?</p>
+          <p>This will reset unit <b>RX-09</b> to factory calibration. Logs are kept.</p>
+          <div className="hazard orange" />
+          <div className="row"><button className="btn accent" onClick={onClose}><span>CONFIRM</span><span>&gt;&gt;</span></button><button className="btn ghost" onClick={onClose}>CANCEL</button></div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function Showcase({ setView, theme, setTheme, accent, setAccent }) {
+  const [active, setActive] = useState("cover");
+  const [toasts, setToasts] = useState([]);
+  const [modal, setModal] = useState(false);
+
+  const notify = useCallback((msg) => {
+    const id = Date.now() + Math.random();
+    setToasts(t => [...t.slice(-2), { id, msg }]);
+    setTimeout(() => setToasts(t => t.filter(x => x.id !== id)), 2600);
+  }, []);
+
+  const go = (id) => { const el = document.getElementById(id); el && el.scrollIntoView({ behavior: reduced() ? "auto" : "smooth" }); };
+
+  useEffect(() => {
+    const io = new IntersectionObserver(es => es.forEach(e => e.isIntersecting && setActive(e.target.id)), { rootMargin:"-40% 0px -55% 0px" });
+    SECTIONS.forEach(([id]) => { const el = document.getElementById(id); el && io.observe(el); });
+    return () => io.disconnect();
+  }, []);
+
+  return (
+    <>
+      <nav className="topnav" aria-label="Design system sections">
+        <button className="brand-mini" onClick={() => go("cover")} aria-label="Back to top">RX<span className="micro" style={{ color:"var(--gray)" }}>SYS</span></button>
+        <div className="links">
+          {SECTIONS.map(([id, n, t]) => (
+            <a key={id} href={"#" + id} className={active === id ? "active" : ""} aria-current={active === id ? "true" : undefined}
+               onClick={e => { e.preventDefault(); go(id); }}><span>{n}</span>{t}</a>
+          ))}
+        </div>
+        <div className="nav-tools">
+          <ThemeSwitch theme={theme} setTheme={setTheme} />
+          <AccentSwitch accent={accent} setAccent={setAccent} />
+        </div>
+      </nav>
+      <main>
+        <Cover go={go} />
+        <ColorSec notify={notify} />
+        <TypeSec />
+        <GridSec />
+        <ShapeSec />
+        <GlyphSec notify={notify} />
+        <WarningSec />
+        <ComponentSec notify={notify} openModal={() => setModal(true)} />
+        <DataSec />
+        <MotionSec />
+        <SamplesSec setView={setView} />
+        <TokensSec notify={notify} />
+        <BaybayinSec notify={notify} />
+      </main>
+      <footer className="footer">
+        <p className="micro">2026 BLACKBOX. BUILT TO WIN, BORN TO RIDE. · A BLACKBOX GRAFX ORIGINAL SYSTEM · <span className="rx-bb" lang="tl-Tglg">ᜇᜒᜐᜒᜌᜈ᜔</span></p>
+        <p className="micro">BRAND: RX / MODEL: 09 / MODE: {accent === "mono" ? "B·PICTOGRAM" : "A·SIGNAL"} / {theme === "dark" ? "NIGHT OPS" : "DAY"}</p>
+      </footer>
+      <div className="toasts" aria-live="polite">{toasts.map(t => <div key={t.id} className="toast">{t.msg}</div>)}</div>
+      {modal && <Modal onClose={() => setModal(false)} />}
+    </>
+  );
+}
+
+/* =====================================================
+   LIVE DEMOS: AUTH + DASHBOARD
+   ===================================================== */
+function Auth({ onAuth, onBack, theme, setTheme }) {
+  const [mode, setMode] = useState("login");
+  const [form, setForm] = useState({ name:"", email:"", password:"", confirm:"" });
+  const [error, setError] = useState("");
+  const set = (k) => (e) => setForm({ ...form, [k]: e.target.value });
+
+  function submit(e) {
+    e.preventDefault(); setError("");
+    const users = store.users();
+    const email = form.email.trim().toLowerCase();
+    if (!/^\S+@\S+\.\S+$/.test(email)) return setError("ERR_01 // INVALID EMAIL FORMAT");
+    if (form.password.length < 6) return setError("ERR_02 // PASSWORD MIN 6 CHARS");
+    if (mode === "signup") {
+      if (!form.name.trim()) return setError("ERR_03 // OPERATOR NAME REQUIRED");
+      if (form.password !== form.confirm) return setError("ERR_04 // PASSWORDS DO NOT MATCH");
+      if (users.some(u => u.email === email)) return setError("ERR_05 // OPERATOR ALREADY REGISTERED");
+      const user = { id:"OP-" + String(users.length + 1).padStart(3, "0"), name:form.name.trim(), email, password:form.password };
+      store.save([...users, user]); store.setSession({ id:user.id, name:user.name, email });
+      return onAuth(store.session());
+    }
+    const u = users.find(x => x.email === email && x.password === form.password);
+    if (!u) return setError("ERR_06 // ACCESS DENIED — CHECK CREDENTIALS");
+    store.setSession({ id:u.id, name:u.name, email }); onAuth(store.session());
+  }
+
+  return (
+    <main className="auth">
+      <section className="auth-art" aria-hidden="true">
+        <CircuitTrace />
+        <div style={{ position:"relative" }}>
+          <div className="logo-plate" style={{ font:"700 28px var(--hero)" }}>RX</div>
+          <p className="micro" style={{ marginTop:16 }}>//:001 &nbsp; SA/CT_II &nbsp; 想像力を動力源</p>
+        </div>
+        <div className="cross" style={{ top:"38%", right:"18%" }} /><div className="cross" style={{ top:"62%", right:"10%" }} />
+        <div style={{ position:"relative" }}>
+          <p className="label" style={{ marginBottom:12 }}>■ 00.15 &nbsp; ■ 00.05 &nbsp; ■ 00.19.90<span className="blink">_</span></p>
+          <h1 className="giant">RX-09</h1>
+          <div className="hazard" style={{ marginTop:16, width:"60%" }} />
+        </div>
+      </section>
+      <section className="auth-panel">
+        <div className="auth-tools">
+          <button className="btn ghost sm" onClick={onBack}>&lt;&lt; SYSTEM</button>
+          <ThemeSwitch theme={theme} setTheme={setTheme} />
+        </div>
+        <div className="warn">
+          <WarnTriangle />
+          <div><p className="label b">SECURITY PROTOCOL ACTIVE</p><p className="micro">警告 — AUTHORIZED OPERATORS ONLY</p></div>
+        </div>
+        <div className="tabs" role="tablist" aria-label="Authentication mode">
+          {[["login","01 [LOGIN]"],["signup","02 [SIGN UP]"]].map(([k, t]) => (
+            <button key={k} role="tab" aria-selected={mode === k} onClick={() => { setMode(k); setError(""); }}>{t}</button>
+          ))}
+        </div>
+        <form onSubmit={submit} noValidate>
+          {mode === "signup" && <div className="field"><label className="label" htmlFor="name">Operator Name</label><input id="name" value={form.name} onChange={set("name")} autoComplete="name" placeholder="KIERWIN RAMOS" /></div>}
+          <div className="field"><label className="label" htmlFor="email">Email // ID</label><input id="email" type="email" value={form.email} onChange={set("email")} autoComplete="email" placeholder="operator@rx09.sys" /></div>
+          <div className="field"><label className="label" htmlFor="pw">Access Key</label><input id="pw" type="password" value={form.password} onChange={set("password")} autoComplete={mode === "login" ? "current-password" : "new-password"} placeholder="••••••" /></div>
+          {mode === "signup" && <div className="field"><label className="label" htmlFor="pw2">Confirm Access Key</label><input id="pw2" type="password" value={form.confirm} onChange={set("confirm")} autoComplete="new-password" placeholder="••••••" /></div>}
+          {error && <p className="err" role="alert">▲ {error}</p>}
+          <button className={"btn " + (mode === "login" ? "" : "accent")} type="submit"><span>{mode === "login" ? "INITIATE ACCESS" : "REGISTER OPERATOR"}</span><span>&gt;&gt;&gt;</span></button>
+        </form>
+        <p className="micro">DEMO ONLY: ACCOUNTS ARE STORED IN THIS BROWSER</p>
+      </section>
+    </main>
+  );
+}
+
+const NAV = ["OVERVIEW","UNITS","TELEMETRY","LOGS","SETTINGS"];
+function Dashboard({ user, onLogout, onBack, theme, setTheme }) {
+  const [page, setPage] = useState("OVERVIEW");
+  const { load, bars, spark } = useTelemetry();
+  return (
+    <div className="app">
+      <aside className="side">
+        <div className="brand"><p className="giant" style={{ fontSize:40 }}>RX-09</p><p className="micro">CONTROL SYSTEM v0.9</p></div>
+        <nav aria-label="Main"><ul className="nav">
+          <li><button onClick={onBack}><span className="idx">00</span>[SYSTEM]</button></li>
+          {NAV.map((n, i) => <li key={n}><button aria-current={page === n ? "page" : undefined} onClick={() => setPage(n)}><span className="idx">{String(i + 1).padStart(2,"0")}</span>[{n}]</button></li>)}
+        </ul></nav>
+        <div className="side-foot">
+          <p className="micro">OPERATOR</p><p className="label b">{user.name}</p><p className="micro">{user.id}</p>
+          <div className="hazard" style={{ margin:"16px 0" }} />
+          <button className="btn ghost" style={{ width:"100%" }} onClick={onLogout}><span>LOGOUT</span><span>&lt;&lt;</span></button>
+        </div>
+      </aside>
+      <div className="main">
+        <header className="topbar">
+          <p className="label"><b>{String(NAV.indexOf(page) + 1).padStart(2,"0")}</b> // {page} <span className="micro">&nbsp;移動 MOVE</span></p>
+          <p className="label">● LIVE &nbsp; <Clock /> <span className="blink">_</span></p>
+          <div className="topbar-actions"><ThemeSwitch theme={theme} setTheme={setTheme} /><button className="btn ghost sm" onClick={onLogout}>[X] EXIT</button></div>
+        </header>
+        <div className="ticker" style={{ border:0, borderBottom:"1px solid var(--ink)" }} aria-hidden="true"><span>{"SYSTEM NOMINAL ◆ STAND CLEAR FROM THIS AREA ◆ REMOVABLE MODULE ◆ BATTERY CHARGED +5HP ◆ 危険 DANGER ◆ ".repeat(6)}</span></div>
+        <main className="content">
+          <section className="hero">
+            <div className="block" aria-hidden="true" />
+            <CircuitTrace style={{ opacity:.35 }} />
+            <div><p className="label">WELCOME BACK, {user.name.toUpperCase()}</p><h1 className="giant">{page === "OVERVIEW" ? "RX-09" : page}</h1><p className="micro">SA/CT_II &nbsp; //:000 &nbsp; 想像力を動力源</p></div>
+            <div style={{ textAlign:"right" }} className="on-accent hero-meta"><p className="label b">A BLACKBOX GRAFX</p><p className="label b">ORIGINAL SYSTEM</p></div>
+          </section>
+          <section className="grid" aria-label="Unit metrics">
+            <div className="cell"><span className="micro tag">#01</span><p className="label">UNITS ONLINE</p><Count to={24} pad={2} className="readout" /><p className="micro">OF 32 REGISTERED</p></div>
+            <div className="cell"><span className="micro tag">#02</span><p className="label">ACTIVE ALERTS</p><Count to={3} pad={2} className="readout accent" /><p className="micro">▲ REQUIRES ATTENTION</p></div>
+            <div className="cell"><span className="micro tag">#03</span><p className="label">UPTIME HRS</p><p className="lcd">719</p><p className="micro">00.19.90_</p></div>
+            <div className="cell" style={{ alignItems:"center" }}><span className="micro tag">#04</span><Gauge value={load} /></div>
+            <div className="cell span2"><span className="micro tag">#05</span><p className="label">POWER CELLS // 6 CH</p><Meters bars={bars} /></div>
+            <div className="cell span2"><span className="micro tag">#06</span><p className="label">THROUGHPUT // LIVE</p><Sparkline data={spark} /></div>
+            <div className="cell span2 inverse"><span className="micro tag" style={{ color:"var(--accent)" }}>#07</span><p className="label b" style={{ color:"var(--accent)" }}>▲ CAUTION // 危険</p><p className="display" style={{ fontSize:"clamp(22px,3vw,34px)" }}>STAND CLEAR<br />FROM THIS AREA</p><div className="hazard orange" /></div>
+            <div className="cell span2" style={{ padding:0 }}><Terminal /></div>
+          </section>
+          <section style={{ border:"1px solid var(--ink)" }} aria-label="Event log">
+            <div className="topbar"><p className="label b">EVENT LOG // SCAN</p><p className="micro">[X] AUTO-REFRESH</p></div>
+            <div style={{ overflowX:"auto" }}><table>
+              <thead><tr><th>IDX</th><th>UNIT</th><th>EVENT</th><th>TIME</th><th>STATUS</th></tr></thead>
+              <tbody>{LOGS.map(l => <tr key={l.id}><td>{l.id}</td><td><b>{l.unit}</b></td><td>{l.event}</td><td>{l.t}</td><td><span className={"chip " + (l.s === "OK" ? "ok" : "warn")}>{l.s}</span></td></tr>)}</tbody>
+            </table></div>
+          </section>
+        </main>
+        <footer className="footer"><p className="micro">2026 BLACKBOX. BUILT TO WIN, BORN TO RIDE.</p><p className="micro">BRAND: RX / MODEL: 09 / CLASS GRM-976 ®</p></footer>
+      </div>
+    </div>
+  );
+}
+
+/* =====================================================
+   APP
+   ===================================================== */
+function App() {
+  const [theme, setTheme] = useDocAttr("data-theme", "rx09_theme", "light");
+  const [accent, setAccent] = useDocAttr("data-accent", "rx09_accent", "signal");
+  const [view, setView] = useState("showcase");
+  const [user, setUser] = useState(store.session());
+
+  useEffect(() => { window.scrollTo(0, 0); }, [view]);
+
+  if (view === "auth")
+    return <Auth theme={theme} setTheme={setTheme} onBack={() => setView("showcase")} onAuth={(u) => { setUser(u); setView("dashboard"); }} />;
+  if (view === "dashboard" && user)
+    return <Dashboard user={user} theme={theme} setTheme={setTheme} onBack={() => setView("showcase")}
+                      onLogout={() => { store.setSession(null); setUser(null); setView("auth"); }} />;
+  return <Showcase setView={setView} theme={theme} setTheme={setTheme} accent={accent} setAccent={setAccent} />;
+}
+
+ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+</script>
+</body>
+</html>

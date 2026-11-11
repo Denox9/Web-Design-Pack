@@ -1,0 +1,1238 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark" data-accent="dahon">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dagitab DGT-01 // Design System</title>
+<meta name="theme-color" content="#121212">
+<link rel="icon" href="data:,">
+<!-- set theme + accent before first paint (no flash) -->
+<script>(function(d,g){d.setAttribute("data-theme",g("dgt_theme","dark"));d.setAttribute("data-accent",g("dgt_accent","dahon"));})(document.documentElement,function(k,f){try{return localStorage.getItem(k)||f}catch(e){return f}});</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* 00 // RX09 BAYBAYIN FONT (embedded WOFF2 · angular derivative of Noto Sans Tagalog · SIL OFL 1.1) */
+@font-face{font-family:"RX09 Baybayin";src:url(data:font/woff2;base64,d09GMgABAAAAAAlIAA8AAAAAE7wAAAjuAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGkQbg2ocOgZgAIEOCpMYjwsBNgIkA4EMC0gABCAFhGgHgmUXJBiBBhtdEKOinJBKIfhPCZqN4S4fZq5WEPZiBSWJWrQo7MpQBJnT8ns9+jJn5D3+LniMrS8K/p+3q/+1T91uD13zLIUgIpgRHSRgKvyv0JqmADgkVEW6BxR+E25O1ImhMIDH8/X37Ozd1Z8mGQVpM4HWTFIhhJx44EHPj+ze28S7gfXhAJiZd4jvxy66QlUyXVszERC3G4Dhedy9883U+wn1qWzKtExQx3RMyyZsyqZslilMYSrT/V3mYw7zMpcZpswwcGFgYKChjimrPOsrNrxw4e9/v1/1zX8M4hexqhIqXjqlvDvo/EFcm0siEjKHkGiq+addz6KRkLZaaG3PvlTzgEcpTQpGDdld0Xn7Yc4shJEIjitoP5YjTAaRKZtHoULCV0wIA9JBHGFkySZEJgFR6unF0Op0eInWq8pV0HrLSuPw71y2jNZHUqihlQP4nwogbMsdCD7LkLeXUlsL5IjHJKvMBEkmoghRRiaRvw922Dwc3HlZDNQD1GmHRXbBCPnlmaDycr4VlTkHOMdEGCmb1zB+spPiKe7jJm54ikta7DOOOWAXbwlh8+Bayy2EwdkkjJw9QUbMrXPL9E62adRv/VTX8qfKgqpkXXz/AKGWbud9hy+dukf/qCnH3he50VRbkHBpSXMkQ7V1mU+dX99kS5FZTpLQrCXFpbIeJU+Dj82GN2ZhwGYiJ6VSQy6RTrP13ydA/yeYGSSZ3S0cONbLWCdQMHSh3WoNtF4AbGVugY7yPWiI8WoBFguYCzgzNx8e+EgGQNvzyQ7qoPRHP/jfwNWq9F1xBMu2+wCfAQZ4QDoPoXLMbMyUnIDg7Qn4du3tWRnVzdXRlsLSD/dYkFbI2vwjLeYn1f/3aZrB4pP2//Gn5HNo8HLEme9LlSZdRrekCKWkgDanVIethhuE3MIEYewnDDHYqsmkAJD8WOeKwmnpFU1tpRXtVSUmNZgeyMyoz+OKuKO0whOi+X6WiIPCnAo/+20aBFoZpX4dOSRgNpa2GWfKU2ib0nTAPpMcisOA4U+Lta4/LarsRmqyKGCdhH03mRlgV9NkbiILc6xQfoRhhy0RdztsBLLYFzKkuYksf5lKttwwMDRPXpP2ZrOaGjrPZqUIvRcsNXRIPHYnJxxhvQ3LPmU2sXZnZ/aoyoIqJp4D8bQ6stcO2TxN1LYdgipLFzkJQzZTYKmSdlaGrtixzg5TDS10hT3hjPvbtM9h2BDkX8Sy9at7MYuItYr8xaYpKKG0zuZqB0A5pd4RK/eh6tB+OKYKY30aeuDAvOsrrvzSNPWsu7OypqOrrkXaahFARkVtladnyuZqCKnQdZ4GriozKo0KW6ZGHkUNXnVsiK3yWbwMokMFINOXwbCvAZjIeHIjmrTRJEBV2BQke+jNg8Y7+T/5DA5tfEswWTJp+c/DBIb+9Xj+8OF8+trFQ5o55vPpPxct5Riv1eXokG1DcOuWVKAH3XlPkXdaqJF1Gcjk68EXKgfZEJL1sts6lhITy+BXr6pLV5u8zlf/MlmHfbVemptEDw0jVBpWr0AiL3SJ/7ewSKQVL3MPXlYfK56nDsBX9zbP+R+5+yF8x8FgCccBKNqhV82dySwiA6hAHruOonO/u+RNLTkSxo8aGK20nAzS96GIBalopdZJBICJmjZ0VDfTyQL7hLGWWV/g4hzfzU2WK/eTWpj4jHnAQPdLSvngK1PV2PT0J0sPupByrtTWEWsn8pICFljd9Yv1fuZccDKjLyWM+mqnL+5uF64EMREJCgvNm3poT6C/nbQ1vo3JL38SSAwtQ17kB6uXtqEqBrOecMmlxtFklyQOenZ1SllTWKPUxJKyc1u+LLBk6qWph/Fi/OtxNyCTqXbbixHvSWwjgGXLPOU5QTV6qmrXAcFsKYX2ZcowDxXB+p9ETnYAS00SZ7jfxfT2rNiUSl5jwWD46jZBkih6HPfg5c2NaDAJU6JlVU3Hs75g0LGjntfwQCLNkXBMq86D7dN9I7XjBuQhrfZl8S9Eryb2l1/Pp+70OPZSlzChmZGZ9FylWeW9TXfm2bTTzKo18nzVSkcjISs/HT4fnj89i+MPn9RbL7z/8fWkbp173//1+htPUHsopQaaS4qr1duEq7u51tpaNSe8I+GlkiaXBy63ib210p5KaVUrCplDWu+t8nOJaKkf5Lc2M379NXVqrZbei5rXQxjnBPrYdULIT8rGAjfzFOMgJ7BlghtahUb/WqCoxMSxcEl29E6qrS15zdVXtJo5NPLDpTjxlpLtH+uEUiGhKYHVHhMQJkgJ3tsXYCz6SmONB67FbxzeRwCvRrwD8EE3f/iPPunree2AIGYueO54hh7/6K5fpgFjlcxsMbtU7u1JLpdeE8JPQ6r1X0z0eKN67Fr9BZuzePVU+3NuvqdZnX4aTHlt8Lz8LpBH3ZA2jamF/zvJKKX4762p8iYeCWCGTTXq43993o7cUAOrze0yvKT5kmMbzSju24/t7E8fscfQIRdp3QYtUuTaFmkkciHSo4mbkY4KZZEBptdgZJByte/FJFKnHqIlgqHiFOUVCFrVUE0NNfh6JSAbuwtCQBq74YBLSUlbGpsT5XEFBIfXqtxcGplRZ8+rqqqxioW3ilKGjURUjZhi5sYcorFg4hHBSXAkqYLI69PDrVH1+VpIUqWAi1+Tz2XliYb2JM6t6HYagrIF0oqqrgoFa1xtp9YXvlbptM1FpGjJXM0N+fOVDr3sGa5m1wijdKdDSJIkqbvUheU9lp526ua2Xh3ZkHOuOAAtJb26MH2W4RNwhWhknC+b1dW2Q1q8XP9/UMMHUxIyeXhyCiiokMKKKKqY4kpQopKUrBSlKk3pylCmspStHOUqT/kqUKGK5KtYJdy/FThOu3Exia/i6OjUKAWNzYxgAIMYwjBGMIoxjGMCp3AaZ3DOab40sD4GMIABDGDIDFWPj85PiDPmbOvUzAYU7rd0Fn7NvH7zmOSgSUZf/9V9NGz7/21oBIR3GB8aCa7ym5tKwGc4C09JwrHaC9KrIZwuWQWudtCV/ypdWwhvDGq6fL0JlhLokTvXpTnLGwAA) format("woff2");font-weight:400;font-style:normal;font-display:swap;unicode-range:U+1700-171F,U+1735-1736,U+25CC}
+@font-face{font-family:"RX09 Baybayin";src:url(data:font/woff2;base64,d09GMgABAAAAAAlQAA8AAAAAEzgAAAj4AAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGkQbg2ocOgZgAIEOCpIsjhQBNgIkA4EMC0gABCAFhFAHgmUXJBiBBhvOD1FUk9og+EMCtbiUk/WHFAdjaqMnlsZhh3o1hkVVSoe+fOVf2mct3g/+n9/f/4+5zn6Uvp3IDDF9N0CJDgXMwrWH/dxtHsVJc0uIeZra+6KV5KHgiUQOEKrz/PcXO+/+t7abJoEHlARpM4HWTFIBUYIJ9/9UfYXS4JPswB3uSEc60pHOdKTDhdTTt+4Cd3hDOtyRzr8pm7zxb/RGb8wmbxrltKp0ZYq2MB2D8w4qxIFRf6nxma6t2VWesfVSITa8nseP1lK78/cT4A2QJxQepdy5C03maT+4SQoEl5RYVVfJKiAShlBVVihSpJzs0zQFjuzrNiWEUIuMeWM+3n1NCCMcAChmOAKJI+Il8kiXTmTKIoQBsSBU4gSjqODVCQim0QiGHpftY/juKjeE79GSCk7mk2sN4HvVhDF8HIDvXwBhQ14I13tAgrHErS/Q9Txmm2fGn0giuEfJT5I6joYOMQFuIhIYaBhogBEOlguFkJqMB52SC/NQ/jyUI6gMRLr6G8ZPrER55oFbbnK5LDU8692bV95NYdeqLS5dwKpFJAyfO1NT2bnDkvC2VRqNmTN9Pf/pAtClNqjoD1JlsXYhPGFGo/vzxzCVZB9M2ZHuDRJojXVhti8Z5KcvzDOyO3iFEoFerWRZZRtKCsKnaS3ePgs77IVzhNYRkolYmqv/fyLIJ2OKQSPxqzuw49jYuRAwsOuBdENrtusMYBvSA/rzF6CxCtUNLMTPnJ8zc8vAg0xEAqD3dW8Nr5D3vSj9/2sQs5T33AjAEu0ByGSAAR4Qy0OgHQtcvEgF/B8vjEwH90VC3HzP7CnzHsWIrp2ErYQ++Xcq33E8wAA+5+P3/cp30pD1CmX3TNFixIpbLclAyWHQa48q2CRwl5sEgmcASzqRCNhB1dYAEHkG51IDo2KH86jpyjEPjvLDnWKjt8S5UAcnCsw2CkpND45pVrRJ7b/4bROAdqvTCk/dhSzrIL0MLGRZujM9kJpsf5Z293QXOtDJKu6IRAymKNTXg24L4PlFkKXby2wK2nAL7f691jQChwPYw51sIUPd3c9f9UdIU/sBhrs+C9H+DN4sSj+piTLb7je7LeusheR0r+1Fh2BUi9PLH3Cc9yomUQgvtHf392fZQto+1X0afLIt9Nutvb2npjTyWOpn4so+7M160UjB+KjJ3npn2q7dyrK9MPm1AO30AZ/oPedJN/dSm92wrb2/62CukB1zWY+LM4Cduj+/rP0Q7rag1U0PtC9ulV7oI6WxPf2p2BdAJMp7tsBERoeVyPHOkUAVt2Fny69et+GqazZdxiMbESBVa8fW9+Uu9ZhC5dr2pj4Br7epdWpt5EJCvh8J8jdlqhtZ9y36F6TpnhZAf393A3wJgB8L134lzdJ9kCWbugDPA9ycLvASuKnTX9H/NSwspMn0/J/nyd6y7BZUGhoXj5zecPrFw8ZQVxnpll58nydM2SQZB+4Toa2IirJq4pA0M5hC45SZ61JHYOycr7cLq+x2qM8mNrKQe6eMhlyMBGq4nzAjsB3xF4eUqaZiwkVeWJw3StIcBpVA2GhT6ir5rZGlVVCpusBSuFpUyfdzUUphJ3xSeH71M5HLcyon2os3ZsCGocHQgCK1gQFDUBAsQQwn3EmSB6+skisxdWXjHFX6g0EwjLmQMFDJ3NuywVQfQRMywGRqwfsC13TMpf2cfG7KEeBFVGgNS4kNKjFTPYW4IOeCkda5b4iOdnnOWmvEuM/BgIKMRXptKhC/yGROCRTC+8SwYpHPWAneS6OV1RaMLseo0oQsHaGMiJAbUeabcKdOBG+Cq5xUoZ6PADmsvFbC6yKsnDM2dAErWSXjmbGW8ZGtSlo43fiIplhYwpeOREINoXUTiBESNvUqtBx7XdnBeZwHVMlf2JkjlGERB5YVOXeS+8RH4sds5udzjZtwN9LEeUi0UZLAiE+MNhOVDxop3Oc8V9EZ0EZXNao0Ja4vyNCi5NNQSlBDV2E/YHE4HRs002OqBIWKHa7kdk1ByPji3aePEI5D45rU8JpFAlrhMljMEOfMn3xZ0c5udAEoNmBIA1RrMPqMSBZP7nnyycNPPrTnIXYmtPztZW+sePvsG2jb26JLLzx75I0vo/BGCM2l98GHKubjGB7VZPHPbQhhDINSkGisrR7GADI/3zg2jW8u81b6TW9+cWUTY2N7voE4VX4+ryGDr38dtk0TfIweFfV2MSgcx0citooOEJOBnmgXiJw6R5kf0hOOm3rFLHLwXqWHnFDpAmuiFcQaHjCA9IrnVZBGcuNY3OAH2gTmFAkS0Ew5CtoxlJzs7QkwVp7u/4wh09+Wbd4nwOujP4CPY/XwvxE3dJ9xToM/BoDg8b9y4r/4OzsFDdggJ5uUnaTGt7tyxYzoKJnpL9eh1Iz5cnLD2vbo0dtnXmOz6ybHWvM9yW03SatuSx1lcLYnYnqgEnwhqvrt/t+3TrIl9VjZLFsj5+ffOd+FeaKaL44ejazaMpbbYHRS3AHHd8tfAhpOpUMuaN5ekGpEsr1sVrxY49HoZo0j1/caP+bVRI0/2bXjacOpr/OWEIaK09PRJfCpVqmauEwjFGg1HIQIyA3Bce6r0ihxXUR0XaSv5vkUelFgRnSTKsj0ND3jzUR1GZOQkay5zq6NJBMdL8tcTSe6IeL3FDfMuZwmmbqpUdWh6xnLTOZk03jAmExDcioZQVcpJ3KoPSR9aepUa26kCqV9XKZbZDrF0yk8wViHaJiYQ5nsYCJLsgjcgPjmvN+KyvByf+2OGzH/w5zbAVeauDT6FWY9JTN2HnJ/b37RjqzBVm3TAoDvUUH2yeRAJg9PTn7yV4ACFaRghShUYQpXhCIVpWjFKFZxileCEpWkZKUoVWlKV4YylaVs9+8AzqVdupnETy8HVA7L8xwgRIQYCVJkyFGgRIUaDb7RLw77R4gQIULEHk4XgH+AaDw7j5oliNJ8YH/Pp18+1zhoItHX/5ePT8uhv6+PDWlAZKeTCU0CV/aWrWz4AufizwIcH7tIPxjCmdhGyLJDWfy3rjeoNq0ODtDfRhblNyy3cXF18gk=) format("woff2");font-weight:700;font-style:normal;font-display:swap;unicode-range:U+1700-171F,U+1735-1736,U+25CC}
+/* =========================================================
+   DGT-01 // DAGITAB DESIGN SYSTEM v1.0
+   Minimal dark-first web kit · six-colour spectrum · Baybayin layer
+   01 TOKENS
+   ========================================================= */
+:root{
+  --c-dahon:#3ECF8E; --c-langit:#3B9EFF; --c-ube:#9B7BFF;
+  --c-mangga:#F5B83D; --c-gumamela:#F2555A; --c-dagat:#2EC4D6;
+  --accent:var(--c-dahon); --on-accent:#0B0B0B;
+  --sans:"Inter",ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"RX09 Baybayin",sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,"SFMono-Regular",Consolas,"RX09 Baybayin",monospace;
+  --bb:"RX09 Baybayin","Noto Sans Tagalog",sans-serif;
+  --r-sm:4px; --r:6px; --r-lg:10px; --r-xl:14px; --r-pill:999px;
+  --s1:4px; --s2:8px; --s3:12px; --s4:16px; --s5:24px; --s6:32px; --s7:48px; --s8:64px; --s9:96px;
+  --hdr:56px; --side:248px; --toc:208px; --max:880px;
+  --ease:cubic-bezier(.2,.8,.2,1);
+}
+[data-theme="dark"]{
+  --bg:#121212; --bg-alt:#171717; --surface:#1C1C1C; --surface-2:#242424;
+  --border:#2E2E2E; --border-strong:#3E3E3E;
+  --text:#EDEDED; --text-muted:#A1A1A1; --text-faint:#6E6E6E;
+  --accent-text:var(--accent); --shadow:0 8px 24px rgba(0,0,0,.45);
+  color-scheme:dark;
+}
+[data-theme="light"]{
+  --bg:#FCFCFC; --bg-alt:#F6F6F6; --surface:#FFFFFF; --surface-2:#F1F1F1;
+  --border:#E6E6E6; --border-strong:#D2D2D2;
+  --text:#171717; --text-muted:#5E5E5E; --text-faint:#8C8C8C;
+  --accent-text:color-mix(in srgb,var(--accent) 62%,#000); --shadow:0 8px 24px rgba(0,0,0,.08);
+  color-scheme:light;
+}
+[data-accent="dahon"]{--accent:var(--c-dahon)}
+[data-accent="langit"]{--accent:var(--c-langit)}
+[data-accent="ube"]{--accent:var(--c-ube)}
+[data-accent="mangga"]{--accent:var(--c-mangga)}
+[data-accent="gumamela"]{--accent:var(--c-gumamela)}
+[data-accent="dagat"]{--accent:var(--c-dagat)}
+/* tone helper: any element can carry its own spectrum colour via --t */
+.t-dahon{--t:var(--c-dahon)} .t-langit{--t:var(--c-langit)} .t-ube{--t:var(--c-ube)}
+.t-mangga{--t:var(--c-mangga)} .t-gumamela{--t:var(--c-gumamela)} .t-dagat{--t:var(--c-dagat)}
+.t-accent{--t:var(--accent)}
+
+/* 02 BASE */
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-padding-top:calc(var(--hdr) + 16px)}
+body{background:var(--bg);color:var(--text);font:14px/1.6 var(--sans);-webkit-font-smoothing:antialiased;min-height:100vh}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit}
+svg{display:block;max-width:100%}
+::selection{background:color-mix(in srgb,var(--accent) 35%,transparent)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:var(--r-sm)}
+code,kbd,pre{font-family:var(--mono)}
+.mono{font-family:var(--mono)}
+.muted{color:var(--text-muted)} .faint{color:var(--text-faint)}
+.accent-text{color:var(--accent-text)}
+.rx-bb{font-family:var(--bb);font-weight:700;letter-spacing:0;text-transform:none;line-height:1.35}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.eyebrow{font:500 12px/1 var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--text-muted);display:inline-flex;gap:8px;align-items:center}
+.eyebrow .rx-bb{font-size:14px;color:var(--t,var(--accent-text))}
+.ic{width:16px;height:16px;flex:none;stroke:currentColor;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.ic.lg{width:20px;height:20px}
+
+/* 03 SHELL // header + sidebar + content + toc */
+.hdr{position:sticky;top:0;z-index:50;height:var(--hdr);display:flex;align-items:center;gap:var(--s4);padding:0 var(--s5);
+  background:color-mix(in srgb,var(--bg) 82%,transparent);backdrop-filter:saturate(1.4) blur(10px);-webkit-backdrop-filter:saturate(1.4) blur(10px);border-bottom:1px solid var(--border)}
+.logo{display:flex;align-items:center;gap:10px;font-weight:600;font-size:15px;letter-spacing:-.01em;flex:none}
+.logo svg{width:26px;height:26px}
+.logo .ver{font:500 11px var(--mono);color:var(--text-faint);border:1px solid var(--border);border-radius:var(--r-pill);padding:1px 8px}
+.hdr-nav{display:flex;gap:2px;margin-left:var(--s3)}
+.hdr-nav a{padding:6px 10px;border-radius:var(--r);color:var(--text-muted);font-size:13px}
+.hdr-nav a:hover,.hdr-nav a.on{color:var(--text);background:var(--surface-2)}
+.hdr-tools{margin-left:auto;display:flex;align-items:center;gap:var(--s2)}
+.search{display:flex;align-items:center;gap:8px;height:32px;min-width:220px;padding:0 8px 0 10px;border:1px solid var(--border);border-radius:var(--r);background:var(--bg-alt);color:var(--text-faint);cursor:pointer;font-size:13px}
+.search:hover{border-color:var(--border-strong);color:var(--text-muted)}
+.search kbd{margin-left:auto}
+kbd{font:500 11px var(--mono);padding:1px 6px;border:1px solid var(--border-strong);border-bottom-width:2px;border-radius:var(--r-sm);background:var(--surface);color:var(--text-muted)}
+.dots{display:flex;gap:4px;padding:4px;border:1px solid var(--border);border-radius:var(--r-pill)}
+.dot{width:18px;height:18px;border-radius:50%;border:0;background:var(--t);cursor:pointer;position:relative}
+.dot[aria-pressed="true"]::after{content:"";position:absolute;inset:-3px;border-radius:50%;border:1.5px solid var(--text)}
+.icon-btn{width:32px;height:32px;display:grid;place-items:center;border:1px solid var(--border);border-radius:var(--r);background:transparent;cursor:pointer;color:var(--text-muted)}
+.icon-btn:hover{color:var(--text);border-color:var(--border-strong);background:var(--surface-2)}
+.theme-ic-sun{display:none}
+[data-theme="light"] .theme-ic-sun{display:block}[data-theme="light"] .theme-ic-moon{display:none}
+.menu-btn{display:none}
+
+.shell{display:grid;grid-template-columns:var(--side) minmax(0,1fr) var(--toc);max-width:1440px;margin:0 auto}
+.side{position:sticky;top:var(--hdr);height:calc(100vh - var(--hdr));overflow-y:auto;padding:var(--s5) var(--s3) var(--s7);border-right:1px solid var(--border);scrollbar-width:thin}
+.side h6{font:500 11px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--text-faint);padding:0 10px;margin:var(--s5) 0 var(--s2);display:flex;justify-content:space-between}
+.side h6:first-child{margin-top:0}
+.side h6 .rx-bb{font-size:12px;letter-spacing:0}
+.side a{display:flex;align-items:center;gap:10px;padding:6px 10px;border-radius:var(--r);color:var(--text-muted);font-size:13.5px}
+.side a .pip{width:6px;height:6px;border-radius:2px;background:var(--t);opacity:.85;flex:none}
+.side a:hover{color:var(--text);background:var(--surface)}
+.side a[aria-current="page"]{color:var(--text);background:var(--surface-2);font-weight:500}
+.side-foot{margin-top:var(--s6);padding:var(--s4) 10px 0;border-top:1px solid var(--border)}
+
+.page{min-width:0;padding:var(--s7) var(--s7) var(--s9)}
+.page-in{max-width:var(--max);margin:0 auto}
+.page.wide .page-in{max-width:1080px}
+.toc{position:sticky;top:var(--hdr);height:calc(100vh - var(--hdr));padding:var(--s7) var(--s4) 0 var(--s2);font-size:12.5px}
+.toc p{font:500 11px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--text-faint);margin-bottom:var(--s3)}
+.toc a{display:block;padding:4px 0 4px 12px;border-left:1px solid var(--border);color:var(--text-muted)}
+.toc a:hover{color:var(--text)}
+.toc a.on{color:var(--accent-text);border-left-color:var(--accent)}
+.page-head{margin-bottom:var(--s7)}
+.page-head h1{font-size:clamp(28px,4vw,40px);line-height:1.15;letter-spacing:-.025em;font-weight:600;margin:var(--s3) 0 var(--s3)}
+.page-head p{font-size:16px;color:var(--text-muted);max-width:640px}
+.page h2{font-size:20px;letter-spacing:-.015em;font-weight:600;margin:var(--s8) 0 var(--s2);display:flex;align-items:center;gap:10px}
+.page h2::before{content:"";width:8px;height:8px;border-radius:2px;background:var(--t,var(--accent));flex:none}
+.page h2 + .lead{margin-bottom:var(--s5)}
+.page h3{font-size:15px;font-weight:600;margin-bottom:var(--s2)}
+.lead{color:var(--text-muted);max-width:680px}
+.pager{display:grid;grid-template-columns:1fr 1fr;gap:var(--s4);margin-top:var(--s9)}
+.pager a{border:1px solid var(--border);border-radius:var(--r-lg);padding:var(--s4) var(--s5);display:grid;gap:2px}
+.pager a:hover{border-color:var(--border-strong);background:var(--surface)}
+.pager a span{font-size:12px;color:var(--text-faint)} .pager a b{font-weight:500}
+.pager a.next{text-align:right;grid-column:2}
+.site-foot{border-top:1px solid var(--border);padding:var(--s5);display:flex;justify-content:space-between;flex-wrap:wrap;gap:var(--s3);color:var(--text-faint);font-size:12px}
+
+/* 04 PRIMITIVES */
+.row{display:flex;gap:var(--s3);align-items:center;flex-wrap:wrap}
+.stack{display:grid;gap:var(--s3)}
+.grid{display:grid;gap:var(--s4)}
+.g2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.g3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.g4{grid-template-columns:repeat(4,minmax(0,1fr))}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);padding:var(--s5);position:relative;min-width:0;transition:border-color .15s var(--ease)}
+a.card:hover,.card.hover:hover{border-color:var(--border-strong)}
+.card.tone{border-color:color-mix(in srgb,var(--t) 30%,var(--border))}
+.card .art{color:var(--text);margin:calc(var(--s5) * -1) calc(var(--s5) * -1) var(--s4);border-bottom:1px solid var(--border);border-radius:var(--r-lg) var(--r-lg) 0 0;overflow:hidden;background:var(--bg-alt)}
+.card .art svg{width:100%;height:auto}
+.card-ic{width:36px;height:36px;border-radius:var(--r);display:grid;place-items:center;color:var(--t);background:color-mix(in srgb,var(--t) 12%,transparent);border:1px solid color-mix(in srgb,var(--t) 30%,transparent);margin-bottom:var(--s4)}
+.card h3{display:flex;gap:8px;align-items:center}
+.card p{color:var(--text-muted);font-size:13.5px}
+.panel{border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden;background:var(--surface)}
+.panel-head{display:flex;align-items:center;justify-content:space-between;gap:var(--s3);padding:10px var(--s4);border-bottom:1px solid var(--border);background:var(--bg-alt);font-size:12.5px;color:var(--text-muted)}
+.panel-body{padding:var(--s5)}
+.demo{border:1px solid var(--border);border-radius:var(--r-lg);background:var(--bg-alt);background-image:radial-gradient(var(--border) 1px,transparent 1px);background-size:16px 16px;padding:var(--s6) var(--s5);display:flex;flex-wrap:wrap;gap:var(--s3);align-items:center}
+.hr{height:1px;background:var(--border);border:0;margin:var(--s6) 0}
+
+/* 05 COMPONENTS */
+.btn{--t:var(--accent);display:inline-flex;align-items:center;justify-content:center;gap:8px;height:32px;padding:0 12px;border-radius:var(--r);border:1px solid var(--border-strong);background:var(--surface-2);color:var(--text);font-size:13px;font-weight:500;cursor:pointer;white-space:nowrap;transition:background .15s var(--ease),border-color .15s var(--ease),color .15s var(--ease)}
+.btn:hover{background:color-mix(in srgb,var(--surface-2) 70%,var(--text) 8%);border-color:color-mix(in srgb,var(--border-strong) 70%,var(--text) 20%)}
+.btn-primary{background:color-mix(in srgb,var(--t) 88%,#000);border-color:var(--t);color:var(--on-accent)}
+.btn-primary:hover{background:var(--t);border-color:var(--t)}
+.btn-soft{background:color-mix(in srgb,var(--t) 14%,transparent);border-color:color-mix(in srgb,var(--t) 40%,transparent);color:var(--t)}
+[data-theme="light"] .btn-soft{color:color-mix(in srgb,var(--t) 62%,#000)}
+.btn-soft:hover{background:color-mix(in srgb,var(--t) 22%,transparent);border-color:var(--t)}
+.btn-outline{background:transparent}
+.btn-ghost{background:transparent;border-color:transparent;color:var(--text-muted)}
+.btn-ghost:hover{background:var(--surface-2);border-color:transparent;color:var(--text)}
+.btn-danger{--t:var(--c-gumamela)}
+.btn-link{background:none;border:0;padding:0;height:auto;color:var(--accent-text)}
+.btn-link:hover{background:none;text-decoration:underline;text-underline-offset:3px}
+.btn-sm{height:26px;padding:0 10px;font-size:12px}
+.btn-lg{height:40px;padding:0 18px;font-size:14px}
+.btn[disabled]{opacity:.45;cursor:not-allowed}
+.btn .ic{width:14px;height:14px}
+.badge{--t:var(--text-muted);display:inline-flex;align-items:center;gap:6px;height:22px;padding:0 8px;border-radius:var(--r-pill);font:500 11.5px var(--sans);color:var(--t);background:color-mix(in srgb,var(--t) 12%,transparent);border:1px solid color-mix(in srgb,var(--t) 30%,transparent);white-space:nowrap}
+[data-theme="light"] .badge{color:color-mix(in srgb,var(--t) 65%,#000)}
+.badge.dot-b::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--t)}
+.pill{display:inline-flex;align-items:center;gap:8px;height:30px;padding:0 6px 0 6px;border:1px solid var(--border-strong);border-radius:var(--r-pill);font-size:12.5px;color:var(--text-muted);background:var(--surface)}
+.pill .badge{height:20px}
+.field{display:grid;gap:6px}
+.field label{font-size:13px;color:var(--text-muted)}
+.field .hint{font-size:12px;color:var(--text-faint)}
+.field.err .hint{color:var(--c-gumamela)}
+.field.err .input{border-color:var(--c-gumamela)}
+.input,.select,.textarea{width:100%;height:36px;padding:0 12px;border-radius:var(--r);border:1px solid var(--border-strong);background:var(--bg-alt);color:var(--text);font:14px var(--sans);transition:border-color .15s,box-shadow .15s}
+.textarea{height:auto;min-height:88px;padding:10px 12px;resize:vertical}
+.input::placeholder,.textarea::placeholder{color:var(--text-faint)}
+.input:focus,.select:focus,.textarea:focus{outline:0;border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 22%,transparent)}
+.input-group{display:flex;align-items:center;border:1px solid var(--border-strong);border-radius:var(--r);background:var(--bg-alt);padding-left:10px;color:var(--text-faint)}
+.input-group .input{border:0;background:transparent;box-shadow:none!important}
+.input-group:focus-within{border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 22%,transparent)}
+.switch{appearance:none;-webkit-appearance:none;width:34px;height:20px;border-radius:var(--r-pill);background:var(--border-strong);position:relative;cursor:pointer;flex:none;transition:background .15s}
+.switch::after{content:"";position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:#fff;transition:transform .18s var(--ease)}
+.switch:checked{background:var(--t,var(--accent))}
+.switch:checked::after{transform:translateX(14px)}
+.chk{appearance:none;-webkit-appearance:none;width:16px;height:16px;border-radius:var(--r-sm);border:1px solid var(--border-strong);background:var(--bg-alt);cursor:pointer;display:inline-grid;place-content:center;flex:none}
+.chk:checked{background:var(--t,var(--accent));border-color:var(--t,var(--accent))}
+.chk:checked::after{content:"";width:8px;height:4px;border-left:2px solid var(--on-accent);border-bottom:2px solid var(--on-accent);transform:rotate(-45deg) translate(1px,-1px)}
+.opt{display:flex;gap:10px;align-items:center;font-size:13.5px;cursor:pointer}
+.range{width:100%;accent-color:var(--accent)}
+.tabs{display:flex;gap:var(--s4);border-bottom:1px solid var(--border);overflow-x:auto;scrollbar-width:none}
+.tabs button{background:none;border:0;padding:10px 0;color:var(--text-muted);font-size:13px;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;white-space:nowrap}
+.tabs button:hover{color:var(--text)}
+.tabs button[aria-selected="true"]{color:var(--text);border-bottom-color:var(--accent)}
+.seg{display:inline-flex;padding:3px;border:1px solid var(--border);border-radius:var(--r);background:var(--bg-alt);gap:2px}
+.seg button{border:0;background:none;padding:4px 10px;border-radius:var(--r-sm);font-size:12.5px;color:var(--text-muted);cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--surface-2);color:var(--text);box-shadow:0 0 0 1px var(--border-strong)}
+.alert{--t:var(--c-langit);display:grid;grid-template-columns:auto 1fr;gap:12px;padding:12px 14px;border-radius:var(--r-lg);border:1px solid color-mix(in srgb,var(--t) 35%,var(--border));background:color-mix(in srgb,var(--t) 7%,var(--surface));font-size:13.5px}
+.alert .ic{color:var(--t);margin-top:3px}
+.alert b{font-weight:600;display:block}
+.alert p{color:var(--text-muted)}
+.avatar{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;font:600 11px var(--sans);color:var(--on-accent);background:var(--t);border:2px solid var(--bg)}
+.avatars{display:flex}.avatars .avatar+.avatar{margin-left:-8px}
+.tbl{width:100%;border-collapse:collapse;font-size:13px}
+.tbl th{font:500 12px var(--sans);color:var(--text-muted);text-align:left;padding:8px 12px;border-bottom:1px solid var(--border);background:var(--bg-alt);white-space:nowrap}
+.tbl td{padding:9px 12px;border-bottom:1px solid var(--border);white-space:nowrap}
+.tbl tr:last-child td{border-bottom:0}
+.tbl tbody tr:hover td{background:var(--surface-2)}
+.tbl .mono{font-size:12px;color:var(--text-muted)}
+.progress{height:6px;border-radius:var(--r-pill);background:var(--surface-2);overflow:hidden}
+.progress i{display:block;height:100%;background:var(--t,var(--accent));border-radius:inherit}
+.tip{position:relative}
+.tip:hover::after,.tip:focus-visible::after{content:attr(data-tip);position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);background:var(--text);color:var(--bg);font-size:12px;padding:4px 8px;border-radius:var(--r);white-space:nowrap;z-index:5}
+.crumbs{display:flex;gap:6px;align-items:center;font-size:13px;color:var(--text-muted)}
+.crumbs b{color:var(--text);font-weight:500}
+.pages{display:flex;gap:4px}
+.pages button{min-width:30px;height:30px;border-radius:var(--r);border:1px solid var(--border);background:var(--surface);cursor:pointer;font-size:12.5px;color:var(--text-muted)}
+.pages button[aria-current="true"]{border-color:var(--accent);color:var(--accent-text);background:color-mix(in srgb,var(--accent) 10%,transparent)}
+.skeleton{background:linear-gradient(90deg,var(--surface-2),var(--border),var(--surface-2));background-size:200% 100%;animation:sk 1.4s linear infinite;border-radius:var(--r-sm)}
+@keyframes sk{to{background-position:-200% 0}}
+
+/* code block */
+.code{border:1px solid var(--border);border-radius:var(--r-lg);background:var(--bg-alt);overflow:hidden}
+.code-head{display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border);padding:0 8px 0 14px}
+.code-head .tabs{border:0;gap:var(--s4)}
+.code pre{padding:14px 16px;overflow-x:auto;font-size:12.5px;line-height:1.7;color:var(--text);margin:0;tab-size:2}
+.tk-k{color:var(--c-ube)} .tk-s{color:var(--c-dahon)} .tk-f{color:var(--c-langit)} .tk-n{color:var(--c-mangga)} .tk-c{color:var(--text-faint)} .tk-p{color:var(--c-dagat)}
+[data-theme="light"] .tk-k{color:#6D45E8}[data-theme="light"] .tk-s{color:#13834F}[data-theme="light"] .tk-f{color:#1666C5}[data-theme="light"] .tk-n{color:#9A6400}[data-theme="light"] .tk-p{color:#0B7F8D}
+
+/* toast + palette */
+.toasts{position:fixed;right:16px;bottom:16px;z-index:200;display:grid;gap:8px;max-width:min(360px,calc(100vw - 32px))}
+.toast{display:flex;gap:10px;align-items:center;background:var(--surface);border:1px solid var(--border-strong);border-radius:var(--r-lg);padding:10px 14px;font-size:13px;box-shadow:var(--shadow);animation:tin .2s var(--ease)}
+.toast .ic{color:var(--c-dahon)}
+@keyframes tin{from{opacity:0;transform:translateY(6px)}}
+.overlay{position:fixed;inset:0;z-index:150;background:rgba(0,0,0,.55);display:flex;justify-content:center;align-items:flex-start;padding:12vh 16px 16px}
+.cmd{width:min(560px,100%);background:var(--surface);border:1px solid var(--border-strong);border-radius:var(--r-xl);box-shadow:var(--shadow);overflow:hidden}
+.cmd .input-group{border:0;border-bottom:1px solid var(--border);border-radius:0;background:transparent;padding-left:16px;box-shadow:none}
+.cmd .input-group .input{height:48px;font-size:15px}
+.cmd ul{list-style:none;max-height:340px;overflow-y:auto;padding:6px}
+.cmd li button{width:100%;display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:var(--r);border:0;background:none;cursor:pointer;text-align:left;font-size:13.5px;color:var(--text-muted)}
+.cmd li button .pip{width:8px;height:8px;border-radius:2px;background:var(--t)}
+.cmd li button small{margin-left:auto;color:var(--text-faint);font-size:11.5px}
+.cmd li button[aria-selected="true"]{background:var(--surface-2);color:var(--text)}
+.cmd-foot{display:flex;gap:14px;padding:8px 14px;border-top:1px solid var(--border);font-size:11.5px;color:var(--text-faint)}
+
+/* 06 PAGE-SPECIFIC */
+.hero{position:relative;border:1px solid var(--border);border-radius:var(--r-xl);overflow:hidden;padding:var(--s8) var(--s6);background:var(--bg-alt);isolation:isolate}
+.hero .bgart{position:absolute;inset:0;z-index:-1;opacity:.9;color:var(--text)}
+.hero .bgart svg{width:100%;height:100%;object-fit:cover}
+.hero h1{font-size:clamp(34px,5.4vw,60px);line-height:1.04;letter-spacing:-.035em;font-weight:600;max-width:720px}
+.hero h1 span{color:var(--accent-text)}
+.hero p{font-size:16.5px;color:var(--text-muted);max-width:560px;margin:var(--s4) 0 var(--s5)}
+.bento{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:var(--s4)}
+.bento > *{grid-column:span 2}
+.bento .w3{grid-column:span 3}.bento .w4{grid-column:span 4}.bento .w6{grid-column:span 6}
+.sw{border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden;background:var(--surface);cursor:pointer;text-align:left;padding:0;display:grid}
+.sw:hover{border-color:var(--border-strong)}
+.sw .chipc{height:84px;background:var(--t);position:relative}
+.sw .chipc .rx-bb{position:absolute;right:12px;bottom:6px;font-size:26px;color:rgba(0,0,0,.55)}
+.sw .meta{padding:12px 14px;display:grid;gap:2px}
+.sw .meta b{font-weight:600}
+.sw .meta code{font-size:12px;color:var(--text-muted)}
+.sw .meta small{font-size:12px;color:var(--text-faint)}
+.scale{display:grid;grid-template-columns:repeat(10,1fr);border-radius:var(--r);overflow:hidden;border:1px solid var(--border)}
+.scale div{height:40px;display:flex;align-items:flex-end;padding:4px;font:500 9.5px var(--mono)}
+.surf{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--s3)}
+.surf div{border:1px solid var(--border);border-radius:var(--r);padding:var(--s3);height:96px;display:flex;flex-direction:column;justify-content:flex-end;font-size:12px}
+.surf code{font-size:11px;color:var(--text-muted)}
+.type-row{display:grid;grid-template-columns:140px 1fr;gap:var(--s4);align-items:baseline;padding:var(--s4) 0;border-bottom:1px solid var(--border)}
+.type-row .k{font:500 12px var(--mono);color:var(--text-faint)}
+.type-row .k b{display:block;color:var(--text-muted);font-weight:500}
+.space-row{display:grid;grid-template-columns:60px 70px 1fr;align-items:center;gap:var(--s3);padding:6px 0;font-size:12.5px}
+.space-row i{display:block;height:12px;background:var(--accent);border-radius:2px;opacity:.85}
+.rad-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:var(--s3)}
+.rad-grid div{height:88px;border:1px solid var(--border-strong);background:var(--surface);display:flex;align-items:flex-end;padding:10px;font:500 11.5px var(--mono);color:var(--text-muted)}
+.icon-hero{display:grid;grid-template-columns:auto 1fr;gap:var(--s6);align-items:center}
+.icon-hero .big svg{width:180px;height:180px}
+.variants{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:var(--s3)}
+.variant{border:1px solid var(--border);border-radius:var(--r-lg);padding:var(--s4);display:grid;gap:10px;justify-items:center;background:var(--surface)}
+.variant svg{width:72px;height:72px}
+.variant .row{gap:6px;justify-content:center}
+.ladder{display:flex;align-items:flex-end;gap:var(--s5);flex-wrap:wrap}
+.ladder div{display:grid;gap:6px;justify-items:center;font:500 11px var(--mono);color:var(--text-faint)}
+.browser-tab{display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border:1px solid var(--border);border-bottom:0;border-radius:var(--r-lg) var(--r-lg) 0 0;background:var(--surface);font-size:12.5px}
+.browser-tab svg{width:16px;height:16px}
+.icons{display:grid;grid-template-columns:repeat(auto-fill,minmax(104px,1fr));gap:2px;border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden;background:var(--border)}
+.icons button{background:var(--surface);border:0;padding:18px 6px 12px;display:grid;justify-items:center;gap:10px;cursor:pointer;color:var(--text-muted);font-size:11.5px}
+.icons button:hover{background:var(--surface-2);color:var(--text)}
+.icons .ic{width:22px;height:22px}
+.art-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:var(--s4)}
+.art-card{border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden;background:var(--surface);display:grid}
+.art-card .pv{background:var(--bg-alt);border-bottom:1px solid var(--border);color:var(--text)}
+.art-card .pv svg{width:100%;height:auto}
+.art-card .ft{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:10px 12px}
+.art-card .ft b{font-weight:500;font-size:13px}
+.art-card .ft small{display:block;font:500 10.5px var(--mono);color:var(--text-faint);letter-spacing:.04em}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:var(--s4)}
+.chips button{height:28px;padding:0 12px;border-radius:var(--r-pill);border:1px solid var(--border);background:transparent;color:var(--text-muted);cursor:pointer;font-size:12.5px}
+.chips button[aria-pressed="true"]{background:var(--text);color:var(--bg);border-color:var(--text)}
+.bb-conv{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr);gap:var(--s4)}
+.bb-out{min-height:140px;display:flex;align-items:center;overflow-x:auto;color:var(--accent-text)}
+.bb-out svg{height:var(--bb-h,96px);width:auto;max-width:none;flex:none}
+.bb-uni{font-size:30px;word-break:break-all;color:var(--text)}
+.bb-chart{display:grid;grid-template-columns:repeat(auto-fill,minmax(76px,1fr));gap:2px;background:var(--border);border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden}
+.bb-chart button{background:var(--surface);border:0;padding:12px 4px 8px;display:grid;justify-items:center;gap:2px;cursor:pointer}
+.bb-chart button:hover{background:var(--surface-2)}
+.bb-chart .g{font-family:var(--bb);font-weight:700;font-size:32px;line-height:1.3;color:var(--t,var(--text))}
+.bb-chart small{font:500 10.5px var(--mono);color:var(--text-faint)}
+.frame{border:1px solid var(--border-strong);border-radius:var(--r-xl);overflow:hidden;background:var(--bg);box-shadow:var(--shadow)}
+.frame-bar{display:flex;align-items:center;gap:6px;padding:10px 14px;border-bottom:1px solid var(--border);background:var(--bg-alt)}
+.frame-bar i{width:10px;height:10px;border-radius:50%;background:var(--border-strong)}
+.frame-bar span{margin:0 auto;font:500 11.5px var(--mono);color:var(--text-faint);border:1px solid var(--border);padding:2px 14px;border-radius:var(--r-pill);background:var(--surface)}
+/* landing template */
+.lp-nav{display:flex;align-items:center;gap:var(--s5);padding:14px var(--s5);border-bottom:1px solid var(--border)}
+.lp-nav nav{display:flex;gap:var(--s4);font-size:13px;color:var(--text-muted)}
+.lp-hero{text-align:center;padding:var(--s9) var(--s5) var(--s8);position:relative;isolation:isolate;overflow:hidden}
+.lp-hero .bgart{position:absolute;inset:0;z-index:-1;opacity:.55}
+.lp-hero .bgart svg{width:100%;height:100%}
+.lp-hero h2{display:block;font-size:clamp(32px,5.5vw,64px);line-height:1.02;letter-spacing:-.04em;margin:var(--s4) auto 0;font-weight:600}
+.lp-hero h2::before{display:none}
+.lp-hero h2 span{color:var(--accent-text);display:block}
+.lp-hero p{max-width:540px;margin:var(--s4) auto var(--s5);color:var(--text-muted);font-size:16px}
+.logos{display:flex;justify-content:center;flex-wrap:wrap;gap:var(--s6);padding:var(--s5);border-top:1px solid var(--border);border-bottom:1px solid var(--border);color:var(--text-faint);font:600 15px var(--sans);letter-spacing:.12em}
+.lp-sec{padding:var(--s8) var(--s5)}
+.lp-foot{display:grid;grid-template-columns:1.4fr repeat(3,1fr);gap:var(--s5);padding:var(--s7) var(--s5);border-top:1px solid var(--border);font-size:13px}
+.lp-foot ul{list-style:none;display:grid;gap:6px;color:var(--text-muted)}
+.lp-foot h5{font-size:13px;font-weight:500;margin-bottom:var(--s2)}
+.tier{border:1px solid var(--border);border-radius:var(--r-xl);padding:var(--s5);background:var(--surface);display:grid;gap:var(--s4);align-content:start}
+.tier.feat{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}
+.tier .price{font-size:34px;font-weight:600;letter-spacing:-.03em}
+.tier .price small{font-size:13px;color:var(--text-muted);font-weight:400;letter-spacing:0}
+.tier ul{list-style:none;display:grid;gap:8px;font-size:13px;color:var(--text-muted)}
+.tier li{display:flex;gap:8px;align-items:flex-start}
+.tier li .ic{color:var(--t,var(--accent));margin-top:3px;width:14px;height:14px}
+.auth{display:grid;grid-template-columns:1fr 1fr;min-height:520px}
+.auth-form{padding:var(--s7) var(--s6);display:grid;gap:var(--s4);align-content:center;max-width:420px;width:100%;margin:0 auto}
+.auth-art{border-left:1px solid var(--border);background:var(--bg-alt);position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;padding:var(--s6);isolation:isolate}
+.auth-art .bgart{position:absolute;inset:0;z-index:-1;color:var(--text)}
+.auth-art .bgart svg{width:100%;height:100%}
+.or{display:flex;align-items:center;gap:10px;color:var(--text-faint);font-size:12px}
+.or::before,.or::after{content:"";flex:1;height:1px;background:var(--border)}
+.studio{display:grid;grid-template-columns:52px 210px 1fr;min-height:560px;font-size:13px}
+.rail{border-right:1px solid var(--border);display:flex;flex-direction:column;align-items:center;gap:6px;padding:10px 0;background:var(--bg-alt)}
+.rail button{width:36px;height:36px;border-radius:var(--r);border:0;background:none;display:grid;place-items:center;color:var(--text-faint);cursor:pointer}
+.rail button:hover{color:var(--text);background:var(--surface-2)}
+.rail button[aria-current="page"]{color:var(--accent-text);background:color-mix(in srgb,var(--accent) 12%,transparent)}
+.studio-side{border-right:1px solid var(--border);padding:var(--s4) var(--s3);display:grid;gap:4px;align-content:start}
+.studio-side a{display:flex;align-items:center;gap:8px;padding:6px 8px;border-radius:var(--r);color:var(--text-muted);cursor:pointer}
+.studio-side a.on{background:var(--surface-2);color:var(--text)}
+.studio-main{min-width:0;display:flex;flex-direction:column}
+.studio-top{display:flex;align-items:center;justify-content:space-between;gap:var(--s3);padding:10px var(--s4);border-bottom:1px solid var(--border);flex-wrap:wrap}
+.stat{display:grid;gap:6px}
+.stat .v{font-size:26px;font-weight:600;letter-spacing:-.02em}
+.stat .d{font-size:12px}
+.stat svg{height:40px;width:100%}
+
+/* 07 RESPONSIVE */
+@media (max-width:1240px){.shell{grid-template-columns:var(--side) minmax(0,1fr)}.toc{display:none}}
+@media (max-width:960px){
+  .hdr-nav,.search span.txt{display:none}.search{min-width:0}
+  .menu-btn{display:grid}
+  .shell{grid-template-columns:1fr}
+  .side{position:fixed;left:0;top:var(--hdr);bottom:0;width:min(300px,86vw);z-index:60;background:var(--bg);transform:translateX(-100%);transition:transform .2s var(--ease);height:auto}
+  body.nav-open .side{transform:none;box-shadow:var(--shadow)}
+  .page{padding:var(--s6) var(--s4) var(--s8)}
+  .g3,.g4{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .bento > *,.bento .w3,.bento .w4{grid-column:span 3}
+  .auth{grid-template-columns:1fr}.auth-art{border-left:0;border-top:1px solid var(--border);min-height:260px}
+  .studio{grid-template-columns:52px 1fr}.studio-side{display:none}
+  .lp-foot{grid-template-columns:1fr 1fr}
+  .surf{grid-template-columns:repeat(2,1fr)}
+}
+@media (max-width:640px){
+  .hdr{padding:0 var(--s3);gap:var(--s2)}.logo .ver,.dots{display:none}
+  .g2,.g3,.g4,.bb-conv{grid-template-columns:1fr}
+  .bento > *,.bento .w3,.bento .w4,.bento .w6{grid-column:span 6}
+  .hero{padding:var(--s6) var(--s4)}
+  .icon-hero{grid-template-columns:1fr}
+  .type-row{grid-template-columns:1fr;gap:4px}
+  .rad-grid{grid-template-columns:repeat(2,1fr)}
+  .pager{grid-template-columns:1fr}.pager a.next{grid-column:1}
+  .scale{grid-template-columns:repeat(5,1fr)}
+  .lp-nav nav{display:none}
+}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}html{scroll-behavior:auto}}
+/* 08 FIXES */
+.card .art .mk svg{width:96px;height:96px}
+.hero .bgart{-webkit-mask-image:linear-gradient(90deg,transparent 15%,#000 65%);mask-image:linear-gradient(90deg,transparent 15%,#000 65%)}
+.card .art svg{max-height:240px}
+.bb-chart,.icons{gap:0;background:var(--surface)}
+.bb-chart button,.icons button{box-shadow:inset -1px -1px 0 var(--border)}
+
+</style>
+</head>
+<body>
+<div class="shell">
+  <aside class="side" id="side" aria-label="Documentation"></aside>
+  <main class="page" id="page"></main>
+  <aside class="toc" id="toc" aria-label="On this page"></aside>
+</div>
+<footer class="site-foot"><span>© 2026 DAGITAB · DGT-01 Design System v1.0 · Built for light, born in the archipelago.</span><span class="mono">BRAND: DAGITAB / MODEL: DGT-01 / LICENSE: INTERNAL</span></footer>
+<div class="toasts" id="toasts" aria-live="polite"></div>
+<!-- RX09 BAYBAYIN SVG ENGINE // window.RX09Baybayin -->
+<script>
+
+
+/*! RX09 Baybayin SVG Engine v1.0 | glyph outlines: angular derivative of Noto Sans Tagalog (SIL OFL 1.1) */
+(function(root){
+"use strict";
+var DATA={"unitsHeight":1300,"baselineY":1000,"units":{"a":{"d":"M196 904 220 648H84V528H236V504H84V392H188L92 296L116 184L292 280L348 392H508V504H364L324 824L356 896L460 832L780 376L908 336L1028 400L1076 480L972 528L908 464L836 488L548 920L340 1032Z","w":1066,"u":"ᜀ"},"i":{"d":"M96 392 328 480 808 392 1056 504 984 600 744 520 320 600 64 512ZM96 800H288L408 616H488L536 720L608 616H688L776 800H952L1016 904L760 936L632 800L512 912L440 816L360 904L224 952L32 904Z","w":1063,"u":"ᜁ"},"u":{"d":"M48 992 88 872 296 904 392 856 400 752 208 712V600L360 576L392 504L328 464L152 496L104 384L360 344L520 448L512 584L448 640L520 696L544 832L456 976L280 1024Z","w":587,"u":"ᜂ"},"e":{"d":"M96 392 328 480 808 392 1056 504 984 600 744 520 320 600 64 512ZM96 800H288L408 616H488L536 720L608 616H688L776 800H952L1016 904L760 936L632 800L512 912L440 816L360 904L224 952L32 904Z","w":1063,"u":"ᜁ"},"o":{"d":"M48 992 88 872 296 904 392 856 400 752 208 712V600L360 576L392 504L328 464L152 496L104 384L360 344L520 448L512 584L448 640L520 696L544 832L456 976L280 1024Z","w":587,"u":"ᜂ"},"ka":{"d":"M51 904 131 808 299 888 475 824V592L227 648L59 544L131 456L307 528L747 368L1011 424L963 536L779 488L603 552V776L843 728L1011 784L963 888L755 848L291 1008Z","w":1036,"u":"ᜃ"},"ki":{"d":"M51 904 131 808 299 888 475 824V592L227 648L59 544L131 456L307 528L747 368L1011 424L963 536L779 488L603 552V776L843 728L1011 784L963 888L755 848L291 1008Z M439 240 527 144 615 240 527 336Z","w":1036,"u":"ᜃᜒ"},"ku":{"d":"M51 904 131 808 299 888 475 824V592L227 648L59 544L131 456L307 528L747 368L1011 424L963 536L779 488L603 552V776L843 728L1011 784L963 888L755 848L291 1008Z M487 1080 575 984 655 1080 575 1176Z","w":1036,"u":"ᜃᜓ"},"k":{"d":"M51 904 131 808 299 888 475 824V592L227 648L59 544L131 456L307 528L747 368L1011 424L963 536L779 488L603 552V776L843 728L1011 784L963 888L755 848L291 1008Z M517 1160H445V1064H517V992H621V1064H685V1160H621V1232H517Z","w":1036,"u":"ᜃ᜔"},"k_p":{"d":"M51 904 131 808 299 888 475 824V592L227 648L59 544L131 456L307 528L747 368L1011 424L963 536L779 488L603 552V776L843 728L1011 784L963 888L755 848L291 1008Z M1220 560V896L1172 1040L1012 1152L716 1160V1040L972 1032L1076 960L1100 560Z","w":1284,"u":"ᜃ᜕"},"ke":{"d":"M51 904 131 808 299 888 475 824V592L227 648L59 544L131 456L307 528L747 368L1011 424L963 536L779 488L603 552V776L843 728L1011 784L963 888L755 848L291 1008Z M439 240 527 144 615 240 527 336Z","w":1036,"u":"ᜃᜒ"},"ko":{"d":"M51 904 131 808 299 888 475 824V592L227 648L59 544L131 456L307 528L747 368L1011 424L963 536L779 488L603 552V776L843 728L1011 784L963 888L755 848L291 1008Z M487 1080 575 984 655 1080 575 1176Z","w":1036,"u":"ᜃᜓ"},"ga":{"d":"M48 992 88 872 296 904 392 856 400 752 208 712V600L360 576L392 504L328 464L152 496L104 384L336 336L472 392H664L736 528L752 864L872 912V1040L640 952L608 544L552 496L520 504L512 592L448 648L536 720L520 904L424 992L280 1024Z","w":889,"u":"ᜄ"},"gi":{"d":"M48 992 88 872 296 904 392 856 400 752 208 712V600L360 576L392 504L328 464L152 496L104 384L336 336L472 392H664L736 528L752 864L872 912V1040L640 952L608 544L552 496L520 504L512 592L448 648L536 720L520 904L424 992L280 1024Z M351 240 439 144 527 240 439 336Z","w":889,"u":"ᜄᜒ"},"gu":{"d":"M48 992 88 872 296 904 392 856 400 752 208 712V600L360 576L392 504L328 464L152 496L104 384L336 336L472 392H664L736 528L752 864L872 912V1040L640 952L608 544L552 496L520 504L512 592L448 648L536 720L520 904L424 992L280 1024Z M493 1080 581 984 661 1080 581 1176Z","w":889,"u":"ᜄᜓ"},"g":{"d":"M48 992 88 872 296 904 392 856 400 752 208 712V600L360 576L392 504L328 464L152 496L104 384L336 336L472 392H664L736 528L752 864L872 912V1040L640 952L608 544L552 496L520 504L512 592L448 648L536 720L520 904L424 992L280 1024Z M523 1160H451V1064H523V992H627V1064H691V1160H627V1232H523Z","w":889,"u":"ᜄ᜔"},"g_p":{"d":"M48 992 88 872 296 904 392 856 400 752 208 712V600L360 576L392 504L328 464L152 496L104 384L336 336L472 392H664L736 528L752 864L872 912V1040L640 952L608 544L552 496L520 504L512 592L448 648L536 720L520 904L424 992L280 1024Z M1073 560V896L1025 1040L865 1152L569 1160V1040L825 1032L929 960L953 560Z","w":1137,"u":"ᜄ᜕"},"ge":{"d":"M48 992 88 872 296 904 392 856 400 752 208 712V600L360 576L392 504L328 464L152 496L104 384L336 336L472 392H664L736 528L752 864L872 912V1040L640 952L608 544L552 496L520 504L512 592L448 648L536 720L520 904L424 992L280 1024Z M351 240 439 144 527 240 439 336Z","w":889,"u":"ᜄᜒ"},"go":{"d":"M48 992 88 872 296 904 392 856 400 752 208 712V600L360 576L392 504L328 464L152 496L104 384L336 336L472 392H664L736 528L752 864L872 912V1040L640 952L608 544L552 496L520 504L512 592L448 648L536 720L520 904L424 992L280 1024Z M493 1080 581 984 661 1080 581 1176Z","w":889,"u":"ᜄᜓ"},"nga":{"d":"M108 840 380 832 436 744 388 592 180 632 68 576 52 440 180 320 252 424 180 480V496L444 472L556 640L804 528L916 552L988 632V816L844 944L748 976L716 864L844 800L876 712L804 648L564 768L460 936L212 944L188 1024H68Z","w":1063,"u":"ᜅ"},"ngi":{"d":"M108 840 380 832 436 744 388 592 180 632 68 576 52 440 180 320 252 424 180 480V496L444 472L556 640L804 528L916 552L988 632V816L844 944L748 976L716 864L844 800L876 712L804 648L564 768L460 936L212 944L188 1024H68Z M439 240 527 144 615 240 527 336Z","w":1063,"u":"ᜅᜒ"},"ngu":{"d":"M108 840 380 832 436 744 388 592 180 632 68 576 52 440 180 320 252 424 180 480V496L444 472L556 640L804 528L916 552L988 632V816L844 944L748 976L716 864L844 800L876 712L804 648L564 768L460 936L212 944L188 1024H68Z M512 1080 600 984 680 1080 600 1176Z","w":1063,"u":"ᜅᜓ"},"ng":{"d":"M108 840 380 832 436 744 388 592 180 632 68 576 52 440 180 320 252 424 180 480V496L444 472L556 640L804 528L916 552L988 632V816L844 944L748 976L716 864L844 800L876 712L804 648L564 768L460 936L212 944L188 1024H68Z M542 1160H470V1064H542V992H646V1064H710V1160H646V1232H542Z","w":1063,"u":"ᜅ᜔"},"ng_p":{"d":"M108 840 380 832 436 744 388 592 180 632 68 576 52 440 180 320 252 424 180 480V496L444 472L556 640L804 528L916 552L988 632V816L844 944L748 976L716 864L844 800L876 712L804 648L564 768L460 936L212 944L188 1024H68Z M1247 560V896L1199 1040L1039 1152L743 1160V1040L999 1032L1103 960L1127 560Z","w":1311,"u":"ᜅ᜕"},"nge":{"d":"M108 840 380 832 436 744 388 592 180 632 68 576 52 440 180 320 252 424 180 480V496L444 472L556 640L804 528L916 552L988 632V816L844 944L748 976L716 864L844 800L876 712L804 648L564 768L460 936L212 944L188 1024H68Z M439 240 527 144 615 240 527 336Z","w":1063,"u":"ᜅᜒ"},"ngo":{"d":"M108 840 380 832 436 744 388 592 180 632 68 576 52 440 180 320 252 424 180 480V496L444 472L556 640L804 528L916 552L988 632V816L844 944L748 976L716 864L844 800L876 712L804 648L564 768L460 936L212 944L188 1024H68Z M512 1080 600 984 680 1080 600 1176Z","w":1063,"u":"ᜅᜓ"},"ta":{"d":"M212 728 68 720 84 496 188 584 180 624 188 632 604 368 788 344 988 384 932 488 716 472 500 568 332 760 244 1024H108Z","w":1027,"u":"ᜆ"},"ti":{"d":"M212 728 68 720 84 496 188 584 180 624 188 632 604 368 788 344 988 384 932 488 716 472 500 568 332 760 244 1024H108Z M439 240 527 144 615 240 527 336Z","w":1027,"u":"ᜆᜒ"},"tu":{"d":"M212 728 68 720 84 496 188 584 180 624 188 632 604 368 788 344 988 384 932 488 716 472 500 568 332 760 244 1024H108Z M487 1080 575 984 655 1080 575 1176Z","w":1027,"u":"ᜆᜓ"},"t":{"d":"M212 728 68 720 84 496 188 584 180 624 188 632 604 368 788 344 988 384 932 488 716 472 500 568 332 760 244 1024H108Z M517 1160H445V1064H517V992H621V1064H685V1160H621V1232H517Z","w":1027,"u":"ᜆ᜔"},"t_p":{"d":"M212 728 68 720 84 496 188 584 180 624 188 632 604 368 788 344 988 384 932 488 716 472 500 568 332 760 244 1024H108Z M1211 560V896L1163 1040L1003 1152L707 1160V1040L963 1032L1067 960L1091 560Z","w":1275,"u":"ᜆ᜕"},"te":{"d":"M212 728 68 720 84 496 188 584 180 624 188 632 604 368 788 344 988 384 932 488 716 472 500 568 332 760 244 1024H108Z M439 240 527 144 615 240 527 336Z","w":1027,"u":"ᜆᜒ"},"to":{"d":"M212 728 68 720 84 496 188 584 180 624 188 632 604 368 788 344 988 384 932 488 716 472 500 568 332 760 244 1024H108Z M487 1080 575 984 655 1080 575 1176Z","w":1027,"u":"ᜆᜓ"},"da":{"d":"M195 920 115 832V672L179 568L51 496L115 400L339 480L819 392L1075 504L1003 600L763 512L315 592L235 728L243 784L291 824L819 744L1075 848L1003 944L763 864L323 944Z","w":1100,"u":"ᜇ"},"di":{"d":"M195 920 115 832V672L179 568L51 496L115 400L339 480L819 392L1075 504L1003 600L763 512L315 592L235 728L243 784L291 824L819 744L1075 848L1003 944L763 864L323 944Z M478 240 566 144 654 240 566 336Z","w":1100,"u":"ᜇᜒ"},"du":{"d":"M195 920 115 832V672L179 568L51 496L115 400L339 480L819 392L1075 504L1003 600L763 512L315 592L235 728L243 784L291 824L819 744L1075 848L1003 944L763 864L323 944Z M500 1080 588 984 668 1080 588 1176Z","w":1100,"u":"ᜇᜓ"},"d":{"d":"M195 920 115 832V672L179 568L51 496L115 400L339 480L819 392L1075 504L1003 600L763 512L315 592L235 728L243 784L291 824L819 744L1075 848L1003 944L763 864L323 944Z M530 1160H458V1064H530V992H634V1064H698V1160H634V1232H530Z","w":1100,"u":"ᜇ᜔"},"d_p":{"d":"M195 920 115 832V672L179 568L51 496L115 400L339 480L819 392L1075 504L1003 600L763 512L315 592L235 728L243 784L291 824L819 744L1075 848L1003 944L763 864L323 944Z M1284 560V896L1236 1040L1076 1152L780 1160V1040L1036 1032L1140 960L1164 560Z","w":1348,"u":"ᜇ᜕"},"de":{"d":"M195 920 115 832V672L179 568L51 496L115 400L339 480L819 392L1075 504L1003 600L763 512L315 592L235 728L243 784L291 824L819 744L1075 848L1003 944L763 864L323 944Z M478 240 566 144 654 240 566 336Z","w":1100,"u":"ᜇᜒ"},"do":{"d":"M195 920 115 832V672L179 568L51 496L115 400L339 480L819 392L1075 504L1003 600L763 512L315 592L235 728L243 784L291 824L819 744L1075 848L1003 944L763 864L323 944Z M500 1080 588 984 668 1080 588 1176Z","w":1100,"u":"ᜇᜓ"},"na":{"d":"M314 1040 434 904 346 808 434 736 346 648 434 560 386 472 298 520 226 648 242 1024H106L74 712L210 432L482 344L642 392L762 512L826 864L794 1024H658L698 792L666 624L578 504L522 480L578 576L498 648L602 728L498 816L594 896L426 1096Z","w":902,"u":"ᜈ"},"ni":{"d":"M314 1040 434 904 346 808 434 736 346 648 434 560 386 472 298 520 226 648 242 1024H106L74 712L210 432L482 344L642 392L762 512L826 864L794 1024H658L698 792L666 624L578 504L522 480L578 576L498 648L602 728L498 816L594 896L426 1096Z M361 240 449 144 537 240 449 336Z","w":902,"u":"ᜈᜒ"},"nu":{"d":"M314 1040 434 904 346 808 434 736 346 648 434 560 386 472 298 520 226 648 242 1024H106L74 712L210 432L482 344L642 392L762 512L826 864L794 1024H658L698 792L666 624L578 504L522 480L578 576L498 648L602 728L498 816L594 896L426 1096Z M385 1168 473 1072 553 1168 473 1264Z","w":902,"u":"ᜈᜓ"},"n":{"d":"M314 1040 434 904 346 808 434 736 346 648 434 560 386 472 298 520 226 648 242 1024H106L74 712L210 432L482 344L642 392L762 512L826 864L794 1024H658L698 792L666 624L578 504L522 480L578 576L498 648L602 728L498 816L594 896L426 1096Z M415 1248H343V1152H415V1080H519V1152H583V1248H519V1320H415Z","w":902,"u":"ᜈ᜔"},"n_p":{"d":"M314 1040 434 904 346 808 434 736 346 648 434 560 386 472 298 520 226 648 242 1024H106L74 712L210 432L482 344L642 392L762 512L826 864L794 1024H658L698 792L666 624L578 504L522 480L578 576L498 648L602 728L498 816L594 896L426 1096Z M1086 560V896L1038 1040L878 1152L582 1160V1040L838 1032L942 960L966 560Z","w":1150,"u":"ᜈ᜕"},"ne":{"d":"M314 1040 434 904 346 808 434 736 346 648 434 560 386 472 298 520 226 648 242 1024H106L74 712L210 432L482 344L642 392L762 512L826 864L794 1024H658L698 792L666 624L578 504L522 480L578 576L498 648L602 728L498 816L594 896L426 1096Z M361 240 449 144 537 240 449 336Z","w":902,"u":"ᜈᜒ"},"no":{"d":"M314 1040 434 904 346 808 434 736 346 648 434 560 386 472 298 520 226 648 242 1024H106L74 712L210 432L482 344L642 392L762 512L826 864L794 1024H658L698 792L666 624L578 504L522 480L578 576L498 648L602 728L498 816L594 896L426 1096Z M385 1168 473 1072 553 1168 473 1264Z","w":902,"u":"ᜈᜓ"},"pa":{"d":"M202 920 218 648H58V528L338 560L322 864L378 896L514 800L818 376L954 336L1074 400L1122 480L1010 528L954 464L898 472L802 600L914 776L802 832L730 704L546 944L354 1032Z","w":1122,"u":"ᜉ"},"pi":{"d":"M202 920 218 648H58V528L338 560L322 864L378 896L514 800L818 376L954 336L1074 400L1122 480L1010 528L954 464L898 472L802 600L914 776L802 832L730 704L546 944L354 1032Z M439 240 527 144 615 240 527 336Z","w":1122,"u":"ᜉᜒ"},"pu":{"d":"M202 920 218 648H58V528L338 560L322 864L378 896L514 800L818 376L954 336L1074 400L1122 480L1010 528L954 464L898 472L802 600L914 776L802 832L730 704L546 944L354 1032Z M538 1080 626 984 706 1080 626 1176Z","w":1122,"u":"ᜉᜓ"},"p":{"d":"M202 920 218 648H58V528L338 560L322 864L378 896L514 800L818 376L954 336L1074 400L1122 480L1010 528L954 464L898 472L802 600L914 776L802 832L730 704L546 944L354 1032Z M568 1160H496V1064H568V992H672V1064H736V1160H672V1232H568Z","w":1122,"u":"ᜉ᜔"},"p_p":{"d":"M202 920 218 648H58V528L338 560L322 864L378 896L514 800L818 376L954 336L1074 400L1122 480L1010 528L954 464L898 472L802 600L914 776L802 832L730 704L546 944L354 1032Z M1306 560V896L1258 1040L1098 1152L802 1160V1040L1058 1032L1162 960L1186 560Z","w":1370,"u":"ᜉ᜕"},"pe":{"d":"M202 920 218 648H58V528L338 560L322 864L378 896L514 800L818 376L954 336L1074 400L1122 480L1010 528L954 464L898 472L802 600L914 776L802 832L730 704L546 944L354 1032Z M439 240 527 144 615 240 527 336Z","w":1122,"u":"ᜉᜒ"},"po":{"d":"M202 920 218 648H58V528L338 560L322 864L378 896L514 800L818 376L954 336L1074 400L1122 480L1010 528L954 464L898 472L802 600L914 776L802 832L730 704L546 944L354 1032Z M538 1080 626 984 706 1080 626 1176Z","w":1122,"u":"ᜉᜓ"},"ba":{"d":"M136 992 64 872 144 544 384 352 656 384 824 624 792 912 640 1024 512 1016 440 960 264 1024ZM464 792 560 896 664 864 704 672 600 496 432 472 272 584 192 832 216 888 264 904Z","w":903,"u":"ᜊ"},"bi":{"d":"M136 992 64 872 144 544 384 352 656 384 824 624 792 912 640 1024 512 1016 440 960 264 1024ZM464 792 560 896 664 864 704 672 600 496 432 472 272 584 192 832 216 888 264 904Z M439 240 527 144 615 240 527 336Z","w":903,"u":"ᜊᜒ"},"bu":{"d":"M136 992 64 872 144 544 384 352 656 384 824 624 792 912 640 1024 512 1016 440 960 264 1024ZM464 792 560 896 664 864 704 672 600 496 432 472 272 584 192 832 216 888 264 904Z M468 1159 556 1063 636 1159 556 1255Z","w":903,"u":"ᜊᜓ"},"b":{"d":"M136 992 64 872 144 544 384 352 656 384 824 624 792 912 640 1024 512 1016 440 960 264 1024ZM464 792 560 896 664 864 704 672 600 496 432 472 272 584 192 832 216 888 264 904Z M498 1239H426V1143H498V1071H602V1143H666V1239H602V1311H498Z","w":903,"u":"ᜊ᜔"},"b_p":{"d":"M136 992 64 872 144 544 384 352 656 384 824 624 792 912 640 1024 512 1016 440 960 264 1024ZM464 792 560 896 664 864 704 672 600 496 432 472 272 584 192 832 216 888 264 904Z M1087 560V896L1039 1040L879 1152L583 1160V1040L839 1032L943 960L967 560Z","w":1151,"u":"ᜊ᜕"},"be":{"d":"M136 992 64 872 144 544 384 352 656 384 824 624 792 912 640 1024 512 1016 440 960 264 1024ZM464 792 560 896 664 864 704 672 600 496 432 472 272 584 192 832 216 888 264 904Z M439 240 527 144 615 240 527 336Z","w":903,"u":"ᜊᜒ"},"bo":{"d":"M136 992 64 872 144 544 384 352 656 384 824 624 792 912 640 1024 512 1016 440 960 264 1024ZM464 792 560 896 664 864 704 672 600 496 432 472 272 584 192 832 216 888 264 904Z M468 1159 556 1063 636 1159 556 1255Z","w":903,"u":"ᜊᜓ"},"ma":{"d":"M250 992 202 888 218 592H58V472L314 488L338 584L610 608L794 360L922 344L1018 392L1074 480L970 528L906 464L834 488L554 912L354 1032ZM434 856 538 712H330L322 848L362 896Z","w":1082,"u":"ᜋ"},"mi":{"d":"M250 992 202 888 218 592H58V472L314 488L338 584L610 608L794 360L922 344L1018 392L1074 480L970 528L906 464L834 488L554 912L354 1032ZM434 856 538 712H330L322 848L362 896Z M439 240 527 144 615 240 527 336Z","w":1082,"u":"ᜋᜒ"},"mu":{"d":"M250 992 202 888 218 592H58V472L314 488L338 584L610 608L794 360L922 344L1018 392L1074 480L970 528L906 464L834 488L554 912L354 1032ZM434 856 538 712H330L322 848L362 896Z M525 1080 613 984 693 1080 613 1176Z","w":1082,"u":"ᜋᜓ"},"m":{"d":"M250 992 202 888 218 592H58V472L314 488L338 584L610 608L794 360L922 344L1018 392L1074 480L970 528L906 464L834 488L554 912L354 1032ZM434 856 538 712H330L322 848L362 896Z M555 1160H483V1064H555V992H659V1064H723V1160H659V1232H555Z","w":1082,"u":"ᜋ᜔"},"m_p":{"d":"M250 992 202 888 218 592H58V472L314 488L338 584L610 608L794 360L922 344L1018 392L1074 480L970 528L906 464L834 488L554 912L354 1032ZM434 856 538 712H330L322 848L362 896Z M1266 560V896L1218 1040L1058 1152L762 1160V1040L1018 1032L1122 960L1146 560Z","w":1330,"u":"ᜋ᜕"},"me":{"d":"M250 992 202 888 218 592H58V472L314 488L338 584L610 608L794 360L922 344L1018 392L1074 480L970 528L906 464L834 488L554 912L354 1032ZM434 856 538 712H330L322 848L362 896Z M439 240 527 144 615 240 527 336Z","w":1082,"u":"ᜋᜒ"},"mo":{"d":"M250 992 202 888 218 592H58V472L314 488L338 584L610 608L794 360L922 344L1018 392L1074 480L970 528L906 464L834 488L554 912L354 1032ZM434 856 538 712H330L322 848L362 896Z M525 1080 613 984 693 1080 613 1176Z","w":1082,"u":"ᜋᜓ"},"ya":{"d":"M202 928 226 648H58V528L338 560L330 864L378 896L522 792L810 376L946 336L1058 392L1098 512L1034 632L778 648L786 624L586 912L354 1032ZM850 536 930 544 962 520 954 472H898Z","w":1081,"u":"ᜌ"},"yi":{"d":"M202 928 226 648H58V528L338 560L330 864L378 896L522 792L810 376L946 336L1058 392L1098 512L1034 632L778 648L786 624L586 912L354 1032ZM850 536 930 544 962 520 954 472H898Z M471 240 559 144 647 240 559 336Z","w":1081,"u":"ᜌᜒ"},"yu":{"d":"M202 928 226 648H58V528L338 560L330 864L378 896L522 792L810 376L946 336L1058 392L1098 512L1034 632L778 648L786 624L586 912L354 1032ZM850 536 930 544 962 520 954 472H898Z M531 1080 619 984 699 1080 619 1176Z","w":1081,"u":"ᜌᜓ"},"y":{"d":"M202 928 226 648H58V528L338 560L330 864L378 896L522 792L810 376L946 336L1058 392L1098 512L1034 632L778 648L786 624L586 912L354 1032ZM850 536 930 544 962 520 954 472H898Z M561 1160H489V1064H561V992H665V1064H729V1160H665V1232H561Z","w":1081,"u":"ᜌ᜔"},"y_p":{"d":"M202 928 226 648H58V528L338 560L330 864L378 896L522 792L810 376L946 336L1058 392L1098 512L1034 632L778 648L786 624L586 912L354 1032ZM850 536 930 544 962 520 954 472H898Z M1265 560V896L1217 1040L1057 1152L761 1160V1040L1017 1032L1121 960L1145 560Z","w":1329,"u":"ᜌ᜕"},"ye":{"d":"M202 928 226 648H58V528L338 560L330 864L378 896L522 792L810 376L946 336L1058 392L1098 512L1034 632L778 648L786 624L586 912L354 1032ZM850 536 930 544 962 520 954 472H898Z M471 240 559 144 647 240 559 336Z","w":1081,"u":"ᜌᜒ"},"yo":{"d":"M202 928 226 648H58V528L338 560L330 864L378 896L522 792L810 376L946 336L1058 392L1098 512L1034 632L778 648L786 624L586 912L354 1032ZM850 536 930 544 962 520 954 472H898Z M531 1080 619 984 699 1080 619 1176Z","w":1081,"u":"ᜌᜓ"},"ra":{"d":"M323 944 195 920 115 832V672L179 568L51 496L115 400L339 480L819 392L1075 504L1003 600L763 512L315 592L235 728L243 784L291 824L547 784L523 672L635 648L667 768L819 744L1075 848L1003 944L763 864L699 872L723 984L611 1016L579 896Z","w":1100,"u":"ᜍ"},"ri":{"d":"M323 944 195 920 115 832V672L179 568L51 496L115 400L339 480L819 392L1075 504L1003 600L763 512L315 592L235 728L243 784L291 824L547 784L523 672L635 648L667 768L819 744L1075 848L1003 944L763 864L699 872L723 984L611 1016L579 896Z M478 240 566 144 654 240 566 336Z","w":1100,"u":"ᜍᜒ"},"ru":{"d":"M323 944 195 920 115 832V672L179 568L51 496L115 400L339 480L819 392L1075 504L1003 600L763 512L315 592L235 728L243 784L291 824L547 784L523 672L635 648L667 768L819 744L1075 848L1003 944L763 864L699 872L723 984L611 1016L579 896Z M500 1080 588 984 668 1080 588 1176Z","w":1100,"u":"ᜍᜓ"},"r":{"d":"M323 944 195 920 115 832V672L179 568L51 496L115 400L339 480L819 392L1075 504L1003 600L763 512L315 592L235 728L243 784L291 824L547 784L523 672L635 648L667 768L819 744L1075 848L1003 944L763 864L699 872L723 984L611 1016L579 896Z M530 1160H458V1064H530V992H634V1064H698V1160H634V1232H530Z","w":1100,"u":"ᜍ᜔"},"r_p":{"d":"M323 944 195 920 115 832V672L179 568L51 496L115 400L339 480L819 392L1075 504L1003 600L763 512L315 592L235 728L243 784L291 824L547 784L523 672L635 648L667 768L819 744L1075 848L1003 944L763 864L699 872L723 984L611 1016L579 896Z M1284 560V896L1236 1040L1076 1152L780 1160V1040L1036 1032L1140 960L1164 560Z","w":1348,"u":"ᜍ᜕"},"re":{"d":"M323 944 195 920 115 832V672L179 568L51 496L115 400L339 480L819 392L1075 504L1003 600L763 512L315 592L235 728L243 784L291 824L547 784L523 672L635 648L667 768L819 744L1075 848L1003 944L763 864L699 872L723 984L611 1016L579 896Z M478 240 566 144 654 240 566 336Z","w":1100,"u":"ᜍᜒ"},"ro":{"d":"M323 944 195 920 115 832V672L179 568L51 496L115 400L339 480L819 392L1075 504L1003 600L763 512L315 592L235 728L243 784L291 824L547 784L523 672L635 648L667 768L819 744L1075 848L1003 944L763 864L699 872L723 984L611 1016L579 896Z M500 1080 588 984 668 1080 588 1176Z","w":1100,"u":"ᜍᜓ"},"la":{"d":"M380 984 492 864 404 800 484 704 412 648 428 560 236 600 28 504 108 408 316 480 708 336 956 392 908 504 692 464 556 536 540 600 652 696 564 776 660 856 484 1040Z","w":965,"u":"ᜎ"},"li":{"d":"M380 984 492 864 404 800 484 704 412 648 428 560 236 600 28 504 108 408 316 480 708 336 956 392 908 504 692 464 556 536 540 600 652 696 564 776 660 856 484 1040Z M439 240 527 144 615 240 527 336Z","w":965,"u":"ᜎᜒ"},"lu":{"d":"M380 984 492 864 404 800 484 704 412 648 428 560 236 600 28 504 108 408 316 480 708 336 956 392 908 504 692 464 556 536 540 600 652 696 564 776 660 856 484 1040Z M455 1129 543 1033 623 1129 543 1225Z","w":965,"u":"ᜎᜓ"},"l":{"d":"M380 984 492 864 404 800 484 704 412 648 428 560 236 600 28 504 108 408 316 480 708 336 956 392 908 504 692 464 556 536 540 600 652 696 564 776 660 856 484 1040Z M485 1209H413V1113H485V1041H589V1113H653V1209H589V1281H485Z","w":965,"u":"ᜎ᜔"},"l_p":{"d":"M380 984 492 864 404 800 484 704 412 648 428 560 236 600 28 504 108 408 316 480 708 336 956 392 908 504 692 464 556 536 540 600 652 696 564 776 660 856 484 1040Z M1149 560V896L1101 1040L941 1152L645 1160V1040L901 1032L1005 960L1029 560Z","w":1213,"u":"ᜎ᜕"},"le":{"d":"M380 984 492 864 404 800 484 704 412 648 428 560 236 600 28 504 108 408 316 480 708 336 956 392 908 504 692 464 556 536 540 600 652 696 564 776 660 856 484 1040Z M439 240 527 144 615 240 527 336Z","w":965,"u":"ᜎᜒ"},"lo":{"d":"M380 984 492 864 404 800 484 704 412 648 428 560 236 600 28 504 108 408 316 480 708 336 956 392 908 504 692 464 556 536 540 600 652 696 564 776 660 856 484 1040Z M455 1129 543 1033 623 1129 543 1225Z","w":965,"u":"ᜎᜓ"},"wa":{"d":"M202 920 226 648H58V528L338 560L330 864L426 888L586 720L626 496L570 432L402 488L314 416L466 304L642 312L762 456L730 712L578 936L378 1032Z","w":813,"u":"ᜏ"},"wi":{"d":"M202 920 226 648H58V528L338 560L330 864L426 888L586 720L626 496L570 432L402 488L314 416L466 304L642 312L762 456L730 712L578 936L378 1032Z M488 191 576 95 664 191 576 287Z","w":813,"u":"ᜏᜒ"},"wu":{"d":"M202 920 226 648H58V528L338 560L330 864L426 888L586 720L626 496L570 432L402 488L314 416L466 304L642 312L762 456L730 712L578 936L378 1032Z M405 1110 493 1014 573 1110 493 1206Z","w":813,"u":"ᜏᜓ"},"w":{"d":"M202 920 226 648H58V528L338 560L330 864L426 888L586 720L626 496L570 432L402 488L314 416L466 304L642 312L762 456L730 712L578 936L378 1032Z M435 1190H363V1094H435V1022H539V1094H603V1190H539V1262H435Z","w":813,"u":"ᜏ᜔"},"w_p":{"d":"M202 920 226 648H58V528L338 560L330 864L426 888L586 720L626 496L570 432L402 488L314 416L466 304L642 312L762 456L730 712L578 936L378 1032Z M997 560V896L949 1040L789 1152L493 1160V1040L749 1032L853 960L877 560Z","w":1061,"u":"ᜏ᜕"},"we":{"d":"M202 920 226 648H58V528L338 560L330 864L426 888L586 720L626 496L570 432L402 488L314 416L466 304L642 312L762 456L730 712L578 936L378 1032Z M488 191 576 95 664 191 576 287Z","w":813,"u":"ᜏᜒ"},"wo":{"d":"M202 920 226 648H58V528L338 560L330 864L426 888L586 720L626 496L570 432L402 488L314 416L466 304L642 312L762 456L730 712L578 936L378 1032Z M405 1110 493 1014 573 1110 493 1206Z","w":813,"u":"ᜏᜓ"},"sa":{"d":"M515 920 715 896 787 848 763 760 587 728V624L763 568V488L683 464L595 512L283 1024H171V456H19V336L291 376L299 760L547 392L723 336L875 416L899 576L835 664L915 736L907 904L779 1008L515 1040Z","w":974,"u":"ᜐ"},"si":{"d":"M515 920 715 896 787 848 763 760 587 728V624L763 568V488L683 464L595 512L283 1024H171V456H19V336L291 376L299 760L547 392L723 336L875 416L899 576L835 664L915 736L907 904L779 1008L515 1040Z M439 240 527 144 615 240 527 336Z","w":974,"u":"ᜐᜒ"},"su":{"d":"M515 920 715 896 787 848 763 760 587 728V624L763 568V488L683 464L595 512L283 1024H171V456H19V336L291 376L299 760L547 392L723 336L875 416L899 576L835 664L915 736L907 904L779 1008L515 1040Z M557 1159 645 1063 725 1159 645 1255Z","w":974,"u":"ᜐᜓ"},"s":{"d":"M515 920 715 896 787 848 763 760 587 728V624L763 568V488L683 464L595 512L283 1024H171V456H19V336L291 376L299 760L547 392L723 336L875 416L899 576L835 664L915 736L907 904L779 1008L515 1040Z M587 1239H515V1143H587V1071H691V1143H755V1239H691V1311H587Z","w":974,"u":"ᜐ᜔"},"s_p":{"d":"M515 920 715 896 787 848 763 760 587 728V624L763 568V488L683 464L595 512L283 1024H171V456H19V336L291 376L299 760L547 392L723 336L875 416L899 576L835 664L915 736L907 904L779 1008L515 1040Z M1158 560V896L1110 1040L950 1152L654 1160V1040L910 1032L1014 960L1038 560Z","w":1222,"u":"ᜐ᜕"},"se":{"d":"M515 920 715 896 787 848 763 760 587 728V624L763 568V488L683 464L595 512L283 1024H171V456H19V336L291 376L299 760L547 392L723 336L875 416L899 576L835 664L915 736L907 904L779 1008L515 1040Z M439 240 527 144 615 240 527 336Z","w":974,"u":"ᜐᜒ"},"so":{"d":"M515 920 715 896 787 848 763 760 587 728V624L763 568V488L683 464L595 512L283 1024H171V456H19V336L291 376L299 760L547 392L723 336L875 416L899 576L835 664L915 736L907 904L779 1008L515 1040Z M557 1159 645 1063 725 1159 645 1255Z","w":974,"u":"ᜐᜓ"},"ha":{"d":"M52 704 84 584 316 672 796 584 1052 688 980 784 732 704 316 792Z","w":1101,"u":"ᜑ"},"hi":{"d":"M52 704 84 584 316 672 796 584 1052 688 980 784 732 704 316 792Z M483 240 571 144 659 240 571 336Z","w":1101,"u":"ᜑᜒ"},"hu":{"d":"M52 704 84 584 316 672 796 584 1052 688 980 784 732 704 316 792Z M455 1080 543 984 623 1080 543 1176Z","w":1101,"u":"ᜑᜓ"},"h":{"d":"M52 704 84 584 316 672 796 584 1052 688 980 784 732 704 316 792Z M485 1160H413V1064H485V992H589V1064H653V1160H589V1232H485Z","w":1101,"u":"ᜑ᜔"},"h_p":{"d":"M52 704 84 584 316 672 796 584 1052 688 980 784 732 704 316 792Z M1285 560V896L1237 1040L1077 1152L781 1160V1040L1037 1032L1141 960L1165 560Z","w":1349,"u":"ᜑ᜕"},"he":{"d":"M52 704 84 584 316 672 796 584 1052 688 980 784 732 704 316 792Z M483 240 571 144 659 240 571 336Z","w":1101,"u":"ᜑᜒ"},"ho":{"d":"M52 704 84 584 316 672 796 584 1052 688 980 784 732 704 316 792Z M455 1080 543 984 623 1080 543 1176Z","w":1101,"u":"ᜑᜓ"},"|":{"d":"M234 224H362L146 1168H18Z","w":381,"u":"᜵"},"||":{"d":"M522 224 298 1168H178L394 224ZM362 224 146 1168H18L234 224Z","w":540,"u":"᜶"}," ":{"d":"","w":312,"u":" "}}};
+var U=DATA.units, H=DATA.unitsHeight;
+var V="aeiou";
+// Modern-chart convention for letters not native to Baybayin
+function normalize(s){
+  return String(s).toLowerCase().normalize("NFC")
+   .replace(/\u00f1/g,"ny")
+   .replace(/c(?=[ei])/g,"s").replace(/c/g,"k").replace(/q/g,"k")
+   .replace(/f/g,"p").replace(/v/g,"b").replace(/z/g,"s")
+   .replace(/x/g,"ks").replace(/j/g,"dy");
+}
+// Latin -> array of unit keys (e.g. "ba","ng","i","|"," ")
+function tokenize(text,opt){
+  opt=opt||{}; var s=normalize(text), out=[], i=0, kill=opt.killer==="pamudpod"?"_p":"";
+  while(i<s.length){
+    var ch=s[i], c=null;
+    if(s.substr(i,2)==="ng"){c="ng";}
+    else if("kgtdnpbmyrlwsh".indexOf(ch)>-1){c=ch;}
+    if(c){
+      var nx=s[i+c.length];
+      if(nx&&V.indexOf(nx)>-1){out.push(c+nx); i+=c.length+1;}
+      else {out.push(c+kill); i+=c.length;}
+    } else if(V.indexOf(ch)>-1){out.push(ch); i++;}
+    else if(/\s/.test(ch)){ if(out.length&&out[out.length-1]!==" ") out.push(" "); i++;}
+    else if(".!?;".indexOf(ch)>-1){out.push("||"); i++;}
+    else if(",:".indexOf(ch)>-1){out.push("|"); i++;}
+    else i++;
+  }
+  return out;
+}
+// Latin -> Unicode Baybayin (U+1700 block). Display with the RX09 Baybayin font.
+function transliterate(text,opt){return tokenize(text,opt).map(function(k){return U[k]?U[k].u:"";}).join("");}
+// Latin -> standalone SVG markup (pure vector, no font needed)
+function toSVG(text,opt){
+  opt=opt||{}; var toks=tokenize(text,opt), x=0, paths=[], track=opt.tracking||0;
+  toks.forEach(function(k){var g=U[k]; if(!g)return; if(g.d) paths.push('<path transform="translate('+x+' 0)" d="'+g.d+'"/>'); x+=g.w+track;});
+  x=Math.max(1,x-track);
+  var h=opt.height||64, w=Math.round(h*x/H*100)/100;
+  var t=String(text).replace(/[<>&"]/g,"");
+  return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 '+x+' '+H+'" width="'+w+'" height="'+h+'" role="img" aria-label="'+t+'"><title>'+t+'</title><g fill="'+(opt.color||"currentColor")+'">'+paths.join("")+'</g></svg>';
+}
+function render(el,text,opt){el.innerHTML=toSVG(text,opt);return el;}
+var api={tokenize:tokenize,transliterate:transliterate,toSVG:toSVG,render:render,units:U,version:"1.0.0"};
+if(typeof module==="object"&&module.exports) module.exports=api; else root.RX09Baybayin=api;
+})(typeof self!=="undefined"?self:this);
+
+
+</script>
+<!-- DGT ART KIT // window.DGTArt -->
+<script>
+/*! DGT-01 // DAGITAB SVG ART KIT v1.0
+ *  Pure functions -> SVG strings. Every colour comes from the palette object,
+ *  so the same art works with CSS variables (live theming) or hex (static export).
+ *  Requires RX09Baybayin for Baybayin-based pieces (mark, watermark, seal, divider).
+ */
+(function (root) {
+"use strict";
+var B = root.RX09Baybayin || (typeof require === "function" ? require("./engine.js") : null);
+
+/* ---------- palette ---------- */
+var CSSPAL = {
+  bg: "var(--bg)", surf: "var(--surface)", ink: "var(--text)", muted: "var(--text-muted)",
+  line: "var(--border)", strong: "var(--border-strong)", acc: "var(--accent)",
+  a: ["var(--c-dahon)", "var(--c-langit)", "var(--c-ube)", "var(--c-mangga)", "var(--c-gumamela)", "var(--c-dagat)"]
+};
+var SPECTRUM = [
+  { key: "dahon",    hex: "#3ECF8E", name: "Dahon",    en: "Leaf · Success · Database" },
+  { key: "langit",   hex: "#3B9EFF", name: "Langit",   en: "Sky · Info · Auth" },
+  { key: "ube",      hex: "#9B7BFF", name: "Ube",      en: "Violet · AI · Functions" },
+  { key: "mangga",   hex: "#F5B83D", name: "Mangga",   en: "Mango · Warning · Storage" },
+  { key: "gumamela", hex: "#F2555A", name: "Gumamela", en: "Hibiscus · Danger · Realtime" },
+  { key: "dagat",    hex: "#2EC4D6", name: "Dagat",    en: "Sea · Data · Vector" }
+];
+function hexPal(dark, accentIdx) {
+  var a = SPECTRUM.map(function (s) { return s.hex; });
+  return dark
+    ? { bg: "#121212", surf: "#1C1C1C", ink: "#EDEDED", muted: "#8F8F8F", line: "#2E2E2E", strong: "#3E3E3E", acc: a[accentIdx || 0], a: a }
+    : { bg: "#FCFCFC", surf: "#FFFFFF", ink: "#171717", muted: "#6F6F6F", line: "#E4E4E4", strong: "#D0D0D0", acc: a[accentIdx || 0], a: a };
+}
+
+/* ---------- helpers ---------- */
+function r(n) { return Math.round(n * 10) / 10; }
+function S(o) { var k, s = ""; for (k in o) s += k + ":" + o[k] + ";"; return ' style="' + s + '"'; }
+function wrap(vb, body, label, cls) {
+  return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="' + vb + '"' + (cls ? ' class="' + cls + '"' : "") +
+    ' role="img" aria-label="' + label + '" fill="none"><title>' + label + "</title>" + body + "</svg>";
+}
+function rnd(seed) { var s = seed; return function () { s = (s * 9301 + 49297) % 233280; return s / 233280; }; }
+function bbPath(syl) { return B && B.units[syl] ? B.units[syl] : null; }
+
+/* =====================================================
+   WEB ICON // Baybayin ᜇ (DA) for "Dagitab" + spark
+   variant: "solid" | "outline" | "spectrum" | "mono"
+   ===================================================== */
+function mark(o) {
+  o = o || {};
+  var P = o.pal || CSSPAL, v = o.variant || "solid", g = bbPath("da"), size = o.size || 64;
+  /* glyph bbox approx x 51..1075, y 392..944 */
+  var sc = 38 / 1024, tx = 32 - (51 + 512) * sc, ty = 33 - (392 + 276) * sc;
+  var bg = o.bg || P.bg, fg = o.fg || (v === "mono" ? P.ink : P.acc), body = "";
+  if (v === "outline") body += '<rect x="1.5" y="1.5" width="61" height="61" rx="14"' + S({ fill: "none", stroke: o.fg || P.acc, "stroke-width": 3 }) + "/>";
+  else body += '<rect width="64" height="64" rx="14"' + S({ fill: bg }) + "/>";
+  body += '<path transform="translate(' + r(tx) + " " + r(ty) + ") scale(" + sc.toFixed(5) + ')" d="' + g.d + '"' + S({ fill: v === "spectrum" ? P.ink : fg }) + "/>";
+  /* spark (a kudlit diamond) */
+  body += '<path d="M50 9l4 5-4 5-4-5z"' + S({ fill: v === "spectrum" ? P.a[3] : (v === "mono" ? P.ink : (o.spark || P.ink)) }) + "/>";
+  if (v === "spectrum") for (var i = 0; i < 6; i++) body += '<rect x="' + (13 + i * 6.6) + '" y="50" width="5.4" height="4" rx="1"' + S({ fill: P.a[i] }) + "/>";
+  return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="' + size + '" height="' + size + '" role="img" aria-label="Dagitab icon"><title>Dagitab</title>' + body + "</svg>";
+}
+
+/* =====================================================
+   ART PIECES  (viewBox 400 x 260 unless noted)
+   ===================================================== */
+var ART = [];
+function def(id, name, tag, fn) { ART.push({ id: id, name: name, tag: tag, fn: fn }); }
+
+def("A01", "Dot Field", "BACKGROUND", function (P) {
+  var b = "", x, y, d, op, R = rnd(4);
+  for (y = 10; y < 260; y += 16) for (x = 10; x < 400; x += 16) {
+    d = Math.hypot(x - 280, y - 110); op = Math.max(0.08, 1 - d / 240);
+    var hot = d < 70 && R() > 0.55;
+    b += '<circle cx="' + x + '" cy="' + y + '" r="' + (hot ? 2.2 : 1.3) + '"' + S({ fill: hot ? P.a[Math.floor(R() * 6)] : P.ink, opacity: r(hot ? 1 : op * 0.6) }) + "/>";
+  }
+  return b;
+});
+
+def("A02", "Realtime Nodes", "ILLUSTRATION", function (P) {
+  var N = [[60, 70], [150, 40], [250, 80], [340, 50], [100, 170], [200, 150], [300, 180], [370, 210], [40, 220], [180, 230]];
+  var E = [[0, 1], [1, 2], [2, 3], [0, 4], [1, 5], [2, 5], [2, 6], [3, 6], [5, 6], [6, 7], [4, 8], [4, 9], [5, 9], [4, 5]];
+  var b = E.map(function (e, i) { var a = N[e[0]], c = N[e[1]]; return '<path d="M' + a + "L" + c + '"' + S({ stroke: i % 4 === 0 ? P.acc : P.strong, "stroke-width": 1.5, "stroke-dasharray": i % 3 === 0 ? "4 4" : "none" }) + "/>"; }).join("");
+  b += N.map(function (n, i) { var c = P.a[i % 6]; return '<circle cx="' + n[0] + '" cy="' + n[1] + '" r="11"' + S({ fill: P.surf, stroke: c, "stroke-width": 2 }) + '/><circle cx="' + n[0] + '" cy="' + n[1] + '" r="4"' + S({ fill: c }) + "/>"; }).join("");
+  return b;
+});
+
+def("A03", "Layer Stack", "ILLUSTRATION", function (P) {
+  var b = "", i, y, cx = 200;
+  for (i = 4; i >= 0; i--) {
+    y = 70 + i * 34; var c = P.a[i];
+    b += '<path d="M' + (cx - 120) + " " + y + "L" + cx + " " + (y - 44) + "L" + (cx + 120) + " " + y + "L" + cx + " " + (y + 44) + 'Z"' + S({ fill: P.surf, stroke: i === 0 ? P.acc : P.strong, "stroke-width": 1.5 }) + "/>";
+    b += '<path d="M' + (cx - 120) + " " + y + "v8L" + cx + " " + (y + 52) + "L" + (cx + 120) + " " + (y + 8) + "v-8" + '"' + S({ stroke: c, "stroke-width": 1.5 }) + "/>";
+  }
+  b += '<path d="M' + (cx - 40) + " 70h80M" + (cx - 24) + ' 80h48"' + S({ stroke: P.ink, "stroke-width": 2, "stroke-linecap": "round", opacity: 0.6 }) + "/>";
+  return b;
+});
+
+def("A04", "Flow Lines", "BACKGROUND", function (P) {
+  var b = "", i, x, d;
+  for (i = 0; i < 14; i++) {
+    d = "M-10 " + (40 + i * 14);
+    for (x = 0; x <= 410; x += 10) d += "L" + x + " " + r(40 + i * 14 + Math.sin(x / 60 + i * 0.35) * (18 + i * 1.5));
+    b += '<path d="' + d + '"' + S({ stroke: i === 6 ? P.acc : (i % 5 === 2 ? P.a[(i + 1) % 6] : P.strong), "stroke-width": i === 6 ? 2 : 1 }) + "/>";
+  }
+  return b;
+});
+
+def("A05", "Orbit", "ILLUSTRATION", function (P) {
+  var b = "", R = [30, 60, 90, 120], i, a;
+  R.forEach(function (rr, k) { b += '<circle cx="200" cy="130" r="' + rr + '"' + S({ stroke: P.strong, "stroke-width": 1, "stroke-dasharray": k % 2 ? "3 5" : "none" }) + "/>"; });
+  b += '<circle cx="200" cy="130" r="14"' + S({ fill: P.acc }) + "/>";
+  for (i = 0; i < 6; i++) { a = i * 1.05 + 0.4; var rr = R[i % 4]; b += '<circle cx="' + r(200 + Math.cos(a) * rr) + '" cy="' + r(130 + Math.sin(a) * rr) + '" r="' + (5 + (i % 3)) + '"' + S({ fill: P.a[i] }) + "/>"; }
+  return b;
+});
+
+def("A06", "Terminal", "UI MOCK", function (P) {
+  var b = '<rect x="40" y="30" width="320" height="200" rx="10"' + S({ fill: P.surf, stroke: P.strong }) + "/>";
+  b += '<path d="M40 60h320"' + S({ stroke: P.line }) + "/>";
+  [P.a[4], P.a[3], P.a[0]].forEach(function (c, i) { b += '<circle cx="' + (60 + i * 16) + '" cy="45" r="5"' + S({ fill: c }) + "/>"; });
+  var L = [[0, 60, 0], [1, 120, 1], [1, 90, 2], [2, 150, 5], [1, 70, 3], [0, 110, 0], [1, 40, 1]], y = 84;
+  L.forEach(function (l) { var x = 60 + l[0] * 18; b += '<rect x="' + x + '" y="' + y + '" width="' + l[1] + '" height="7" rx="3.5"' + S({ fill: P.a[l[2]], opacity: 0.85 }) + '/><rect x="' + (x + l[1] + 8) + '" y="' + y + '" width="' + (200 - l[1] - l[0] * 18) + '" height="7" rx="3.5"' + S({ fill: P.strong }) + "/>"; y += 20; });
+  b += '<rect x="60" y="' + y + '" width="8" height="12"' + S({ fill: P.acc }) + "/>";
+  return b;
+});
+
+def("A07", "Baybayin Watermark", "PATTERN", function (P) {
+  var words = ["dagitab", "liwanag", "bituin", "alon", "hangin"], b = "", row, x, k = 0;
+  for (row = 0; row < 7; row++) {
+    x = row % 2 ? -60 : -10;
+    while (x < 420) {
+      var w = words[k % words.length], toks = B.tokenize(w), sx = 0.024, gx = x;
+      toks.forEach(function (t) { var u = B.units[t]; if (!u || !u.d) return; b += '<path transform="translate(' + r(gx) + " " + (row * 38 - 6) + ") scale(" + sx + ')" d="' + u.d + '"' + S({ fill: (k % 7 === 3) ? P.a[k % 6] : P.ink, opacity: (k % 7 === 3) ? 0.9 : 0.14 }) + "/>"; gx += u.w * sx; });
+      x = gx + 26; k++;
+    }
+  }
+  return b;
+});
+
+def("A08", "Edge Globe", "ILLUSTRATION", function (P) {
+  var b = '<circle cx="200" cy="130" r="100"' + S({ stroke: P.strong, "stroke-width": 1.2 }) + "/>", i;
+  for (i = 1; i < 6; i++) b += '<ellipse cx="200" cy="130" rx="' + Math.abs(100 * Math.cos(i * Math.PI / 12 * 2)).toFixed(1) + '" ry="100"' + S({ stroke: P.line }) + "/>";
+  for (i = -2; i <= 2; i++) { var y = 130 + i * 36, w = Math.sqrt(10000 - (i * 36) * (i * 36)); b += '<path d="M' + r(200 - w) + " " + y + "H" + r(200 + w) + '"' + S({ stroke: P.line }) + "/>"; }
+  var pts = [[150, 80], [240, 70], [270, 150], [180, 175], [130, 140], [225, 205]];
+  b += '<path d="M' + pts.map(function (p) { return p.join(" "); }).join("L") + '"' + S({ stroke: P.acc, "stroke-width": 1.5, "stroke-dasharray": "3 4" }) + "/>";
+  pts.forEach(function (p, k) { b += '<circle cx="' + p[0] + '" cy="' + p[1] + '" r="5"' + S({ fill: P.a[k] }) + '/><circle cx="' + p[0] + '" cy="' + p[1] + '" r="10"' + S({ stroke: P.a[k], opacity: 0.45 }) + "/>"; });
+  return b;
+});
+
+def("A09", "Spark Grid", "BACKGROUND", function (P) {
+  var b = "", x, y, c = 20, path = { "8,1": 1, "7,2": 1, "6,3": 1, "5,4": 1, "6,4": 1, "7,4": 1, "8,4": 1, "7,5": 1, "6,6": 1, "5,7": 1, "4,8": 1, "9,0": 1, "4,9": 1 };
+  for (y = 0; y < 13; y++) for (x = 0; x < 20; x++) {
+    var on = path[(x - 5) + "," + y];
+    b += '<rect x="' + (x * c + 2) + '" y="' + (y * c + 2) + '" width="' + (c - 4) + '" height="' + (c - 4) + '" rx="3"' + S(on ? { fill: P.a[y % 6] } : { stroke: P.line }) + "/>";
+  }
+  return b;
+});
+
+def("A10", "Spectrum Bars", "DATA", function (P) {
+  var b = "", v = [70, 120, 95, 160, 135, 190], i;
+  for (i = 0; i < 4; i++) b += '<path d="M40 ' + (220 - i * 50) + 'H370"' + S({ stroke: P.line, "stroke-dasharray": "2 4" }) + "/>";
+  v.forEach(function (h, k) { b += '<rect x="' + (60 + k * 50) + '" y="' + (220 - h) + '" width="30" height="' + h + '" rx="4"' + S({ fill: P.a[k] }) + "/>"; });
+  b += '<path d="M75 ' + (220 - 70 - 14) + v.slice(1).map(function (h, k) { return "L" + (125 + k * 50) + " " + (220 - h - 14); }).join("") + '"' + S({ stroke: P.ink, "stroke-width": 1.5 }) + "/>";
+  return b;
+});
+
+def("A11", "Kudlit Scatter", "PATTERN", function (P) {
+  var b = "", R = rnd(11), i, x, y, s;
+  for (i = 0; i < 70; i++) { x = R() * 400; y = R() * 260; s = 3 + R() * 6; var hot = R() > 0.8;
+    b += '<path d="M' + r(x) + " " + r(y - s) + "l" + r(s * 0.8) + " " + r(s) + "l" + r(-s * 0.8) + " " + r(s) + "l" + r(-s * 0.8) + " " + r(-s) + 'z"' + S(hot ? { fill: P.a[i % 6] } : { stroke: P.strong }) + "/>"; }
+  return b;
+});
+
+def("A12", "Flow Diagram", "DIAGRAM", function (P) {
+  var box = function (x, y, w, t, c) { return '<rect x="' + x + '" y="' + y + '" width="' + w + '" height="44" rx="8"' + S({ fill: P.surf, stroke: c, "stroke-width": 1.5 }) + '/><rect x="' + (x + 12) + '" y="' + (y + 18) + '" width="8" height="8" rx="2"' + S({ fill: c }) + '/><rect x="' + (x + 28) + '" y="' + (y + 19) + '" width="' + (w - 44) + '" height="6" rx="3"' + S({ fill: P.strong }) + "/>"; };
+  var arr = function (x1, y1, x2, y2, c) { return '<path d="M' + x1 + " " + y1 + "L" + x2 + " " + y2 + '"' + S({ stroke: c, "stroke-width": 1.5, "stroke-dasharray": "4 3" }) + '/><path d="M' + (x2 - 6) + " " + (y2 - 4) + "L" + x2 + " " + y2 + "L" + (x2 - 6) + " " + (y2 + 4) + '"' + S({ stroke: c, "stroke-width": 1.5 }) + "/>"; };
+  return box(20, 108, 100, "", P.a[1]) + arr(124, 130, 156, 130, P.muted) + box(160, 108, 90, "", P.a[2]) +
+    arr(254, 122, 284, 70, P.muted) + arr(254, 130, 284, 130, P.muted) + arr(254, 138, 284, 190, P.muted) +
+    box(288, 48, 92, "", P.a[0]) + box(288, 108, 92, "", P.a[3]) + box(288, 168, 92, "", P.a[4]);
+});
+
+def("A13", "Baybayin Seal", "EMBLEM", function (P) {
+  var b = '<circle cx="200" cy="130" r="104"' + S({ stroke: P.strong, "stroke-width": 1.2 }) + '/><circle cx="200" cy="130" r="88"' + S({ stroke: P.acc, "stroke-width": 2 }) + "/>", i, a;
+  for (i = 0; i < 72; i++) { a = i * 5 * Math.PI / 180; var rr = i % 6 === 0 ? 92 : 96; b += '<path d="M' + r(200 + Math.cos(a) * rr) + " " + r(130 + Math.sin(a) * rr) + "L" + r(200 + Math.cos(a) * 102) + " " + r(130 + Math.sin(a) * 102) + '"' + S({ stroke: i % 12 === 0 ? P.a[(i / 12) % 6] : P.muted, "stroke-width": i % 6 === 0 ? 2 : 1 }) + "/>"; }
+  var toks = B.tokenize("dagitab"), sc = 1, tw = 0; toks.forEach(function (t) { tw += B.units[t].w; }); sc = 150 / tw; tw = 150;
+  var x = 200 - tw / 2; toks.forEach(function (t) { var u = B.units[t]; b += '<path transform="translate(' + r(x) + " 100) scale(" + sc.toFixed(4) + ')" d="' + u.d + '"' + S({ fill: P.ink }) + "/>"; x += u.w * sc; });
+  for (i = 0; i < 6; i++) b += '<rect x="' + (164 + i * 12.5) + '" y="172" width="9" height="4" rx="2"' + S({ fill: P.a[i] }) + "/>";
+  return b;
+});
+
+def("A14", "Danda Divider", "DIVIDER", function (P) {
+  var b = '<path d="M20 130H160M240 130H380"' + S({ stroke: P.strong }) + "/>", u = B.units["||"], sc = 0.07;
+  b += '<path transform="translate(' + r(200 - u.w * sc / 2) + " " + r(130 - 696 * sc) + ") scale(" + sc + ')" d="' + u.d + '"' + S({ fill: P.acc }) + "/>";
+  for (var i = 0; i < 6; i++) { b += '<circle cx="' + (60 + i * 12) + '" cy="130" r="2.5"' + S({ fill: P.a[i] }) + '/><circle cx="' + (280 + i * 12) + '" cy="130" r="2.5"' + S({ fill: P.a[5 - i] }) + "/>"; }
+  return b;
+});
+
+function art(id, pal, cls) {
+  var a = ART.filter(function (x) { return x.id === id; })[0]; if (!a) return "";
+  return wrap("0 0 400 260", a.fn(pal || CSSPAL), a.name, cls);
+}
+
+var api = { mark: mark, art: art, list: ART, SPECTRUM: SPECTRUM, CSSPAL: CSSPAL, hexPal: hexPal, version: "1.0.0" };
+if (typeof module === "object" && module.exports) module.exports = api; else root.DGTArt = api;
+})(typeof self !== "undefined" ? self : this);
+
+</script>
+<script>
+/* =========================================================
+   DGT-01 // DAGITAB DESIGN SYSTEM v1.0 — app shell + pages
+   Vanilla JS · needs window.RX09Baybayin + window.DGTArt
+   ========================================================= */
+(function () {
+"use strict";
+var B = window.RX09Baybayin, A = window.DGTArt, doc = document.documentElement;
+var LS = { get: function (k, d) { try { var v = localStorage.getItem(k); return v === null ? d : v; } catch (e) { return d; } }, set: function (k, v) { try { localStorage.setItem(k, v); } catch (e) {} } };
+var reduced = function () { return !!(window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches); };
+function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+function $(s, r) { return (r || document).querySelector(s); }
+function $$(s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); }
+function slug(s) { return String(s).toLowerCase().replace(/&amp;|&/g, "and").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, ""); }
+
+/* ---------- STATE ---------- */
+var SPEC = A.SPECTRUM, KEYS = SPEC.map(function (s) { return s.key; });
+var state = { theme: doc.getAttribute("data-theme") || "dark", accent: doc.getAttribute("data-accent") || "dahon" };
+function accIdx() { return Math.max(0, KEYS.indexOf(state.accent)); }
+function isDark() { return state.theme === "dark"; }
+function hexPal() { return A.hexPal(isDark(), accIdx()); }
+function applyTheme() {
+  doc.setAttribute("data-theme", state.theme); doc.setAttribute("data-accent", state.accent);
+  LS.set("dgt_theme", state.theme); LS.set("dgt_accent", state.accent);
+  var tb = $("#theme-btn"); if (tb) { tb.setAttribute("aria-label", isDark() ? "Switch to light mode" : "Switch to night mode"); tb.setAttribute("aria-pressed", String(isDark())); }
+  $$(".dots .dot").forEach(function (d) { d.setAttribute("aria-pressed", String(d.getAttribute("data-v") === state.accent)); });
+  setFavicon();
+}
+function setFavicon() {
+  var svg = A.mark({ pal: A.hexPal(true, accIdx()), size: 64 });
+  var l = $("link[rel=icon]"); if (!l) { l = document.createElement("link"); l.rel = "icon"; document.head.appendChild(l); }
+  l.type = "image/svg+xml"; l.href = "data:image/svg+xml," + encodeURIComponent(svg);
+}
+
+/* ---------- BAYBAYIN + ICON HELPERS ---------- */
+function bbu(w, o) { return B.transliterate(w, o); }
+function bbs(w, st) { return '<span class="rx-bb" lang="tl-Tglg" title="' + esc(w) + '"' + (st ? ' style="' + st + '"' : "") + ">" + bbu(w) + "</span>"; }
+var IC = {
+  home: '<path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/>',
+  palette: '<path d="M12 21a9 9 0 1 1 9-9c0 2.2-1.8 3.5-4 3.5h-1.8a1.7 1.7 0 0 0-1.2 2.9A1.6 1.6 0 0 1 12 21z"/><circle cx="7.5" cy="11" r="1"/><circle cx="10" cy="7" r="1"/><circle cx="15" cy="7.5" r="1"/>',
+  type: '<path d="M4 7V5h16v2M9 19h6M12 5v14"/>',
+  layout: '<rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/>',
+  image: '<rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-5-5L5 21"/>',
+  sparkles: '<path d="m12 3 1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/><path d="M19 3v4M17 5h4"/>',
+  code: '<path d="m16 18 6-6-6-6M8 6l-6 6 6 6"/>',
+  terminal: '<path d="m4 17 6-6-6-6M12 19h8"/>',
+  database: '<ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v14c0 1.7 3.6 3 8 3s8-1.3 8-3V5M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/>',
+  lock: '<rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/>',
+  zap: '<path d="M13 2 4 14h7l-1 8 9-12h-7z"/>',
+  globe: '<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/>',
+  table: '<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18M3 15h18M9 4v16"/>',
+  chart: '<path d="M3 3v18h18"/><path d="m7 15 4-4 3 3 5-6"/>',
+  settings: '<circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9 7 7M17 17l2.1 2.1M4.9 19.1 7 17M17 7l2.1-2.1"/>',
+  search: '<circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/>',
+  sun: '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>',
+  moon: '<path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/>',
+  copy: '<rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/>',
+  check: '<path d="M20 6 9 17l-5-5"/>',
+  download: '<path d="M12 3v12M7 10l5 5 5-5M5 21h14"/>',
+  arrow: '<path d="M5 12h14M13 6l6 6-6 6"/>',
+  external: '<path d="M14 3h7v7M10 14 21 3M19 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h5"/>',
+  menu: '<path d="M4 6h16M4 12h16M4 18h16"/>',
+  x: '<path d="M18 6 6 18M6 6l12 12"/>',
+  info: '<circle cx="12" cy="12" r="9"/><path d="M12 16v-4M12 8h.01"/>',
+  warn: '<path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4M12 17h.01"/>',
+  alert: '<circle cx="12" cy="12" r="9"/><path d="M12 8v4M12 16h.01"/>',
+  ok: '<circle cx="12" cy="12" r="9"/><path d="m8.5 12 2.5 2.5 4.5-5"/>',
+  user: '<circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/>',
+  box: '<path d="M21 8 12 3 3 8v8l9 5 9-5z"/><path d="m3 8 9 5 9-5M12 13v8"/>',
+  layers: '<path d="m12 2 10 5-10 5L2 7z"/><path d="m2 12 10 5 10-5M2 17l10 5 10-5"/>',
+  branch: '<circle cx="6" cy="5" r="2"/><circle cx="6" cy="19" r="2"/><circle cx="18" cy="7" r="2"/><path d="M6 7v10M18 9a6 6 0 0 1-6 6H6"/>',
+  bell: '<path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.9 1.9 0 0 0 3.4 0"/>',
+  key: '<circle cx="7.5" cy="15.5" r="4.5"/><path d="m10.7 12.3 9.3-9.3M17 6l3 3M14 9l2 2"/>',
+  cloud: '<path d="M17.5 19H7a5 5 0 1 1 1.2-9.9A6 6 0 0 1 19.5 11a4 4 0 0 1-2 8z"/>',
+  folder: '<path d="M3 6a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>',
+  plus: '<path d="M12 5v14M5 12h14"/>',
+  filter: '<path d="M3 5h18l-7 8v6l-4 2v-8z"/>',
+  feather: '<path d="M20 4c-7 0-13 5-14 13l-2 3M8 15h6M10 11h7"/>',
+  shapes: '<circle cx="7" cy="7" r="4"/><rect x="13" y="13" width="8" height="8" rx="1"/><path d="m17 3 4 7h-8z"/>',
+  play: '<path d="M6 4v16l14-8z"/>',
+  calendar: '<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/>',
+  mail: '<rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/>',
+  eye: '<path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>',
+  refresh: '<path d="M21 12a9 9 0 1 1-2.6-6.4L21 8M21 3v5h-5"/>',
+  trash: '<path d="M3 6h18M8 6V4h8v2M6 6l1 15h10l1-15"/>',
+  book: '<path d="M4 4h6a3 3 0 0 1 3 3v13a2 2 0 0 0-2-2H4z"/><path d="M20 4h-6a3 3 0 0 0-3 3v13a2 2 0 0 1 2-2h7z"/>'
+};
+function ic(n, cls) { return '<svg class="ic' + (cls ? " " + cls : "") + '" viewBox="0 0 24 24" aria-hidden="true">' + (IC[n] || "") + "</svg>"; }
+function art(id, cls) { return A.art(id, null, cls); }
+function bgArt(id) { return A.art(id).replace("<svg ", '<svg preserveAspectRatio="xMidYMid slice" '); }
+function staticArt(id, pal) { return A.art(id, pal || hexPal()); }
+
+/* ---------- CODE BLOCK ---------- */
+var KW = "const|let|var|function|return|import|from|export|new|if|else|await|async|true|false|null|for|of";
+var RX = new RegExp("(\\/\\/[^\\n]*|\\/\\*[\\s\\S]*?\\*\\/|<!--[\\s\\S]*?-->|#(?= )[^\\n]*)|(\"(?:[^\"\\\\\\n]|\\\\.)*\"|'(?:[^'\\\\\\n]|\\\\.)*')|\\b(" + KW + ")\\b|(--[\\w-]+)|\\b(\\d+(?:\\.\\d+)?(?:px|ms|%)?)\\b|([A-Za-z_$][\\w$]*)(?=\\()", "g");
+function hl(src, lang) {
+  var out = "", last = 0, m;
+  if (lang === "tree") return esc(src).replace(/( # [^\n]*)/g, '<span class="tk-c">$1</span>');
+  if (lang === "bash") return esc(src).replace(/^(# [^\n]*)/gm, '<span class="tk-c">$1</span>').replace(/^(\$ )/gm, '<span class="tk-p">$1</span>');
+  RX.lastIndex = 0;
+  while ((m = RX.exec(src))) {
+    out += esc(src.slice(last, m.index));
+    { var c = m[1] ? "c" : m[2] ? "s" : m[3] ? "k" : m[4] ? "p" : m[5] ? "n" : "f"; out += '<span class="tk-' + c + '">' + esc(m[0]) + "</span>"; }
+    last = RX.lastIndex;
+  }
+  return out + esc(src.slice(last));
+}
+var CODES = {}, codeN = 0;
+function codeBlock(files, title) {
+  var id = "cb" + (++codeN); CODES[id] = files;
+  var tabs = files.length > 1 ? '<div class="tabs" role="tablist">' + files.map(function (f, i) { return '<button role="tab" data-act="cbtab" data-cb="' + id + '" data-i="' + i + '" aria-selected="' + (i === 0) + '">' + esc(f.name) + "</button>"; }).join("") + "</div>" : '<span class="mono faint" style="font-size:12px;padding:10px 0">' + esc(title || files[0].name) + "</span>";
+  return '<div class="code" id="' + id + '"><div class="code-head">' + tabs + '<button class="btn btn-ghost btn-sm" data-act="cbcopy" data-cb="' + id + '">' + ic("copy") + "Copy</button></div><pre><code>" + hl(files[0].code, files[0].lang) + "</code></pre></div>";
+}
+
+/* ---------- SMALL BUILDERS ---------- */
+function spark(vals, tone) {
+  var w = 120, h = 40, mx = Math.max.apply(null, vals), mn = Math.min.apply(null, vals);
+  var pts = vals.map(function (v, i) { return (i / (vals.length - 1) * w).toFixed(1) + "," + (h - 4 - (v - mn) / (mx - mn || 1) * (h - 8)).toFixed(1); });
+  return '<svg viewBox="0 0 ' + w + " " + h + '" preserveAspectRatio="none" aria-hidden="true"><polyline points="' + pts.join(" ") + '" fill="none" style="stroke:var(--c-' + tone + ');stroke-width:1.6" vector-effect="non-scaling-stroke"/></svg>';
+}
+function card(o) {
+  return '<' + (o.href ? 'a href="' + o.href + '"' : "div") + ' class="card hover t-' + o.tone + (o.cls ? " " + o.cls : "") + '">' + (o.art ? '<div class="art">' + o.art + "</div>" : '<div class="card-ic">' + ic(o.icon || "box", "lg") + "</div>") +
+    "<h3>" + o.title + (o.badge ? ' <span class="badge t-' + o.tone + '" style="--t:var(--c-' + o.tone + ')">' + o.badge + "</span>" : "") + "</h3><p>" + o.text + "</p>" + (o.foot || "") + "</" + (o.href ? "a" : "div") + ">";
+}
+function badge(txt, tone, dot) { return '<span class="badge' + (dot ? " dot-b" : "") + '" style="--t:var(--c-' + tone + ')">' + txt + "</span>"; }
+function toneVar(k) { return "--t:var(--c-" + k + ")"; }
+
+/* =========================================================
+   PAGES
+   ========================================================= */
+var PAGES = [
+  ["overview", "Getting started", "Overview", "dahon", "home", "Simula", "A quiet, dark-first web kit with six meaningful colours, a reusable SVG art library and Baybayin as its culture layer."],
+  ["install", "Getting started", "Installation", "langit", "download", "Gamit", "Drop the tokens, the Baybayin engine and the art kit into any static site, PHP app or Next.js project."],
+  ["color", "Foundations", "Color", "gumamela", "palette", "Kulay", "Neutral surfaces do the work. Six spectrum colours carry meaning: one is your brand accent, the others label modules and states."],
+  ["typography", "Foundations", "Typography", "ube", "type", "Titik", "Inter for interface, JetBrains Mono for data and code, RX09 Baybayin for identity."],
+  ["layout", "Foundations", "Spacing & Radius", "mangga", "layout", "Sukat", "A 4px base grid, soft 6px radius and border-first elevation."],
+  ["web-icon", "Brand", "Web Icon", "dahon", "zap", "Tatak", "The DA glyph (ᜇ) for Dagitab, plus a kudlit-shaped spark. Ships as favicon, app icon and avatar in every spectrum colour."],
+  ["baybayin", "Brand", "Baybayin", "mangga", "feather", "Baybayin", "Live Latin-to-Baybayin conversion as Unicode text or pure SVG, with usage patterns for minimalist layouts."],
+  ["svg-art", "Brand", "SVG Art Library", "ube", "image", "Sining", "Fourteen reusable vector pieces. Each one reads your theme and accent live, and exports as a static SVG file."],
+  ["icons", "Brand", "Icon Set", "dagat", "shapes", "Simbolo", Object.keys(IC).length + " interface icons on a 24px grid, 1.6px round stroke, drawn in currentColor."],
+  ["actions", "Components", "Buttons & Forms", "langit", "box", "Pindot", "Buttons, inputs and selection controls. Any control accepts a spectrum tone through the --t variable."],
+  ["display", "Components", "Data Display", "dagat", "table", "Datos", "Cards, badges, tables, avatars, progress and stat blocks."],
+  ["feedback", "Components", "Feedback & Code", "gumamela", "bell", "Tugon", "Alerts, toasts, tooltips, navigation helpers and the tabbed code block."],
+  ["landing", "Templates", "Landing Page", "dahon", "globe", "Bungad", "A complete marketing page: nav, hero, logo strip, feature bento, code section, CTA and footer."],
+  ["pricing", "Templates", "Pricing", "mangga", "chart", "Presyo", "Four-tier pricing with a highlighted plan and a comparison table."],
+  ["auth", "Templates", "Sign In", "langit", "lock", "Pasok", "Split-screen authentication with an art panel."],
+  ["dashboard", "Templates", "Dashboard", "ube", "database", "Tanaw", "A studio-style console: icon rail, project sidebar, stat cards and a table editor."],
+  ["tokens", "Resources", "Design Tokens", "dagat", "code", "Tuntunin", "Copy-ready CSS variables and a JSON token map."]
+].map(function (p) { return { id: p[0], g: p[1], t: p[2], tone: p[3], icon: p[4], bb: p[5], d: p[6] }; });
+var R = {}; /* renderers */
+
+/* ---------- OVERVIEW ---------- */
+R.overview = function () {
+  return '<section class="hero"><div class="bgart" aria-hidden="true">' + bgArt("A01") + '</div>' +
+    '<a class="pill" href="#/baybayin">' + badge("New", "dahon") + " Baybayin SVG engine v1.0 " + ic("arrow") + "</a>" +
+    '<h1 style="margin-top:20px">Design it tonight.<br><span>Ship it to millions.</span></h1>' +
+    "<p>DGT-01 is a minimalist web design pack: dark-first surfaces, a six-colour spectrum, reusable SVG art and a Baybayin identity layer. It's all plain HTML, CSS and JS.</p>" +
+    '<div class="row"><a class="btn btn-primary btn-lg" href="#/install">Start building ' + ic("arrow") + '</a><a class="btn btn-lg" href="#/actions">Browse components</a></div>' +
+    '<p class="eyebrow" style="margin:28px 0 0">' + bbs("Dagitab") + " · Dagitab = spark</p></section>" +
+    "<h2>What's in the pack</h2><p class=\"lead\">Every module has its own spectrum colour, so you can always tell which part of the system you're in.</p>" +
+    '<div class="bento">' +
+    card({ cls: "w3", tone: "gumamela", href: "#/color", art: art("A10"), title: "Spectrum color", badge: "6 hues", text: "Dahon, Langit, Ube, Mangga, Gumamela and Dagat, each with its own meaning." }) +
+    card({ cls: "w3", tone: "mangga", href: "#/baybayin", art: art("A07"), title: "Baybayin layer", text: "Converter, Unicode font and SVG output for labels, logos and patterns." }) +
+    card({ tone: "dahon", href: "#/web-icon", art: '<div class="mk" style="display:grid;place-items:center;padding:28px 0">' + A.mark({ size: 96, variant: "spectrum" }) + "</div>", title: "Web icon", text: "Favicon and app icons in 10 variants." }) +
+    card({ tone: "ube", href: "#/svg-art", art: art("A02"), title: "SVG art", badge: "14", text: "Backgrounds, illustrations, patterns and dividers." }) +
+    card({ tone: "langit", href: "#/actions", art: art("A06"), title: "Components", text: "Buttons, forms, data display and feedback." }) +
+    card({ cls: "w6", tone: "dagat", href: "#/landing", art: '<div style="max-height:220px;overflow:hidden">' + art("A12") + "</div>", title: "Templates", text: "Landing, pricing, sign-in and dashboard pages, built only from the pack's components." }) +
+    "</div>" +
+    "<h2 style=\"--t:var(--c-langit)\">Principles</h2>" +
+    '<div class="grid g3">' +
+    card({ tone: "langit", icon: "layers", title: "Quiet surfaces", text: "Use neutrals for about 90% of the screen. Show depth with 1px borders, not shadows." }) +
+    card({ tone: "gumamela", icon: "palette", title: "Colour with meaning", text: "Each hue maps to a module or state. Use one brand accent and pick the rest on purpose." }) +
+    card({ tone: "mangga", icon: "feather", title: "Culture as a layer", text: "Use Baybayin for identity: eyebrows, seals and watermarks. Keep Latin text as the readable content." }) +
+    "</div>" +
+    "<h2 style=\"--t:var(--c-ube)\">Spectrum at a glance</h2>" +
+    '<div class="row">' + SPEC.map(function (s) { return badge(s.name + " · " + s.en.split(" · ")[1], s.key, true); }).join("") + "</div>";
+};
+
+/* ---------- INSTALL ---------- */
+var TREE = "dgt01-dagitab-pack/\n├── index.html                 # this showcase (single file)\n├── assets/\n│   ├── tokens.css             # colour, type, radius, spacing variables\n│   ├── components.css         # buttons, inputs, cards, badges, code ...\n│   ├── baybayin-engine.js     # window.RX09Baybayin (font + SVG)\n│   └── dgt-art.js             # window.DGTArt (14 art pieces + web icon)\n├── icons/                     # favicon.svg, favicon.ico, PNG 16-512, variants\n├── art/dark/  art/light/      # static SVG exports of every art piece\n└── README.md";
+R.install = function () {
+  return "<h2>1. Folder structure</h2><p class=\"lead\">Unzip the pack. Everything is static, so it runs from Apache, IIS, Vercel or straight off the disk.</p>" + codeBlock([{ name: "tree", lang: "tree", code: TREE }]) +
+    "<h2 style=\"--t:var(--c-langit)\">2. Link the styles and set the theme</h2><p class=\"lead\">Set the theme and accent on <code>&lt;html&gt;</code>. Every component reads them through CSS variables.</p>" +
+    codeBlock([{ name: "index.html", lang: "html", code: '<html data-theme="dark" data-accent="dahon">\n<head>\n  <link rel="icon" type="image/svg+xml" href="icons/favicon.svg">\n  <link rel="icon" href="icons/favicon.ico" sizes="any">\n  <link rel="apple-touch-icon" href="icons/icon-180.png">\n  <link rel="stylesheet" href="assets/tokens.css">\n  <link rel="stylesheet" href="assets/components.css">\n</head>' }]) +
+    "<h2 style=\"--t:var(--c-ube)\">3. Use the art kit and Baybayin engine</h2>" +
+    codeBlock([{ name: "app.js", lang: "js", code: '<script src="assets/baybayin-engine.js"><\/script>\n<script src="assets/dgt-art.js"><\/script>\n<script>\n  // live art: follows theme + accent through CSS variables\n  document.querySelector("#hero-bg").innerHTML = DGTArt.art("A01");\n\n  // web icon in any variant\n  document.querySelector("#logo").innerHTML = DGTArt.mark({ size: 28, variant: "spectrum" });\n\n  // Baybayin text\n  RX09Baybayin.transliterate("Dagitab");         // "ᜇᜄᜒᜆᜊ᜔"\n  RX09Baybayin.render(el, "Dagitab", { height: 64 });\n<\/script>' },
+      { name: "theme-toggle.js", lang: "js", code: 'const root = document.documentElement;\nfunction toggleNight() {\n  const next = root.dataset.theme === "dark" ? "light" : "dark";\n  root.dataset.theme = next;\n  localStorage.setItem("dgt_theme", next);\n}\nfunction setAccent(key) {          // dahon | langit | ube | mangga | gumamela | dagat\n  root.dataset.accent = key;\n  localStorage.setItem("dgt_accent", key);\n}' },
+      { name: "React / Next.js", lang: "js", code: '// app/layout.jsx\nimport "./tokens.css";\nimport "./components.css";\nexport default function RootLayout({ children }) {\n  return (\n    <html lang="en" data-theme="dark" data-accent="dahon">\n      <body>{children}</body>\n    </html>\n  );\n}\n// any component\nexport const Badge = ({ tone = "langit", children }) =>\n  <span className="badge" style={{ "--t": "var(--c-" + tone + ")" }}>{children}</span>;' }]) +
+    '<div class="alert" style="margin-top:24px;' + toneVar("mangga") + '">' + ic("warn") + "<div><b>Offline servers</b><p>Inter and JetBrains Mono load from Google Fonts. On air-gapped servers the system font stack takes over automatically. The Baybayin font is embedded as WOFF2, so it always works.</p></div></div>";
+};
+
+/* ---------- COLOR ---------- */
+R.color = function () {
+  var sw = SPEC.map(function (s) { return '<button class="sw" style="' + toneVar(s.key) + '" data-act="copy" data-v="' + s.hex + '" aria-label="Copy ' + s.name + " " + s.hex + '"><div class="chipc">' + bbs(s.name) + '</div><div class="meta"><b>' + s.name + "</b><code>" + s.hex + " · --c-" + s.key + "</code><small>" + s.en + "</small></div></button>"; }).join("");
+  var steps = [[92, "#fff", "50"], [80, "#fff", "100"], [62, "#fff", "200"], [40, "#fff", "300"], [18, "#fff", "400"], [0, "", "500"], [18, "#000", "600"], [36, "#000", "700"], [54, "#000", "800"], [70, "#000", "900"]];
+  var scales = SPEC.map(function (s) { return '<div class="stack" style="gap:6px"><span class="mono faint" style="font-size:12px">' + s.name.toUpperCase() + '</span><div class="scale">' + steps.map(function (st) { var bg = st[0] ? "color-mix(in srgb,var(--c-" + s.key + ") " + (100 - st[0]) + "%," + st[1] + ")" : "var(--c-" + s.key + ")"; return '<div style="background:' + bg + ";color:" + (+st[2] >= 600 || +st[2] <= 200 ? (+st[2] >= 600 ? "#fff" : "#111") : "#111") + '">' + st[2] + "</div>"; }).join("") + "</div></div>"; }).join("");
+  var surf = function (dark) { var p = dark ? [["bg", "#121212"], ["bg-alt", "#171717"], ["surface", "#1C1C1C"], ["surface-2", "#242424"], ["border", "#2E2E2E"], ["border-strong", "#3E3E3E"], ["text-muted", "#A1A1A1"], ["text", "#EDEDED"]] : [["bg", "#FCFCFC"], ["bg-alt", "#F6F6F6"], ["surface", "#FFFFFF"], ["surface-2", "#F1F1F1"], ["border", "#E6E6E6"], ["border-strong", "#D2D2D2"], ["text-muted", "#5E5E5E"], ["text", "#171717"]];
+    return '<div class="surf">' + p.map(function (x, i) { var light = i < 6 ? !dark : dark; return '<div style="background:' + x[1] + ";color:" + (light ? "#171717" : "#EDEDED") + '"><b style="font-weight:500">--' + x[0] + '</b><code style="color:inherit;opacity:.7">' + x[1] + "</code></div>"; }).join("") + "</div>"; };
+  var map = [["Success · Online", "dahon", "Database, storage health, confirmations"], ["Info · Link", "langit", "Auth, help, neutral notices"], ["AI · Functions", "ube", "Edge logic, AI and automation features"], ["Warning · Pending", "mangga", "Storage, quotas, unsaved changes"], ["Danger · Error", "gumamela", "Destructive actions, realtime alerts"], ["Data · Vector", "dagat", "Analytics, charts, embeddings"]];
+  return "<h2>Spectrum</h2><p class=\"lead\">Click a swatch to copy it. Choose your brand accent with the dots in the header; the other five stay available as tones.</p><div class=\"grid g3\">" + sw + "</div>" +
+    '<h2 style="--t:var(--c-langit)">Tints &amp; shades</h2><p class="lead">Built with <code>color-mix()</code>, so they follow any accent you change. Use 50–200 for soft fills, 500 for solids and 700–900 for text on light surfaces.</p><div class="stack" style="gap:16px">' + scales + "</div>" +
+    '<h2 style="--t:var(--c-dagat)">Surfaces</h2><p class="lead">Two neutral ramps. Night mode is the default. Day mode swaps the ramp and leaves every component unchanged.</p><div class="stack"><span class="mono faint" style="font-size:12px">NIGHT · data-theme="dark"</span>' + surf(true) + '<span class="mono faint" style="font-size:12px;margin-top:8px">DAY · data-theme="light"</span>' + surf(false) + "</div>" +
+    '<h2 style="--t:var(--c-ube)">Semantic mapping</h2><div class="panel"><table class="tbl"><thead><tr><th>Role</th><th>Tone</th><th>Use for</th></tr></thead><tbody>' + map.map(function (m) { return "<tr><td>" + m[0] + "</td><td>" + badge(A.SPECTRUM[KEYS.indexOf(m[1])].name, m[1], true) + '</td><td class="muted">' + m[2] + "</td></tr>"; }).join("") + "</tbody></table></div>" +
+    '<h2 style="--t:var(--c-mangga)">Composition ratio</h2><div style="display:flex;height:40px;border-radius:var(--r);overflow:hidden;border:1px solid var(--border);font:500 11px var(--mono)"><div style="flex:86;background:var(--surface);display:flex;align-items:center;padding:0 12px">86% NEUTRAL</div><div style="flex:9;background:var(--accent);color:var(--on-accent);display:flex;align-items:center;padding:0 8px">9% ACCENT</div>' + KEYS.map(function (k) { return '<div style="flex:.85;background:var(--c-' + k + ')"></div>'; }).join("") + "</div>";
+};
+
+/* ---------- TYPOGRAPHY ---------- */
+var tt = { f: 0, txt: "Ship it to millions", size: 48 };
+var TF = [["Inter", "var(--sans)", 600, "-.03em"], ["JetBrains Mono", "var(--mono)", 500, "0"], ["RX09 Baybayin", "var(--bb)", 700, "0"]];
+R.typography = function () {
+  var rows = [["Display", "60 / 600 / −3.5%", "font-size:60px;font-weight:600;letter-spacing:-.035em;line-height:1", "Design it tonight"], ["H1", "40 / 600 / −2.5%", "font-size:40px;font-weight:600;letter-spacing:-.025em;line-height:1.1", "Spectrum color"], ["H2", "20 / 600", "font-size:20px;font-weight:600", "Semantic mapping"], ["H3", "15 / 600", "font-size:15px;font-weight:600", "Card title"], ["Body", "14 / 400 / 1.6", "font-size:14px", "Neutral surfaces do the work. Colour carries meaning."], ["Small", "12.5 / 400", "font-size:12.5px;color:var(--text-muted)", "Last updated 2 minutes ago"], ["Eyebrow", "12 mono / caps", "font:500 12px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--text-muted)", "Getting started"], ["Code", "12.5 mono", "font:12.5px var(--mono)", "DGTArt.mark({ variant: \"spectrum\" })"], ["Baybayin", "RX09 700", "font-family:var(--bb);font-weight:700;font-size:36px;line-height:1.3", bbu("Dagitab")]];
+  return '<h2>Families</h2><div class="grid g3">' +
+    card({ tone: "ube", icon: "type", title: "Inter", text: '<span style="font-size:34px;font-weight:600;letter-spacing:-.03em;color:var(--text)">Aa Gg 09</span><br>UI, headings, body. Weights 400 / 500 / 600.' }) +
+    card({ tone: "dagat", icon: "code", title: "JetBrains Mono", text: '<span style="font:500 30px var(--mono);color:var(--text)">{ } 0x9</span><br>Code, tokens, eyebrows and table data.' }) +
+    card({ tone: "mangga", icon: "feather", title: "RX09 Baybayin", text: '<span class="rx-bb" style="font-size:34px;color:var(--text)">' + bbu("Titik") + "</span><br>Embedded WOFF2 · U+1700 · identity layer." }) + "</div>" +
+    '<h2 style="--t:var(--c-langit)">Scale</h2><div>' + rows.map(function (r) { return '<div class="type-row"><span class="k"><b>' + r[0] + "</b>" + r[1] + '</span><span style="' + r[2] + ';overflow:hidden;text-overflow:ellipsis;white-space:nowrap" lang="' + (r[0] === "Baybayin" ? "tl-Tglg" : "en") + '">' + esc(r[3]) + "</span></div>"; }).join("") + "</div>" +
+    '<h2 style="--t:var(--c-dahon)">Type tester</h2><div class="panel"><div class="panel-head"><div class="seg" role="group" aria-label="Font">' + TF.map(function (f, i) { return '<button type="button" data-act="ttf" data-i="' + i + '" aria-pressed="' + (tt.f === i) + '">' + f[0] + "</button>"; }).join("") + '</div><span class="mono" id="tt-size-l">' + tt.size + 'px</span></div><div class="panel-body stack"><div class="grid g2"><div class="field"><label for="tt-in">Sample text</label><input class="input" id="tt-in" value="' + esc(tt.txt) + '" maxlength="80"></div><div class="field"><label for="tt-size">Size</label><input class="range" type="range" id="tt-size" min="14" max="120" value="' + tt.size + '"></div></div><div id="tt-out" style="min-height:120px;display:flex;align-items:center;overflow:hidden;word-break:break-word;border-top:1px solid var(--border);padding-top:16px"></div></div></div>';
+};
+function updTester() {
+  var o = $("#tt-out"); if (!o) return; var f = TF[tt.f];
+  o.style.cssText += ";font-family:" + f[1] + ";font-weight:" + f[2] + ";letter-spacing:" + f[3] + ";font-size:" + tt.size + "px;line-height:1.15";
+  o.textContent = (tt.f === 2 ? bbu(tt.txt) : tt.txt) || " "; if (tt.f === 2) o.setAttribute("lang", "tl-Tglg"); else o.removeAttribute("lang");
+  $("#tt-size-l").textContent = tt.size + "px";
+  $$("[data-act=ttf]").forEach(function (b) { b.setAttribute("aria-pressed", String(+b.getAttribute("data-i") === tt.f)); });
+}
+
+/* ---------- LAYOUT ---------- */
+R.layout = function () {
+  var sp = [["s1", 4], ["s2", 8], ["s3", 12], ["s4", 16], ["s5", 24], ["s6", 32], ["s7", 48], ["s8", 64], ["s9", 96]];
+  var rad = [["r-sm", "4px", "Badges inside inputs, kbd"], ["r", "6px", "Buttons, inputs"], ["r-lg", "10px", "Cards, panels, code"], ["r-xl", "14px", "Hero, modal, frames"], ["r-pill", "999px", "Pills, switches, chips"]];
+  return '<h2>Spacing</h2><p class="lead">Use the 4px base everywhere. Components mostly need s2–s5, and page sections use s7–s9.</p><div class="panel"><div class="panel-body">' + sp.map(function (s) { return '<div class="space-row"><code class="muted">--' + s[0] + '</code><span class="mono faint">' + s[1] + 'px</span><i style="width:' + s[1] * 3 + 'px"></i></div>'; }).join("") + "</div></div>" +
+    '<h2 style="--t:var(--c-langit)">Radius</h2><div class="rad-grid">' + rad.map(function (r) { return '<div style="border-radius:' + r[1] + '">--' + r[0] + "<br>" + r[1] + "</div>"; }).join("") + "</div>" +
+    '<h2 style="--t:var(--c-ube)">Elevation</h2><p class="lead">Show elevation with borders. Save shadows for floating layers like toasts, menus and the command palette.</p><div class="grid g4">' +
+    [["0 · Page", "background:var(--bg)"], ["1 · Surface", "background:var(--surface)"], ["2 · Raised", "background:var(--surface-2);border-color:var(--border-strong)"], ["3 · Floating", "background:var(--surface);border-color:var(--border-strong);box-shadow:var(--shadow)"]].map(function (e) { return '<div class="card" style="' + e[1] + ';min-height:110px;display:flex;align-items:flex-end"><span class="mono" style="font-size:12px">' + e[0] + "</span></div>"; }).join("") + "</div>" +
+    '<h2 style="--t:var(--c-dagat)">Shell &amp; breakpoints</h2><div class="panel"><table class="tbl"><thead><tr><th>Token</th><th>Value</th><th>Behaviour</th></tr></thead><tbody>' +
+    [["--hdr", "56px", "Sticky, translucent header"], ["--side", "248px", "Docs sidebar · drawer below 960px"], ["--toc", "208px", "On-this-page rail · hidden below 1240px"], ["--max", "880px", "Reading width for content"], ["≤ 640px", "1 column", "Grids collapse, header tools shrink"]].map(function (r) { return '<tr><td class="mono">' + r[0] + "</td><td>" + r[1] + '</td><td class="muted">' + r[2] + "</td></tr>"; }).join("") + "</tbody></table></div>";
+};
+
+/* ---------- WEB ICON ---------- */
+var VARIANTS = SPEC.map(function (s, i) { return { id: "solid-" + s.key, label: s.name, o: { variant: "solid", acc: i } }; }).concat([{ id: "outline", label: "Outline", o: { variant: "outline" } }, { id: "spectrum", label: "Spectrum", o: { variant: "spectrum" } }, { id: "mono", label: "Mono", o: { variant: "mono" } }, { id: "light", label: "Day", o: { variant: "solid", light: true } }]);
+function variantSVG(v, hex, size) {
+  var o = v.o, live = !hex;
+  var pal = live ? (o.light ? { bg: "#FCFCFC", ink: "#171717", acc: "var(--accent)", a: A.CSSPAL.a } : { bg: "#121212", ink: "#EDEDED", acc: o.acc != null ? "var(--c-" + KEYS[o.acc] + ")" : "var(--accent)", a: A.CSSPAL.a })
+    : A.hexPal(!o.light, o.acc != null ? o.acc : accIdx());
+  return A.mark({ pal: pal, variant: o.variant, size: size || 72 });
+}
+R["web-icon"] = function () {
+  return '<div class="icon-hero"><div class="big">' + A.mark({ size: 180 }) + '</div><div class="stack"><span class="eyebrow">' + bbs("Da") + ' DA · ᜇ · "Dagitab"</span><h2 style="margin:0">One glyph, one spark</h2><p class="lead">The mark is the Baybayin syllable DA drawn with the pack\'s angular outlines. The diamond spark comes from the kudlit, the vowel mark in Baybayin. The plate is a 64-unit square with a 14-unit radius.</p><div class="row"><button class="btn btn-primary" data-act="icon-dl" data-v="current" data-fmt="svg">' + ic("download") + "favicon.svg</button><button class=\"btn\" data-act=\"icon-dl\" data-v=\"current\" data-fmt=\"png\">" + ic("download") + 'PNG 512</button><button class="btn btn-ghost" data-act="copy-favicon">' + ic("copy") + "Copy &lt;head&gt; tags</button></div></div></div>" +
+    '<h2 style="--t:var(--c-langit)">Variants</h2><p class="lead">The solid variants use their own hue. Outline uses your current accent. Downloads are static SVG files with real hex colours.</p><div class="variants">' +
+    VARIANTS.map(function (v) { return '<div class="variant">' + variantSVG(v) + '<b style="font-size:13px;font-weight:500">' + v.label + '</b><div class="row"><button class="btn btn-sm" data-act="icon-dl" data-v="' + v.id + '" data-fmt="svg">SVG</button><button class="btn btn-sm" data-act="icon-dl" data-v="' + v.id + '" data-fmt="png">PNG</button></div></div>'; }).join("") + "</div>" +
+    '<h2 style="--t:var(--c-mangga)">Size ladder</h2><div class="panel"><div class="panel-body"><div class="ladder">' + [16, 24, 32, 48, 64, 96, 128, 180].map(function (s) { return "<div>" + A.mark({ size: s }) + s + "</div>"; }).join("") + '</div></div></div>' +
+    '<h2 style="--t:var(--c-dagat)">In the browser</h2><div><span class="browser-tab">' + A.mark({ size: 16 }) + 'Dagitab — Design System <span class="faint">' + ic("x") + '</span></span><div class="panel" style="border-top-left-radius:0"><div class="panel-body row" style="justify-content:space-between"><span class="mono faint" style="font-size:12px">The live favicon follows your accent. Try the dots in the header.</span>' + A.mark({ size: 32, variant: "spectrum" }) + "</div></div></div>" +
+    '<h2 style="--t:var(--c-ube)">Head tags</h2>' + codeBlock([{ name: "index.html", lang: "html", code: FAV_HTML }]);
+};
+var FAV_HTML = '<link rel="icon" type="image/svg+xml" href="/icons/favicon.svg">\n<link rel="icon" href="/icons/favicon.ico" sizes="any">\n<link rel="apple-touch-icon" href="/icons/icon-180.png">\n<link rel="manifest" href="/icons/site.webmanifest">\n<meta name="theme-color" content="#121212">';
+
+/* ---------- BAYBAYIN ---------- */
+var bb = { txt: "Dagitab ng Liwanag", killer: "krus", h: 96, tone: "accent" };
+R.baybayin = function () {
+  var vow = [["a", "A"], ["i", "E/I"], ["u", "O/U"]], cons = ["ka", "ga", "nga", "ta", "da", "na", "pa", "ba", "ma", "ya", "ra", "la", "wa", "sa", "ha"];
+  var chart = vow.map(function (v, i) { return [v[0], v[1], i]; }).concat(cons.map(function (c, i) { return [c, c.toUpperCase(), i + 3]; }))
+    .map(function (c) { return '<button type="button" data-act="copy" data-v="' + esc(B.units[c[0]].u) + '" style="' + toneVar(KEYS[c[2] % 6]) + '" aria-label="Copy ' + c[1] + '"><span class="g" lang="tl-Tglg">' + B.units[c[0]].u + "</span><small>" + c[1] + "</small></button>"; }).join("");
+  return '<h2>Converter</h2><p class="lead">Type in Latin and get pure SVG (no font needed) or Unicode text set in the embedded RX09 Baybayin font.</p>' +
+    '<div class="bb-conv"><div class="panel"><div class="panel-head">Input</div><div class="panel-body stack">' +
+    '<div class="field"><label for="bb-in">Latin text</label><input class="input" id="bb-in" value="' + esc(bb.txt) + '" maxlength="160" autocomplete="off"><span class="hint">C→K/S · F→P · J→DY · Q→K · V→B · X→KS · Z→S · Ñ→NY</span></div>' +
+    '<div class="field"><label for="bb-kill">Vowel killer</label><select class="select" id="bb-kill"><option value="krus">Krus-kudlit + (U+1714)</option><option value="pamudpod">Pamudpod (U+1715)</option></select></div>' +
+    '<div class="field"><label>Tone</label><div class="row" style="gap:6px">' + ["accent"].concat(KEYS).map(function (k) { return '<button type="button" class="dot" style="--t:' + (k === "accent" ? "var(--text)" : "var(--c-" + k + ")") + '" data-act="bbtone" data-v="' + k + '" aria-pressed="' + (bb.tone === k) + '" aria-label="' + k + '"></button>'; }).join("") + "</div></div>" +
+    '<div class="field"><label for="bb-h">SVG height · <span id="bb-hv">' + bb.h + '</span>px</label><input class="range" type="range" id="bb-h" min="40" max="180" value="' + bb.h + '"></div>' +
+    '<div class="row"><button class="btn btn-primary" data-act="bb-dl">' + ic("download") + 'SVG</button><button class="btn" data-act="bb-copy-svg">' + ic("copy") + 'SVG markup</button><button class="btn btn-ghost" data-act="bb-copy-uni">Copy Unicode</button></div></div></div>' +
+    '<div class="panel"><div class="panel-head">Output <span class="mono" id="bb-n"></span></div><div class="panel-body stack"><div class="bb-out" id="bb-svg" aria-live="polite"></div><hr class="hr" style="margin:4px 0"><div class="bb-uni rx-bb" id="bb-uni" lang="tl-Tglg"></div><p class="mono faint" style="font-size:11.5px" id="bb-tok"></p></div></div></div>' +
+    '<h2 style="--t:var(--c-mangga)">Syllables</h2><p class="lead">Click to copy. Add a kudlit above for E/I and below for O/U. The + mark removes the vowel.</p><div class="bb-chart">' + chart + "</div>" +
+    '<h2 style="--t:var(--c-ube)">Usage patterns</h2><div class="grid g2">' +
+    card({ tone: "dahon", icon: "type", title: "Eyebrow label", text: '<span class="eyebrow" style="--t:var(--c-dahon)">' + bbs("Kulay") + " · Foundations</span><br>Pair a Baybayin word with the mono eyebrow above page titles." }) +
+    card({ tone: "langit", art: art("A14"), title: "Danda divider", text: "Use the double danda (᜶) as a section break between long blocks." }) +
+    card({ tone: "ube", art: art("A07"), title: "Watermark", text: "Tile low-opacity words behind heroes and auth panels. A few words get spectrum colour." }) +
+    card({ tone: "mangga", art: art("A13"), title: "Seal", text: "Use it as a round emblem for certificates, footers and loading screens." }) + "</div>" +
+    '<h2 style="--t:var(--c-gumamela)">Rules</h2><div class="grid g2">' +
+    ["Baybayin is identity. Keep Latin as the readable content.", "Never uppercase or letter-space Baybayin. .rx-bb resets both.", 'Put lang="tl-Tglg" on every Baybayin run.', "Use the SVG engine for logos and exported art. Use the font for live text."].map(function (r, i) { return '<div class="alert" style="' + toneVar(i % 2 ? "dagat" : "dahon") + '">' + ic("ok") + "<p>" + esc(r) + "</p></div>"; }).join("") + "</div>";
+};
+function updBB() {
+  var inp = $("#bb-in"); if (!inp) return;
+  var src = inp.value.slice(0, 160), o = { killer: bb.killer, height: bb.h }, out = $("#bb-svg");
+  out.style.setProperty("--bb-h", bb.h + "px"); out.style.color = bb.tone === "accent" ? "var(--accent-text)" : "var(--c-" + bb.tone + ")";
+  out.innerHTML = B.toSVG(src || " ", o); $("#bb-uni").textContent = bbu(src, o) || " "; $("#bb-hv").textContent = bb.h; $("#bb-n").textContent = src.length + "/160";
+  var t = B.tokenize(src, o); $("#bb-tok").textContent = "TOKENS [" + t.length + "] " + t.map(function (k) { return k === " " ? "/" : k; }).join(" · ").toUpperCase();
+  $$("[data-act=bbtone]").forEach(function (b) { b.setAttribute("aria-pressed", String(b.getAttribute("data-v") === bb.tone)); });
+  bb.cur = { src: src, o: o };
+}
+function bbHex() { return bb.tone === "accent" ? (isDark() ? "#EDEDED" : "#171717") : SPEC[KEYS.indexOf(bb.tone)].hex; }
+
+/* ---------- SVG ART ---------- */
+var artFilter = "ALL", artMode = "live";
+R["svg-art"] = function () {
+  var tags = ["ALL"]; A.list.forEach(function (a) { if (tags.indexOf(a.tag) < 0) tags.push(a.tag); });
+  return '<div class="row" style="justify-content:space-between;margin-bottom:8px"><div class="chips" role="group" aria-label="Filter">' + tags.map(function (t) { return '<button type="button" data-act="artf" data-v="' + t + '" aria-pressed="' + (artFilter === t) + '">' + (t === "UI MOCK" ? "UI mock" : t.charAt(0) + t.slice(1).toLowerCase()) + "</button>"; }).join("") + '</div><div class="seg" role="group" aria-label="Export colours"><button type="button" data-act="artm" data-v="live" aria-pressed="' + (artMode === "live") + '">Current theme</button><button type="button" data-act="artm" data-v="dark" aria-pressed="' + (artMode === "dark") + '">Night hex</button><button type="button" data-act="artm" data-v="light" aria-pressed="' + (artMode === "light") + '">Day hex</button></div></div>' +
+    '<div class="art-grid" id="art-grid"></div>' +
+    '<h2 style="--t:var(--c-langit)">Use in code</h2>' + codeBlock([{ name: "live.js", lang: "js", code: '// follows theme + accent at runtime\nel.innerHTML = DGTArt.art("A08");\n\n// static colours for exports, emails or PPT\nconst pal = DGTArt.hexPal(true, 2);   // night, ube accent\nconst svg = DGTArt.art("A08", pal);' }, { name: "background.css", lang: "css", code: '.hero{ position:relative; isolation:isolate }\n.hero .bgart{ position:absolute; inset:0; z-index:-1; opacity:.9 }\n.hero .bgart svg{ width:100%; height:100%; }' }]);
+};
+function paintArt() {
+  var g = $("#art-grid"); if (!g) return;
+  g.innerHTML = A.list.filter(function (a) { return artFilter === "ALL" || a.tag === artFilter; }).map(function (a) {
+    return '<div class="art-card"><div class="pv">' + art(a.id) + '</div><div class="ft"><div><b>' + a.name + "</b><small>" + a.id + " · " + a.tag + '</small></div><div class="row" style="gap:4px"><button class="btn btn-ghost btn-sm tip" data-tip="Copy SVG" data-act="art-copy" data-v="' + a.id + '" aria-label="Copy ' + a.name + ' SVG">' + ic("copy") + '</button><button class="btn btn-sm" data-act="art-dl" data-v="' + a.id + '" aria-label="Download ' + a.name + '">' + ic("download") + "</button></div></div></div>";
+  }).join("");
+  $$("[data-act=artf]").forEach(function (b) { b.setAttribute("aria-pressed", String(b.getAttribute("data-v") === artFilter)); });
+  $$("[data-act=artm]").forEach(function (b) { b.setAttribute("aria-pressed", String(b.getAttribute("data-v") === artMode)); });
+}
+function artExport(id) { var pal = artMode === "live" ? hexPal() : A.hexPal(artMode === "dark", accIdx()); var s = A.art(id, pal); return s.replace("<svg ", '<svg width="800" height="520" ').replace("<title>", '<rect width="400" height="260" fill="' + pal.bg + '"/><title>'); }
+
+/* ---------- ICONS ---------- */
+R.icons = function () {
+  var keys = Object.keys(IC);
+  return '<div class="row" style="margin-bottom:16px"><div class="input-group" style="flex:1;max-width:320px">' + ic("search") + '<input class="input" id="ic-q" placeholder="Filter ' + keys.length + ' icons" aria-label="Filter icons"></div><span class="faint" style="font-size:12.5px">Click an icon to copy its SVG</span></div><div class="icons" id="ic-grid">' +
+    keys.map(function (k) { return '<button type="button" data-act="ic-copy" data-v="' + k + '" data-name="' + k + '">' + ic(k) + k + "</button>"; }).join("") + "</div>" +
+    '<h2 style="--t:var(--c-langit)">Spec</h2><div class="grid g4">' + [["Grid", "24 × 24"], ["Stroke", "1.6px round"], ["Colour", "currentColor"], ["Sizes", "14 · 16 · 20 · 24"]].map(function (s) { return '<div class="card"><span class="eyebrow">' + s[0] + '</span><p style="font-size:18px;color:var(--text);font-weight:500;margin-top:6px">' + s[1] + "</p></div>"; }).join("") + "</div>" +
+    '<h2 style="--t:var(--c-ube)">With tones</h2><div class="demo">' + ["database", "lock", "sparkles", "folder", "zap", "chart"].map(function (k, i) { return '<span class="card-ic" style="margin:0;' + toneVar(KEYS[i]) + '">' + ic(k, "lg") + "</span>"; }).join("") + "</div>";
+};
+
+/* ---------- ACTIONS ---------- */
+R.actions = function () {
+  return '<h2>Buttons</h2><div class="demo"><button class="btn btn-primary">Primary</button><button class="btn">Default</button><button class="btn btn-outline">Outline</button><button class="btn btn-ghost">Ghost</button><button class="btn btn-soft">Soft</button><button class="btn btn-soft btn-danger">' + ic("trash") + 'Delete</button><button class="btn btn-link">Link ' + ic("arrow") + '</button><button class="btn" disabled>Disabled</button></div>' +
+    '<h3 style="margin-top:24px">Sizes and icons</h3><div class="demo"><button class="btn btn-primary btn-sm">Small</button><button class="btn btn-primary">Medium</button><button class="btn btn-primary btn-lg">Large ' + ic("arrow") + '</button><button class="btn">' + ic("plus") + 'New project</button><button class="icon-btn" aria-label="Settings">' + ic("settings") + '</button><button class="btn btn-ghost">' + ic("refresh") + "Refresh</button></div>" +
+    '<h3 style="margin-top:24px">Spectrum tones · <code>style="--t:var(--c-ube)"</code></h3><div class="demo">' + SPEC.map(function (s) { return '<button class="btn btn-soft" style="' + toneVar(s.key) + '">' + s.name + "</button>"; }).join("") + "</div>" +
+    '<h2 style="--t:var(--c-dahon)">Inputs</h2><div class="grid g2"><div class="field"><label for="f1">Project name</label><input class="input" id="f1" placeholder="dagitab-prod"><span class="hint">Lowercase, numbers and dashes.</span></div>' +
+    '<div class="field"><label for="f2">Search</label><div class="input-group">' + ic("search") + '<input class="input" id="f2" placeholder="Search tables"><kbd style="margin-right:8px">/</kbd></div></div>' +
+    '<div class="field err"><label for="f3">Database password</label><input class="input" id="f3" type="password" value="123"><span class="hint">Must be at least 12 characters.</span></div>' +
+    '<div class="field"><label for="f4">Region</label><select class="select" id="f4"><option>Southeast Asia (Singapore)</option><option>Northeast Asia (Tokyo)</option><option>West US (Oregon)</option></select></div>' +
+    '<div class="field" style="grid-column:1/-1"><label for="f5">Description</label><textarea class="textarea" id="f5" placeholder="What does this project do?"></textarea></div></div>' +
+    '<h2 style="--t:var(--c-ube)">Selection</h2><div class="grid g3"><div class="card stack"><h3>Switches</h3>' + ["Realtime", "Row level security", "Point-in-time recovery"].map(function (l, i) { return '<label class="opt" style="justify-content:space-between">' + l + '<input type="checkbox" class="switch" style="' + toneVar(KEYS[i * 2]) + '"' + (i < 2 ? " checked" : "") + "></label>"; }).join("") + "</div>" +
+    '<div class="card stack"><h3>Checkboxes</h3>' + ["Email alerts", "Weekly report", "Usage warnings"].map(function (l, i) { return '<label class="opt"><input type="checkbox" class="chk"' + (i !== 1 ? " checked" : "") + ">" + l + "</label>"; }).join("") + "</div>" +
+    '<div class="card stack"><h3>Segmented &amp; range</h3><div class="seg" role="group" aria-label="Plan period"><button type="button" aria-pressed="true" data-act="seg">Monthly</button><button type="button" aria-pressed="false" data-act="seg">Yearly</button></div><div class="field"><label for="f6">Compute · <span id="f6v">4</span> GB</label><input class="range" type="range" id="f6" min="1" max="16" value="4"></div></div></div>';
+};
+
+/* ---------- DISPLAY ---------- */
+R.display = function () {
+  var rows = [["dagitab-prod", "Southeast Asia", "dahon", "Healthy", "2.4 GB", 62], ["liwanag-api", "Tokyo", "mangga", "Upgrading", "880 MB", 28], ["alon-analytics", "Oregon", "langit", "Paused", "12.1 GB", 91], ["habi-auth", "Frankfurt", "gumamela", "Degraded", "310 MB", 14]];
+  return '<h2>Cards</h2><div class="grid g3">' + card({ tone: "dahon", icon: "database", title: "Database", text: "A full Postgres instance with backups and branching." }) + card({ tone: "langit", icon: "lock", title: "Auth", badge: "Beta", text: "Email, magic links and SSO providers." }) + card({ tone: "ube", icon: "sparkles", title: "Functions", text: "Edge logic that runs close to your users." }) + "</div>" +
+    '<h2 style="--t:var(--c-mangga)">Badges</h2><div class="demo">' + SPEC.map(function (s) { return badge(s.name, s.key); }).join("") + '</div><div class="demo" style="margin-top:12px">' + [["Online", "dahon"], ["Syncing", "langit"], ["AI", "ube"], ["Pending", "mangga"], ["Error", "gumamela"], ["Vector", "dagat"]].map(function (b) { return badge(b[0], b[1], true); }).join("") + '<span class="badge">Neutral</span></div>' +
+    '<h2 style="--t:var(--c-dagat)">Table</h2><div class="panel" style="overflow-x:auto"><table class="tbl"><thead><tr><th>Project</th><th>Region</th><th>Status</th><th>Size</th><th style="width:160px">Usage</th></tr></thead><tbody>' +
+    rows.map(function (r) { return '<tr><td><span class="row" style="gap:8px">' + ic("folder") + r[0] + '</span></td><td class="muted">' + r[1] + "</td><td>" + badge(r[3], r[2], true) + '</td><td class="mono">' + r[4] + '</td><td><div class="progress" style="' + toneVar(r[2]) + '"><i style="width:' + r[5] + '%"></i></div></td></tr>'; }).join("") + "</tbody></table></div>" +
+    '<h2 style="--t:var(--c-ube)">Stats</h2><div class="grid g4">' + [["Requests", "1.28M", "+12.4%", "dahon", [3, 5, 4, 6, 7, 6, 9, 11]], ["Auth users", "18,402", "+3.1%", "langit", [5, 5, 6, 6, 7, 7, 8, 8]], ["Storage", "42.7 GB", "+0.8%", "mangga", [6, 6, 6, 7, 7, 7, 7, 8]], ["Errors", "0.02%", "−41%", "gumamela", [9, 7, 8, 5, 4, 3, 3, 2]]].map(function (s) { return '<div class="card stat"><span class="eyebrow">' + s[0] + '</span><span class="v">' + s[1] + '</span><span class="d" style="color:var(--c-' + s[3] + ')">' + s[2] + " vs last week</span>" + spark(s[4], s[3]) + "</div>"; }).join("") + "</div>" +
+    '<h2 style="--t:var(--c-gumamela)">Avatars &amp; progress</h2><div class="grid g2"><div class="card row"><div class="avatars">' + ["KR", "AB", "NH", "TS", "+3"].map(function (n, i) { return '<span class="avatar" style="' + toneVar(KEYS[i]) + '">' + n + "</span>"; }).join("") + '</div><span class="muted" style="font-size:13px">7 members</span></div><div class="card stack" style="gap:10px">' + SPEC.slice(0, 4).map(function (s, i) { return '<div class="progress" style="' + toneVar(s.key) + '"><i style="width:' + [82, 64, 45, 23][i] + '%"></i></div>'; }).join("") + "</div></div>";
+};
+
+/* ---------- FEEDBACK ---------- */
+R.feedback = function () {
+  return '<h2>Alerts</h2><div class="stack">' + [["langit", "info", "New region available", "You can now deploy projects to Manila (ap-southeast-4)."], ["dahon", "ok", "Backup completed", "Snapshot 2026-10-31 02:00 is ready to restore."], ["mangga", "warn", "Approaching quota", "Storage is at 86% of your plan limit."], ["gumamela", "alert", "Connection refused", "The pooler rejected 12 connections in the last hour."]].map(function (a) { return '<div class="alert" style="' + toneVar(a[0]) + '">' + ic(a[1]) + "<div><b>" + a[2] + "</b><p>" + a[3] + "</p></div></div>"; }).join("") + "</div>" +
+    '<h2 style="--t:var(--c-dahon)">Toast &amp; tooltip</h2><div class="demo"><button class="btn btn-primary" data-act="toast" data-v="Project created successfully">Trigger toast</button><button class="btn tip" data-tip="Copies the connection string">Hover for tooltip</button><span class="row muted" style="gap:6px;font-size:13px">Press <kbd>Ctrl</kbd><kbd>K</kbd> to search</span></div>' +
+    '<h2 style="--t:var(--c-langit)">Navigation</h2><div class="stack" style="gap:20px"><div class="tabs" role="tablist">' + ["Overview", "Table editor", "SQL", "Logs", "Settings"].map(function (t, i) { return '<button role="tab" data-act="demo-tab" aria-selected="' + (i === 0) + '">' + t + "</button>"; }).join("") + '</div><div class="crumbs">' + ic("folder") + 'acme <span class="faint">/</span> dagitab-prod <span class="faint">/</span> <b>public.users</b></div><div class="row" style="justify-content:space-between"><span class="faint" style="font-size:12.5px">Showing 1–20 of 248</span><div class="pages">' + ["‹", "1", "2", "3", "…", "13", "›"].map(function (p) { return '<button type="button"' + (p === "1" ? ' aria-current="true"' : "") + ">" + p + "</button>"; }).join("") + "</div></div></div>" +
+    '<h2 style="--t:var(--c-mangga)">Loading</h2><div class="card stack"><div class="skeleton" style="height:14px;width:40%"></div><div class="skeleton" style="height:10px;width:90%"></div><div class="skeleton" style="height:10px;width:75%"></div></div>' +
+    '<h2 style="--t:var(--c-ube)">Code block</h2>' + codeBlock([{ name: "JavaScript", lang: "js", code: 'import { createClient } from "@dagitab/client";\n\nconst db = createClient(process.env.DGT_URL, process.env.DGT_KEY);\n\n// fetch the 10 newest labels\nconst { data, error } = await db\n  .from("labels")\n  .select("id, model, status")\n  .order("created_at", { ascending: false })\n  .limit(10);' }, { name: "cURL", lang: "bash", code: '# fetch the 10 newest labels\n$ curl "https://api.dagitab.dev/rest/v1/labels?select=id,model,status&limit=10" \\\n    -H "apikey: $DGT_KEY"' }, { name: "Python", lang: "js", code: 'from dagitab import create_client\n\ndb = create_client(url, key)\nres = db.table("labels").select("id, model, status").limit(10).execute()' }]);
+};
+
+/* ---------- TEMPLATES ---------- */
+function frame(url, body) { return '<div class="frame"><div class="frame-bar"><i></i><i></i><i></i><span>' + url + "</span></div>" + body + "</div>"; }
+R.landing = function () {
+  var nav = '<div class="lp-nav"><span class="logo">' + A.mark({ size: 24 }) + 'dagitab</span><nav><a>Product</a><a>Developers</a><a>Pricing</a><a>Docs</a><a>Blog</a></nav><div class="row" style="margin-left:auto;gap:8px"><button class="btn btn-sm btn-ghost">Sign in</button><button class="btn btn-sm btn-primary">Start your project</button></div></div>';
+  var hero = '<div class="lp-hero"><div class="bgart" aria-hidden="true">' + bgArt("A04") + '</div><a class="pill">' + badge("Launch week", "ube") + " Day 3 · Baybayin type engine " + ic("arrow") + '</a><h2>Build in an afternoon<span>Scale to the whole archipelago</span></h2><p>Dagitab is an open design platform. Start with tokens, components and art, then add your own brand colour.</p><div class="row" style="justify-content:center"><button class="btn btn-primary btn-lg">Start your project</button><button class="btn btn-lg">Request a demo</button></div></div>';
+  var logos = '<div class="logos">' + ["KUBO", "TALA", "ALON", "BAGWIS", "HABI", "SILAY"].map(function (l) { return "<span>" + l + "</span>"; }).join("") + "</div>";
+  var feat = '<div class="lp-sec"><p class="eyebrow" style="justify-content:center;width:100%;margin-bottom:12px">' + bbs("Gamit") + ' · Everything included</p><div class="bento">' +
+    card({ cls: "w4", tone: "dahon", art: art("A03"), title: ic("database") + "Database", text: "Every project is a full Postgres database, the world's most trusted relational database." }) +
+    card({ cls: "w2", tone: "langit", art: art("A09"), title: ic("lock") + "Auth", text: "Add user sign-ups and logins in minutes." }) +
+    card({ cls: "w2", tone: "ube", art: art("A05"), title: ic("sparkles") + "Functions", text: "Run custom code without deploying a server." }) +
+    card({ cls: "w2", tone: "mangga", art: art("A11"), title: ic("folder") + "Storage", text: "Store, organise and serve large files." }) +
+    card({ cls: "w2", tone: "gumamela", art: art("A02"), title: ic("zap") + "Realtime", text: "Sync client state globally over WebSockets." }) + "</div></div>";
+  var code = '<div class="lp-sec" style="border-top:1px solid var(--border)"><div class="grid g2" style="align-items:center"><div class="stack"><span class="eyebrow">' + bbs("Sulat") + ' · Developers</span><h3 style="font-size:28px;letter-spacing:-.02em;line-height:1.15">Write less.<br><span class="faint">Ship more.</span></h3><p class="muted">Typed client libraries with sensible defaults. Your data is in the response before your coffee cools.</p><div class="row"><button class="btn">' + ic("book") + "Read the docs</button></div></div>" + codeBlock([{ name: "index.js", lang: "js", code: 'const { data } = await db\n  .from("projects")\n  .select("*")\n  .eq("status", "healthy");' }]) + "</div></div>";
+  var cta = '<div class="lp-sec" style="text-align:center;border-top:1px solid var(--border);position:relative;overflow:hidden;isolation:isolate"><div class="bgart" style="position:absolute;inset:0;z-index:-1;opacity:.6">' + bgArt("A08") + '</div><h3 style="font-size:clamp(26px,4vw,40px);letter-spacing:-.03em">Build in an afternoon<br><span class="accent-text">Scale to millions</span></h3><div class="row" style="justify-content:center;margin-top:20px"><button class="btn btn-primary btn-lg">Start your project</button></div></div>';
+  var foot = '<div class="lp-foot"><div class="stack"><span class="logo">' + A.mark({ size: 24 }) + 'dagitab</span><p class="faint" style="font-size:12.5px">' + bbs("Dagitab") + ' · © 2026 Dagitab Inc.</p></div>' + [["Product", ["Database", "Auth", "Functions", "Storage"]], ["Resources", ["Docs", "Changelog", "Status", "Templates"]], ["Company", ["Blog", "Careers", "Contact", "Legal"]]].map(function (c) { return "<div><h5>" + c[0] + "</h5><ul>" + c[1].map(function (x) { return "<li>" + x + "</li>"; }).join("") + "</ul></div>"; }).join("") + "</div>";
+  return frame("dagitab.dev", nav + hero + logos + feat + code + cta + foot);
+};
+R.pricing = function () {
+  var T = [["Free", "$0", "Perfect for side projects", ["2 projects", "500 MB database", "50K monthly users", "Community support"], "dahon", false], ["Pro", "$25", "For production apps", ["8 GB database", "100K monthly users", "Daily backups", "Email support"], "accent", true], ["Team", "$599", "Collaborate at scale", ["SSO for dashboard", "Audit logs", "Priority support", "SOC 2 reports"], "ube", false], ["Enterprise", "Custom", "For large-scale apps", ["Dedicated support", "Uptime SLA", "BYO cloud", "Private networking"], "mangga", false]];
+  return '<div class="row" style="justify-content:center;margin-bottom:32px"><div class="seg" role="group" aria-label="Billing"><button type="button" aria-pressed="true" data-act="seg">Monthly</button><button type="button" aria-pressed="false" data-act="seg">Yearly · save 15%</button></div></div><div class="grid g4">' +
+    T.map(function (t) { return '<div class="tier' + (t[5] ? " feat" : "") + '" style="--t:' + (t[4] === "accent" ? "var(--accent)" : "var(--c-" + t[4] + ")") + '"><div class="row" style="justify-content:space-between"><b style="font-weight:600">' + t[0] + "</b>" + (t[5] ? '<span class="badge" style="--t:var(--accent)">Most popular</span>' : "") + '</div><div class="price">' + t[1] + (t[1].charAt(0) === "$" ? "<small> /month</small>" : "") + '</div><p class="muted" style="font-size:13px">' + t[2] + '</p><button class="btn ' + (t[5] ? "btn-primary" : "") + '" style="width:100%">' + (t[0] === "Enterprise" ? "Contact sales" : "Get started") + "</button><ul>" + t[3].map(function (f) { return "<li>" + ic("check") + f + "</li>"; }).join("") + "</ul></div>"; }).join("") + "</div>" +
+    '<h2 style="--t:var(--c-langit)">Compare plans</h2><div class="panel" style="overflow-x:auto"><table class="tbl"><thead><tr><th>Feature</th><th>Free</th><th>Pro</th><th>Team</th><th>Enterprise</th></tr></thead><tbody>' +
+    [["Database size", "500 MB", "8 GB", "8 GB", "Custom"], ["Backups", "—", "7 days", "14 days", "Custom"], ["Branching", "—", ic("check"), ic("check"), ic("check")], ["SSO", "—", "—", ic("check"), ic("check")], ["Support", "Community", "Email", "Priority", "Dedicated"]].map(function (r) { return "<tr>" + r.map(function (c, i) { return "<td" + (i ? ' class="muted"' : "") + ">" + c + "</td>"; }).join("") + "</tr>"; }).join("") + "</tbody></table></div>";
+};
+R.auth = function () {
+  return frame("dagitab.dev/sign-in", '<div class="auth"><div class="auth-form"><span class="logo">' + A.mark({ size: 28 }) + 'dagitab</span><div><h3 style="font-size:24px;letter-spacing:-.02em;margin-bottom:4px">Welcome back</h3><p class="muted" style="font-size:13.5px">Sign in to your account</p></div><button class="btn btn-lg" style="width:100%">' + ic("branch") + 'Continue with Git provider</button><button class="btn btn-lg" style="width:100%">' + ic("key") + 'Continue with SSO</button><div class="or">or</div><div class="field"><label for="au1">Email</label><input class="input" id="au1" type="email" placeholder="you@example.com"></div><div class="field"><label for="au2" class="row" style="justify-content:space-between">Password <a class="faint" style="font-size:12.5px">Forgot password?</a></label><input class="input" id="au2" type="password" placeholder="••••••••"></div><button class="btn btn-primary btn-lg" style="width:100%" data-act="toast" data-v="Signed in (demo)">Sign in</button><p class="faint" style="font-size:12.5px;text-align:center">Don\'t have an account? <a class="accent-text">Sign up</a></p></div>' +
+    '<div class="auth-art"><div class="bgart" aria-hidden="true">' + bgArt("A07") + '</div><div class="card" style="background:color-mix(in srgb,var(--surface) 88%,transparent);backdrop-filter:blur(6px)"><p style="font-size:16px;color:var(--text);line-height:1.5">"We moved our label release workflow to Dagitab in a weekend. The dashboard finally looks like it belongs to us."</p><div class="row" style="margin-top:14px"><span class="avatar" style="' + toneVar("ube") + '">MG</span><div><b style="font-weight:500;font-size:13px">Maria G.</b><p class="faint" style="font-size:12px">Systems Engineer</p></div></div></div></div></div>');
+};
+R.dashboard = function () {
+  var rail = ["home", "table", "terminal", "database", "lock", "folder", "zap", "chart", "settings"];
+  var tables = ["users", "projects", "labels", "releases", "audit_log", "sessions"];
+  var data = [["1", "kierwin@dagitab.dev", "admin", "dahon", "2026-10-31 09:12"], ["2", "allyssa@dagitab.dev", "editor", "langit", "2026-10-30 17:44"], ["3", "nelvyn@dagitab.dev", "editor", "langit", "2026-10-30 08:03"], ["4", "ops-bot", "service", "ube", "2026-10-29 23:59"], ["5", "guest-4471", "pending", "mangga", "—"]];
+  return frame("dagitab.dev/project/dagitab-prod", '<div class="studio"><nav class="rail" aria-label="Studio">' + A.mark({ size: 28, variant: "spectrum" }) + '<div style="height:8px"></div>' + rail.map(function (r, i) { return '<button type="button" aria-label="' + r + '"' + (i === 1 ? ' aria-current="page"' : "") + ">" + ic(r, "lg") + "</button>"; }).join("") + '</nav><div class="studio-side"><span class="eyebrow" style="padding:4px 8px 8px">Table editor</span><div class="input-group" style="margin-bottom:8px">' + ic("search") + '<input class="input" placeholder="Search tables" aria-label="Search tables" style="height:30px;font-size:12.5px"></div>' + tables.map(function (t, i) { return '<a class="' + (i === 0 ? "on" : "") + '">' + ic("table") + t + "</a>"; }).join("") + '</div>' +
+    '<div class="studio-main"><div class="studio-top"><div class="crumbs">' + ic("folder") + 'dagitab-prod <span class="faint">/</span> <b>public.users</b> ' + badge("Healthy", "dahon", true) + '</div><div class="row" style="gap:6px"><button class="btn btn-sm">' + ic("filter") + 'Filter</button><button class="btn btn-sm btn-primary">' + ic("plus") + 'Insert row</button></div></div>' +
+    '<div style="padding:16px;display:grid;gap:16px"><div class="grid g4">' + [["Rows", "18,402", "dahon", [3, 4, 4, 5, 6, 7, 8, 9]], ["Req / min", "2,114", "langit", [6, 5, 7, 6, 8, 7, 9, 8]], ["p95 latency", "38 ms", "ube", [5, 6, 4, 5, 4, 3, 4, 3]], ["Disk", "62%", "mangga", [4, 4, 5, 5, 5, 6, 6, 6]]].map(function (s) { return '<div class="card stat" style="padding:14px"><span class="eyebrow">' + s[0] + '</span><span class="v" style="font-size:22px">' + s[1] + "</span>" + spark(s[3], s[2]) + "</div>"; }).join("") + "</div>" +
+    '<div class="panel" style="overflow-x:auto"><table class="tbl"><thead><tr><th style="width:40px"><input type="checkbox" class="chk" aria-label="Select all"></th><th>id</th><th>email</th><th>role</th><th>last_sign_in</th></tr></thead><tbody>' + data.map(function (d) { return '<tr><td><input type="checkbox" class="chk" aria-label="Select row ' + d[0] + '"></td><td class="mono">' + d[0] + "</td><td>" + d[1] + "</td><td>" + badge(d[2], d[3]) + '</td><td class="mono">' + d[4] + "</td></tr>"; }).join("") + "</tbody></table></div></div></div></div>");
+};
+
+/* ---------- TOKENS ---------- */
+function tokensCSS() {
+  return ":root{\n  /* spectrum */\n" + SPEC.map(function (s) { return "  --c-" + s.key + ":" + s.hex + ";"; }).join("\n") + "\n  --accent:var(--c-dahon); --on-accent:#0B0B0B;\n  /* type */\n  --sans:\"Inter\",system-ui,sans-serif;\n  --mono:\"JetBrains Mono\",ui-monospace,monospace;\n  --bb:\"RX09 Baybayin\",\"Noto Sans Tagalog\",sans-serif;\n  /* shape + space */\n  --r-sm:4px; --r:6px; --r-lg:10px; --r-xl:14px; --r-pill:999px;\n  --s1:4px; --s2:8px; --s3:12px; --s4:16px; --s5:24px; --s6:32px; --s7:48px; --s8:64px; --s9:96px;\n}\n[data-theme=\"dark\"]{\n  --bg:#121212; --bg-alt:#171717; --surface:#1C1C1C; --surface-2:#242424;\n  --border:#2E2E2E; --border-strong:#3E3E3E;\n  --text:#EDEDED; --text-muted:#A1A1A1; --text-faint:#6E6E6E;\n  --accent-text:var(--accent);\n}\n[data-theme=\"light\"]{\n  --bg:#FCFCFC; --bg-alt:#F6F6F6; --surface:#FFFFFF; --surface-2:#F1F1F1;\n  --border:#E6E6E6; --border-strong:#D2D2D2;\n  --text:#171717; --text-muted:#5E5E5E; --text-faint:#8C8C8C;\n  --accent-text:color-mix(in srgb,var(--accent) 62%,#000);\n}\n" + KEYS.map(function (k) { return '[data-accent="' + k + '"]{--accent:var(--c-' + k + ")}"; }).join("\n") + "\n/* per-element tone */\n" + KEYS.map(function (k) { return ".t-" + k + "{--t:var(--c-" + k + ")}"; }).join(" ");
+}
+function tokensJSON() {
+  var o = { color: { spectrum: {}, dark: { bg: "#121212", "bg-alt": "#171717", surface: "#1C1C1C", "surface-2": "#242424", border: "#2E2E2E", "border-strong": "#3E3E3E", text: "#EDEDED", "text-muted": "#A1A1A1" }, light: { bg: "#FCFCFC", "bg-alt": "#F6F6F6", surface: "#FFFFFF", "surface-2": "#F1F1F1", border: "#E6E6E6", "border-strong": "#D2D2D2", text: "#171717", "text-muted": "#5E5E5E" } }, radius: { sm: 4, md: 6, lg: 10, xl: 14 }, space: [4, 8, 12, 16, 24, 32, 48, 64, 96], font: { sans: "Inter", mono: "JetBrains Mono", baybayin: "RX09 Baybayin" } };
+  SPEC.forEach(function (s) { o.color.spectrum[s.key] = s.hex; });
+  return JSON.stringify(o, null, 2);
+}
+R.tokens = function () {
+  return "<h2>CSS variables</h2>" + codeBlock([{ name: "tokens.css", lang: "css", code: tokensCSS() }, { name: "tokens.json", lang: "js", code: tokensJSON() }]) +
+    '<h2 style="--t:var(--c-gumamela)">Never</h2><div class="row">' + ["Gradients on surfaces", "Glow or blur shadows on cards", "More than one accent per view", "Pastel fills", "Emoji as icons", "Uppercased Baybayin"].map(function (n) { return '<span class="badge" style="--t:var(--c-gumamela);text-decoration:line-through">' + n + "</span>"; }).join("") + "</div>" +
+    '<h2 style="--t:var(--c-dahon)">Checklist</h2><div class="grid g2">' + ["One brand accent, set on <html>", "Neutral surfaces for ~86% of the view", "Each module labelled with its spectrum tone", "One Baybayin element per page (eyebrow, seal, watermark)", "Borders for elevation, shadows only for floating layers", "Night and day both checked for AA contrast"].map(function (c) { return '<label class="opt card" style="padding:12px 14px"><input type="checkbox" class="chk" checked>' + esc(c) + "</label>"; }).join("") + "</div>";
+};
+
+/* =========================================================
+   SHELL
+   ========================================================= */
+function header() {
+  return '<header class="hdr"><button class="icon-btn menu-btn" data-act="menu" aria-label="Open navigation">' + ic("menu") + '</button><a class="logo" href="#/overview">' + A.mark({ size: 26 }) + 'dagitab<span class="ver">DGT-01 · v1.0</span></a>' +
+    '<nav class="hdr-nav" aria-label="Primary">' + [["Foundations", "color"], ["Brand", "web-icon"], ["Components", "actions"], ["Templates", "landing"]].map(function (n) { return '<a href="#/' + n[1] + '" data-grp="' + n[0] + '">' + n[0] + "</a>"; }).join("") + "</nav>" +
+    '<div class="hdr-tools"><button class="search" data-act="cmd" aria-label="Search the docs">' + ic("search") + '<span class="txt">Search docs…</span><kbd>Ctrl K</kbd></button>' +
+    '<div class="dots" role="group" aria-label="Accent colour">' + SPEC.map(function (s) { return '<button type="button" class="dot" style="' + toneVar(s.key) + '" data-act="accent" data-v="' + s.key + '" aria-label="Accent ' + s.name + '" aria-pressed="' + (state.accent === s.key) + '"></button>'; }).join("") + "</div>" +
+    '<button class="icon-btn" id="theme-btn" data-act="theme" aria-pressed="' + isDark() + '" aria-label="Toggle night mode"><svg class="ic theme-ic-moon" viewBox="0 0 24 24" aria-hidden="true">' + IC.moon + '</svg><svg class="ic theme-ic-sun" viewBox="0 0 24 24" aria-hidden="true">' + IC.sun + "</svg></button></div></header>";
+}
+function sidebar(cur) {
+  var groups = [], out = "";
+  PAGES.forEach(function (p) { if (groups.indexOf(p.g) < 0) groups.push(p.g); });
+  var GBB = { "Getting started": "Simula", Foundations: "Saligan", Brand: "Tatak", Components: "Bahagi", Templates: "Hulma", Resources: "Yaman" };
+  groups.forEach(function (g) {
+    out += "<h6><span>" + g + "</span>" + bbs(GBB[g]) + "</h6>";
+    PAGES.filter(function (p) { return p.g === g; }).forEach(function (p) { out += '<a href="#/' + p.id + '" style="' + toneVar(p.tone) + '"' + (p.id === cur ? ' aria-current="page"' : "") + '><span class="pip"></span>' + p.t + "</a>"; });
+  });
+  return out + '<div class="side-foot"><div class="dots" role="group" aria-label="Accent colour" style="display:flex;width:max-content;margin-bottom:12px">' + SPEC.map(function (s) { return '<button type="button" class="dot" style="' + toneVar(s.key) + '" data-act="accent" data-v="' + s.key + '" aria-label="Accent ' + s.name + '" aria-pressed="' + (state.accent === s.key) + '"></button>'; }).join("") + '</div><button class="btn btn-sm" style="width:100%" data-act="theme">' + ic(isDark() ? "sun" : "moon") + (isDark() ? "Day mode" : "Night mode") + '</button><p class="faint mono" style="font-size:11px;margin-top:12px">BRAND: DAGITAB · MODEL: DGT-01</p></div>';
+}
+function route() { var h = (location.hash || "").replace(/^#\/?/, ""); return PAGES.some(function (p) { return p.id === h; }) ? h : "overview"; }
+var io = null;
+function render() {
+  var id = route(), i = PAGES.map(function (p) { return p.id; }).indexOf(id), p = PAGES[i], prev = PAGES[i - 1], next = PAGES[i + 1];
+  codeN = 0; CODES = {};
+  $("#side").innerHTML = sidebar(id);
+  var wide = p.g === "Templates" || id === "svg-art" || id === "overview";
+  var main = $("#page"); main.className = "page" + (wide ? " wide" : "");
+  main.innerHTML = '<div class="page-in"><header class="page-head" style="' + toneVar(p.tone) + '"><span class="eyebrow">' + bbs(p.bb) + " · " + p.g + "</span><h1>" + p.t + "</h1><p>" + p.d + "</p></header>" + R[id]() +
+    '<nav class="pager" aria-label="Pagination">' + (prev ? '<a href="#/' + prev.id + '"><span>Previous</span><b>← ' + prev.t + "</b></a>" : "") + (next ? '<a class="next" href="#/' + next.id + '"><span>Next</span><b>' + next.t + " →</b></a>" : "") + "</nav></div>";
+  $$(".hdr-nav a").forEach(function (a) { a.className = a.getAttribute("data-grp") === p.g ? "on" : ""; });
+  document.title = p.t + " · Dagitab DGT-01";
+  buildTOC(); updTester(); updBB(); paintArt();
+  document.body.classList.remove("nav-open");
+}
+function buildTOC() {
+  var hs = $$("#page h2").filter(function (h) { return !h.closest(".frame"); }), toc = $("#toc");
+  hs.forEach(function (h) { if (!h.id) h.id = slug(h.textContent); });
+  toc.innerHTML = hs.length ? "<p>On this page</p>" + hs.map(function (h) { return '<a href="#' + h.id + '" data-act="toc" data-id="' + h.id + '">' + esc(h.textContent) + "</a>"; }).join("") : "";
+  if (io) io.disconnect(); if (!("IntersectionObserver" in window) || !hs.length) return;
+  io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) $$("#toc a").forEach(function (a) { a.className = a.getAttribute("data-id") === e.target.id ? "on" : ""; }); }); }, { rootMargin: "-20% 0px -70% 0px" });
+  hs.forEach(function (h) { io.observe(h); });
+}
+
+/* ---------- COMMAND PALETTE ---------- */
+var cmd = { q: "", i: 0, list: [] };
+function openCmd() {
+  if ($("#cmd-ov")) return;
+  var ov = document.createElement("div"); ov.className = "overlay"; ov.id = "cmd-ov";
+  ov.innerHTML = '<div class="cmd" role="dialog" aria-modal="true" aria-label="Search"><div class="input-group">' + ic("search") + '<input class="input" id="cmd-in" placeholder="Search pages, colours, actions…" autocomplete="off" aria-controls="cmd-list"></div><ul id="cmd-list" role="listbox"></ul><div class="cmd-foot"><span><kbd>↑</kbd> <kbd>↓</kbd> move</span><span><kbd>Enter</kbd> open</span><span><kbd>Esc</kbd> close</span></div></div>';
+  ov.addEventListener("mousedown", function (e) { if (e.target === ov) closeCmd(); });
+  document.body.appendChild(ov); cmd.q = ""; cmd.i = 0; paintCmd(); $("#cmd-in").focus();
+}
+function closeCmd() { var o = $("#cmd-ov"); if (o) o.parentNode.removeChild(o); }
+function cmdItems() {
+  var it = PAGES.map(function (p) { return { t: p.t, g: p.g, tone: p.tone, go: "#/" + p.id }; });
+  it.push({ t: isDark() ? "Switch to day mode" : "Switch to night mode", g: "Action", tone: "mangga", act: "theme" });
+  SPEC.forEach(function (s) { it.push({ t: "Accent: " + s.name, g: "Action", tone: s.key, act: "accent", v: s.key }); });
+  return it;
+}
+function paintCmd() {
+  var q = cmd.q.toLowerCase(); cmd.list = cmdItems().filter(function (x) { return !q || (x.t + " " + x.g).toLowerCase().indexOf(q) > -1; });
+  if (cmd.i >= cmd.list.length) cmd.i = Math.max(0, cmd.list.length - 1);
+  $("#cmd-list").innerHTML = cmd.list.length ? cmd.list.map(function (x, i) { return '<li><button type="button" role="option" data-act="cmd-go" data-i="' + i + '" aria-selected="' + (i === cmd.i) + '" style="' + toneVar(x.tone) + '"><span class="pip"></span>' + esc(x.t) + "<small>" + x.g + "</small></button></li>"; }).join("") : '<li class="faint" style="padding:16px;font-size:13px">No results for "' + esc(cmd.q) + '"</li>';
+}
+function runCmd(x) { closeCmd(); if (!x) return; if (x.go) location.hash = x.go; else if (x.act === "theme") toggleTheme(); else if (x.act === "accent") setAccent(x.v); }
+
+/* ---------- ACTIONS ---------- */
+function toast(msg) {
+  var box = $("#toasts"), d = document.createElement("div"); d.className = "toast"; d.innerHTML = ic("ok") + "<span></span>"; d.lastChild.textContent = msg; box.appendChild(d);
+  while (box.children.length > 3) box.removeChild(box.firstChild);
+  setTimeout(function () { if (d.parentNode) d.parentNode.removeChild(d); }, 2600);
+}
+function copy(text, msg) {
+  var ok = function () { toast(msg || "Copied to clipboard"); }, fail = function () { toast("Copy blocked by the browser. Select the text manually."); };
+  if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(ok, fail);
+  else { try { var t = document.createElement("textarea"); t.value = text; document.body.appendChild(t); t.select(); document.execCommand("copy"); document.body.removeChild(t); ok(); } catch (e) { fail(); } }
+}
+function download(name, data, type) {
+  var a = document.createElement("a"), url = data instanceof Blob ? URL.createObjectURL(data) : URL.createObjectURL(new Blob([data], { type: type || "image/svg+xml" }));
+  a.href = url; a.download = name; document.body.appendChild(a); a.click(); document.body.removeChild(a); setTimeout(function () { URL.revokeObjectURL(url); }, 1500);
+}
+function svgToPng(svg, size, name) {
+  var img = new Image(); img.onload = function () { var c = document.createElement("canvas"); c.width = c.height = size; c.getContext("2d").drawImage(img, 0, 0, size, size); c.toBlob(function (b) { if (b) { download(name, b); toast("Exported " + name); } }, "image/png"); };
+  img.onerror = function () { toast("PNG export failed in this browser"); };
+  img.src = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svg.replace(/width="\d+" height="\d+"/, 'width="' + size + '" height="' + size + '"'));
+}
+function iconExport(id, fmt) {
+  var v = id === "current" ? { id: "favicon", o: { variant: "solid", acc: accIdx() } } : VARIANTS.filter(function (x) { return x.id === id; })[0]; if (!v) return;
+  var svg = variantSVG(v, true, 512), name = "dagitab-" + (id === "current" ? "favicon-" + state.accent : v.id);
+  if (fmt === "png") svgToPng(svg, 512, name + "-512.png"); else { download(name + ".svg", svg); toast("Exported " + name + ".svg"); }
+}
+function toggleTheme() { state.theme = isDark() ? "light" : "dark"; applyTheme(); $("#side").innerHTML = sidebar(route()); }
+function setAccent(k) { state.accent = k; applyTheme(); if (route() === "web-icon" || route() === "tokens") { var y = scrollY; render(); scrollTo(0, y); } }
+
+document.addEventListener("click", function (e) {
+  var t = e.target.closest ? e.target.closest("[data-act]") : null; if (!t) return;
+  var a = t.getAttribute("data-act"), v = t.getAttribute("data-v");
+  switch (a) {
+    case "theme": toggleTheme(); break;
+    case "accent": setAccent(v); break;
+    case "menu": document.body.classList.toggle("nav-open"); break;
+    case "cmd": openCmd(); break;
+    case "cmd-go": runCmd(cmd.list[+t.getAttribute("data-i")]); break;
+    case "copy": copy(v, "Copied " + v); break;
+    case "toast": toast(v); break;
+    case "toc": e.preventDefault(); var el = document.getElementById(t.getAttribute("data-id")); if (el) el.scrollIntoView({ behavior: reduced() ? "auto" : "smooth" }); break;
+    case "cbtab": var f = CODES[t.getAttribute("data-cb")][+t.getAttribute("data-i")], box = document.getElementById(t.getAttribute("data-cb"));
+      $("pre code", box).innerHTML = hl(f.code, f.lang); box.setAttribute("data-i", t.getAttribute("data-i"));
+      $$("[data-act=cbtab]", box).forEach(function (b) { b.setAttribute("aria-selected", String(b === t)); }); break;
+    case "cbcopy": var cb = t.getAttribute("data-cb"), bx = document.getElementById(cb); copy(CODES[cb][+(bx.getAttribute("data-i") || 0)].code, "Code copied"); break;
+    case "ttf": tt.f = +t.getAttribute("data-i"); updTester(); break;
+    case "seg": $$("button", t.parentNode).forEach(function (b) { b.setAttribute("aria-pressed", String(b === t)); }); break;
+    case "demo-tab": $$("button", t.parentNode).forEach(function (b) { b.setAttribute("aria-selected", String(b === t)); }); break;
+    case "bbtone": bb.tone = v; updBB(); break;
+    case "bb-copy-uni": if (bb.cur) copy(bbu(bb.cur.src, bb.cur.o), "Unicode copied"); break;
+    case "bb-copy-svg": if (bb.cur) copy(B.toSVG(bb.cur.src || " ", { killer: bb.killer, height: bb.h, color: bbHex() }), "SVG markup copied"); break;
+    case "bb-dl": if (bb.cur) { var nm = "baybayin-" + (bb.cur.src.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") || "text") + ".svg"; download(nm, B.toSVG(bb.cur.src || "baybayin", { killer: bb.killer, height: 256, color: bbHex() })); toast("Exported " + nm); } break;
+    case "artf": artFilter = v; paintArt(); break;
+    case "artm": artMode = v; paintArt(); break;
+    case "art-copy": copy(artExport(v), v + " SVG copied"); break;
+    case "art-dl": var al = A.list.filter(function (x) { return x.id === v; })[0]; download("dgt-" + v.toLowerCase() + "-" + slug(al.name) + ".svg", artExport(v)); toast("Exported " + al.name); break;
+    case "icon-dl": iconExport(v, t.getAttribute("data-fmt")); break;
+    case "copy-favicon": copy(FAV_HTML, "Head tags copied"); break;
+    case "ic-copy": copy('<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">' + IC[v] + "</svg>", "Icon \u201C" + v + "\u201D copied"); break;
+  }
+});
+document.addEventListener("input", function (e) {
+  var id = e.target.id;
+  if (id === "tt-in") { tt.txt = e.target.value; updTester(); }
+  else if (id === "tt-size") { tt.size = +e.target.value; updTester(); }
+  else if (id === "bb-in") updBB();
+  else if (id === "bb-h") { bb.h = +e.target.value; updBB(); }
+  else if (id === "f6") $("#f6v").textContent = e.target.value;
+  else if (id === "cmd-in") { cmd.q = e.target.value; cmd.i = 0; paintCmd(); }
+  else if (id === "ic-q") { var q = e.target.value.toLowerCase(); $$("#ic-grid button").forEach(function (b) { b.style.display = b.getAttribute("data-name").indexOf(q) > -1 ? "" : "none"; }); }
+});
+document.addEventListener("change", function (e) { if (e.target.id === "bb-kill") { bb.killer = e.target.value; updBB(); } });
+document.addEventListener("keydown", function (e) {
+  if ((e.ctrlKey || e.metaKey) && (e.key === "k" || e.key === "K")) { e.preventDefault(); if ($("#cmd-ov")) closeCmd(); else openCmd(); return; }
+  if (e.key === "/" && !/INPUT|TEXTAREA|SELECT/.test((document.activeElement || {}).tagName || "")) { e.preventDefault(); openCmd(); return; }
+  if (!$("#cmd-ov")) { if (e.key === "Escape") document.body.classList.remove("nav-open"); return; }
+  if (e.key === "Escape") closeCmd();
+  else if (e.key === "ArrowDown") { e.preventDefault(); cmd.i = Math.min(cmd.list.length - 1, cmd.i + 1); paintCmd(); }
+  else if (e.key === "ArrowUp") { e.preventDefault(); cmd.i = Math.max(0, cmd.i - 1); paintCmd(); }
+  else if (e.key === "Enter") { e.preventDefault(); runCmd(cmd.list[cmd.i]); }
+});
+window.addEventListener("hashchange", function () { render(); scrollTo(0, 0); });
+
+/* ---------- BOOT ---------- */
+if (KEYS.indexOf(state.accent) < 0) state.accent = "dahon";
+if (state.theme !== "light") state.theme = "dark";
+document.body.insertAdjacentHTML("afterbegin", header());
+applyTheme(); render();
+window.__DGT = { render: render, PAGES: PAGES, tokensCSS: tokensCSS };
+})();
+
+</script>
+</body>
+</html>

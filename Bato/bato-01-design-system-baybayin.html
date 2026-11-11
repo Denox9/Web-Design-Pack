@@ -1,0 +1,1590 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>BATO-01 // STRUCTURE GRID DESIGN SYSTEM v1.0 + BAYBAYIN</title>
+<script>
+  (function () {
+    var d = document.documentElement;
+    var saved = localStorage.getItem("bato_theme");
+    var sys = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+    d.setAttribute("data-theme", saved || sys);
+    d.setAttribute("data-accent", localStorage.getItem("bato_accent") || "green");
+  })();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@500;700;800;900&family=Tektur:wght@400;500;700&family=Silkscreen:wght@400;700&family=IBM+Plex+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+<script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<style>
+/* =====================================================
+   00 // BAYBAYIN FONT (embedded WOFF2 · SIL OFL 1.1)
+   ===================================================== */
+@font-face{font-family:"RX09 Baybayin";src:url(data:font/woff2;base64,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) format("woff2");font-weight:400;font-style:normal;font-display:swap;unicode-range:U+1700-171F,U+1735-1736,U+25CC}
+@font-face{font-family:"RX09 Baybayin";src:url(data:font/woff2;base64,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) format("woff2");font-weight:700;font-style:normal;font-display:swap;unicode-range:U+1700-171F,U+1735-1736,U+25CC}
+/* =====================================================
+   01 // TOKENS — BATO-01 STRUCTURE GRID
+   ===================================================== */
+:root{
+  --paper:#F1F1EC; --ink:#111311; --forest:#22461F; --moss:#2F5B2A; --leaf:#4B8A3F; --mint:#A9D39C; --pale:#DDEBD6;
+  --bg:var(--paper); --fg:var(--ink); --line:#D3D5CF; --dotc:#C3C5C0; --gray:#80867E;
+  --accent:var(--forest); --accent-2:var(--mint); --on-accent:#F1F1EC; --field-focus:#E6EFE1;
+  --u:8px;
+  --hero:"Inter Tight","Helvetica Neue",Arial,sans-serif;
+  --wide:"Tektur","Inter Tight",sans-serif;
+  --pixel:"Silkscreen","IBM Plex Mono",monospace;
+  --mono:"IBM Plex Mono","JetBrains Mono",monospace;
+  --bb:"RX09 Baybayin","Noto Sans Tagalog",sans-serif;
+  color-scheme:light;
+}
+[data-theme="dark"]{
+  --bg:#0F1A0E; --fg:#E4ECDF; --line:#24341F; --dotc:#2C3D27; --gray:#7D8B77;
+  --accent:#A9D39C; --accent-2:#4B8A3F; --on-accent:#0F1A0E; --field-focus:#16261A;
+  color-scheme:dark;
+}
+[data-accent="mono"], .mono{ --accent:var(--fg); --accent-2:var(--gray); --on-accent:var(--bg); }
+*{box-sizing:border-box;margin:0;padding:0;border-radius:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--fg);font-family:var(--mono);font-size:13px;line-height:1.5;overflow-x:hidden}
+body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:9999;opacity:.05;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+::selection{background:var(--accent);color:var(--on-accent)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+a{color:inherit} svg{max-width:100%}
+/* =====================================================
+   02 // PRIMITIVES
+   ===================================================== */
+.label{font-size:10px;letter-spacing:.14em;text-transform:uppercase}
+.micro{font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--gray)}
+.b{font-weight:700}
+.giant{font-family:var(--hero);font-weight:900;letter-spacing:-.045em;line-height:.8;text-transform:uppercase}
+.wide{font-family:var(--wide);font-weight:400;text-transform:uppercase;letter-spacing:.01em;line-height:.95}
+.pixel{font-family:var(--pixel);font-weight:700;text-transform:uppercase;letter-spacing:.02em;line-height:.9}
+.accent-text{color:var(--accent)}
+.hl{background:var(--fg);color:var(--bg);padding:0 .18em;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+.hl.g{background:var(--accent);color:var(--on-accent)}
+.brk{display:inline-flex;gap:1.2em;align-items:center;font-weight:500}
+.brk::before{content:"["} .brk::after{content:"]"}
+.cnr{position:relative}
+.cnr::before,.cnr::after{content:"";position:absolute;width:10px;height:10px;border:1.5px solid var(--fg);pointer-events:none}
+.cnr::before{top:-1px;left:-1px;border-right:0;border-bottom:0}
+.cnr::after{bottom:-1px;right:-1px;border-left:0;border-top:0}
+.plus{position:absolute;width:14px;height:14px}
+.plus::before,.plus::after{content:"";position:absolute;background:var(--fg)}
+.plus::before{left:50%;width:1px;height:100%} .plus::after{top:50%;height:1px;width:100%}
+.blink{animation:blink 1s steps(1) infinite} @keyframes blink{50%{opacity:0}}
+.s-ink{stroke:var(--fg)} .f-ink{fill:var(--fg)} .f-bg{fill:var(--bg)} .s-line{stroke:var(--line)}
+.f-acc{fill:var(--accent)} .s-acc{stroke:var(--accent)} .f-dot{fill:var(--dotc)}
+/* bracket bar — poster header */
+.bbar{display:grid;grid-template-columns:1fr auto 1fr;gap:16px;align-items:start;font-family:var(--hero);font-weight:500;text-transform:uppercase}
+.bbar .side{display:flex;align-items:center;gap:14px;font-size:15px}
+.bbar .side b{font-weight:800;font-size:18px}
+.bbar .side.r{justify-content:flex-end}
+.bbar .mid{text-align:center}
+.bbar .mid b{display:block;font-weight:800;font-size:clamp(14px,1.9vw,22px);letter-spacing:.01em}
+.bbar .mid span{font-size:13px;letter-spacing:.04em}
+.bbar .mk{display:flex;gap:10px;margin-top:10px}
+/* key row — poster footer */
+.keyrow{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;font-family:var(--hero);text-transform:uppercase}
+.keyrow b{display:block;font-weight:800;font-size:11px;letter-spacing:.02em}
+.keyrow span{font-size:10px;letter-spacing:.04em}
+.slogan{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px 16px;font-family:var(--hero);text-transform:uppercase;font-size:clamp(16px,2.2vw,24px)}
+.slogan b{font-weight:800} .slogan .brk{font-weight:400;font-size:.8em}
+/* =====================================================
+   03 // CONTROLS
+   ===================================================== */
+.btn{font-family:var(--mono);font-weight:500;font-size:11px;letter-spacing:.12em;text-transform:uppercase;border:1px solid var(--fg);background:var(--fg);color:var(--bg);
+  padding:10px 14px;cursor:pointer;transition:0s;display:inline-flex;gap:10px;align-items:center;justify-content:space-between;text-decoration:none}
+.btn::before{content:"";width:7px;height:7px;background:currentColor;flex:none}
+.btn.nob::before{display:none}
+.btn:hover{background:var(--bg);color:var(--fg)}
+.btn.acc{background:var(--accent);color:var(--on-accent);border-color:var(--accent)}
+.btn.acc:hover{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.btn.ghost{background:transparent;color:var(--fg)}
+.btn.ghost:hover{background:var(--fg);color:var(--bg)}
+.btn.sm{padding:6px 10px;font-size:10px}
+.btn.lg{padding:16px 22px;font-size:13px}
+.btn.step{clip-path:polygon(0 0,calc(100% - 8px) 0,calc(100% - 8px) 8px,100% 8px,100% 100%,8px 100%,8px calc(100% - 8px),0 calc(100% - 8px))}
+.btn[disabled]{opacity:.35;cursor:not-allowed}
+.btn[disabled]:hover{background:var(--fg);color:var(--bg)}
+.sw{font:500 10px var(--mono);letter-spacing:.12em;text-transform:uppercase;display:inline-flex;border:1px solid var(--fg);background:transparent;color:var(--fg);cursor:pointer;padding:0;white-space:nowrap}
+.sw span{padding:6px 9px;transition:0s}
+.sw span.on{background:var(--fg);color:var(--bg)}
+.sw:hover span:not(.on){background:var(--line)}
+.field{display:flex;flex-direction:column;gap:6px}
+.field input,.field select,.field textarea{font:14px var(--mono);padding:11px 12px;border:1px solid var(--fg);background:var(--bg);color:var(--fg);width:100%}
+.field textarea{resize:vertical;min-height:80px}
+.field input::placeholder,.field textarea::placeholder{color:var(--gray)}
+.field input:focus,.field select:focus,.field textarea:focus{outline:2px solid var(--accent);outline-offset:0;background:var(--field-focus)}
+.field .hint{font-size:9px;letter-spacing:.14em;color:var(--gray);text-transform:uppercase}
+.field.invalid input{border-left:8px solid var(--fg)}
+.field.invalid .hint{color:var(--fg);font-weight:700}
+.err{background:var(--fg);color:var(--bg);padding:10px 12px;font-size:11px;letter-spacing:.1em;text-transform:uppercase;display:flex;gap:10px}
+.err::before{content:"";width:10px;height:10px;background:var(--accent-2);flex:none;margin-top:2px}
+.chk{appearance:none;width:16px;height:16px;border:1px solid var(--fg);background:var(--bg);cursor:pointer;display:inline-grid;place-content:center;flex:none}
+.chk:checked{background:linear-gradient(to top right,transparent calc(50% - .75px),var(--fg) calc(50% - .75px),var(--fg) calc(50% + .75px),transparent calc(50% + .75px))}
+.chk:checked::after{content:"";width:6px;height:6px;background:var(--accent)}
+.rad{appearance:none;width:14px;height:14px;border:1px solid var(--fg);cursor:pointer;flex:none;background:var(--bg)}
+.rad:checked{background:var(--accent);box-shadow:inset 0 0 0 3px var(--bg)}
+.opt{display:flex;gap:10px;align-items:center;cursor:pointer;font-size:11px;letter-spacing:.12em;text-transform:uppercase}
+.toggle{appearance:none;width:44px;height:20px;border:1px solid var(--fg);position:relative;cursor:pointer;background:var(--bg);flex:none;
+  background-image:linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:11px 100%}
+.toggle::after{content:"";position:absolute;top:2px;left:2px;width:16px;height:14px;background:var(--fg)}
+.toggle:checked{background-color:var(--accent)}
+.toggle:checked::after{left:24px;background:var(--on-accent)}
+.range{appearance:none;width:100%;height:20px;background:transparent;cursor:pointer}
+.range::-webkit-slider-runnable-track{height:1px;background:var(--fg)}
+.range::-moz-range-track{height:1px;background:var(--fg)}
+.range::-webkit-slider-thumb{appearance:none;width:12px;height:12px;background:var(--accent);border:1px solid var(--fg);margin-top:-6px}
+.range::-moz-range-thumb{width:12px;height:12px;background:var(--accent);border:1px solid var(--fg);border-radius:0}
+.tabs{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;border:1px solid var(--fg)}
+.tabs button{font:500 11px var(--mono);letter-spacing:.12em;padding:11px 8px;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;border:0;background:transparent;color:var(--fg);cursor:pointer;text-transform:uppercase;transition:0s}
+.tabs button:hover{background:var(--line)}
+.tabs button[aria-selected="true"]{background:var(--fg);color:var(--bg)}
+.tabs button + button{border-left:1px solid var(--fg)}
+.chip{display:inline-flex;gap:6px;align-items:center;padding:2px 8px;border:1px solid var(--fg);font-size:9px;letter-spacing:.14em;text-transform:uppercase;font-weight:500}
+.chip::before{content:"";width:6px;height:6px;background:currentColor}
+.chip.live{background:var(--accent);color:var(--on-accent);border-color:var(--accent)}
+.chip.ink{background:var(--fg);color:var(--bg)}
+.chip.next::before{background:transparent;border:1px solid currentColor;width:4px;height:4px}
+.seg{display:grid;grid-template-columns:repeat(20,1fr);gap:2px;height:14px}
+.seg i{background:var(--line)} .seg i.on{background:var(--fg)} .seg i.hot{background:var(--accent)}
+details.acc{border:1px solid var(--fg);border-top:0}
+details.acc:first-of-type{border-top:1px solid var(--fg)}
+details.acc summary{list-style:none;cursor:pointer;padding:11px 14px;display:flex;justify-content:space-between;font-size:11px;letter-spacing:.12em;text-transform:uppercase;font-weight:500}
+details.acc summary::-webkit-details-marker{display:none}
+details.acc summary::after{content:"[ + ]";color:var(--gray)}
+details.acc[open] summary{background:var(--fg);color:var(--bg)}
+details.acc[open] summary::after{content:"[ − ]";color:var(--accent-2)}
+details.acc p{padding:12px 14px;font-size:12px}
+[data-tip]{position:relative}
+[data-tip]:hover::after,[data-tip]:focus-visible::after{content:attr(data-tip);position:absolute;left:0;bottom:calc(100% + 6px);background:var(--fg);color:var(--bg);padding:5px 9px;font:500 9px var(--mono);letter-spacing:.14em;white-space:nowrap;z-index:5}
+.toasts{position:fixed;right:16px;bottom:16px;z-index:200;display:flex;flex-direction:column;gap:8px;max-width:min(340px,calc(100vw - 32px))}
+.toast{background:var(--fg);color:var(--bg);padding:11px 14px;font-size:11px;letter-spacing:.12em;text-transform:uppercase;display:flex;gap:10px;animation:tin .2s steps(3)}
+.toast::before{content:"";width:10px;height:10px;background:var(--accent-2);flex:none;margin-top:2px}
+@keyframes tin{from{transform:translateX(24px);opacity:0}}
+.overlay{position:fixed;inset:0;background:rgba(17,19,17,.72);z-index:150;display:grid;place-items:center;padding:16px}
+.modal{background:var(--bg);color:var(--fg);border:1px solid var(--fg);width:min(480px,100%)}
+.modal-head{background:var(--fg);color:var(--bg);padding:10px 16px;display:flex;justify-content:space-between;align-items:center}
+.modal-head button{background:transparent;border:1px solid var(--bg);color:var(--bg);font:500 10px var(--mono);padding:4px 8px;cursor:pointer}
+.modal-body{padding:24px;display:grid;gap:16px}
+/* =====================================================
+   04 // SHOWCASE LAYOUT
+   ===================================================== */
+.topnav{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--fg);display:flex;align-items:stretch;min-height:46px}
+.brand-mini{background:var(--fg);color:var(--bg);padding:6px 16px;font:700 18px var(--pixel);display:flex;align-items:center;gap:10px;cursor:pointer;border:0}
+.links{display:flex;overflow-x:auto;flex:1;scrollbar-width:none}
+.links::-webkit-scrollbar{display:none}
+.links a{display:flex;align-items:center;gap:6px;padding:0 12px;font-size:10px;letter-spacing:.12em;text-decoration:none;white-space:nowrap;border-right:1px solid var(--line);text-transform:uppercase;transition:0s}
+.links a span{color:var(--gray)}
+.links a:hover{background:var(--line)}
+.links a.active{background:var(--accent);color:var(--on-accent)}
+.links a.active span{color:inherit}
+.nav-tools{display:flex;gap:8px;align-items:center;padding:0 12px;border-left:1px solid var(--fg)}
+.sec{border-bottom:1px solid var(--fg);padding:64px 32px;position:relative;scroll-margin-top:46px;overflow:hidden}
+.sec-head{display:grid;grid-template-columns:auto 1fr auto;gap:24px;align-items:end;border-bottom:1px solid var(--fg);padding-bottom:16px;margin-bottom:32px}
+.sec-idx{font:700 52px/1 var(--pixel);color:var(--accent)}
+.sec-title{font:900 clamp(36px,5.5vw,76px)/.82 var(--hero);text-transform:uppercase;letter-spacing:-.045em}
+.sec-meta{text-align:right}
+.lead{max-width:640px;font-size:13px;margin-bottom:32px}
+.lead b{font-weight:500} .lead b.hl{font-weight:500}
+.cells{display:grid;border-top:1px solid var(--fg);border-left:1px solid var(--fg)}
+.cells > *{border-right:1px solid var(--fg);border-bottom:1px solid var(--fg);padding:20px;position:relative;min-width:0}
+.cells .tag{position:absolute;top:8px;right:10px}
+.c2{grid-template-columns:repeat(2,1fr)} .c3{grid-template-columns:repeat(3,1fr)} .c4{grid-template-columns:repeat(4,1fr)}
+.stack{display:grid;gap:16px}
+.row{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+.cell-title{font-size:10px;letter-spacing:.14em;text-transform:uppercase;font-weight:500;margin-bottom:16px;display:flex;gap:8px;align-items:center}
+.cell-title::before{content:"";width:8px;height:8px;background:var(--accent)}
+.span2{grid-column:span 2}
+/* Cover */
+.cover{min-height:calc(100vh - 46px);display:flex;flex-direction:column;gap:24px;padding:28px 32px}
+.cover .giant{font-size:clamp(84px,19vw,300px);position:relative;z-index:2;text-align:center}
+.cover-art{position:relative;margin-top:calc(clamp(84px,19vw,300px) * -.5);z-index:1}
+.cover-copy{position:absolute;left:0;right:0;top:calc(clamp(84px,19vw,300px) * .55);display:flex;justify-content:space-between;gap:24px;z-index:3;font:500 11px/1.4 var(--hero);text-transform:uppercase;letter-spacing:.03em;pointer-events:none}
+.cover-copy p{max-width:300px}
+.cover-copy p:last-child{text-align:right}
+.cover-bb{position:absolute;right:0;bottom:22%;z-index:3;text-align:right}
+/* color */
+.swatches{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));border-top:1px solid var(--fg);border-left:1px solid var(--fg)}
+.swatch{border-right:1px solid var(--fg);border-bottom:1px solid var(--fg);cursor:pointer;background:transparent;text-align:left;color:var(--fg);font-family:var(--mono);padding:0}
+.swatch .chipc{height:110px;border-bottom:1px solid var(--fg)}
+.swatch .info{padding:12px;display:grid;gap:2px}
+.swatch:hover .info{background:var(--fg);color:var(--bg)}
+.ratio{display:flex;height:40px;border:1px solid var(--fg);margin-top:8px}
+.ratio div{display:flex;align-items:center;padding:0 8px;font-size:9px;letter-spacing:.14em;overflow:hidden;white-space:nowrap}
+/* type */
+.spec{display:grid;grid-template-columns:200px 1fr;border-top:1px solid var(--fg)}
+.spec > div{padding:20px 0;border-bottom:1px solid var(--line);min-width:0}
+.spec .meta{padding-right:16px}
+.scale-row{display:grid;grid-template-columns:90px 70px 1fr;align-items:baseline;gap:16px;padding:10px 0;border-bottom:1px solid var(--line)}
+.tester{border:1px solid var(--fg);padding:24px;display:grid;gap:16px}
+.tester-out{min-height:140px;display:flex;align-items:center;overflow:hidden;word-break:break-all;border-top:1px solid var(--line);padding-top:16px}
+/* grid */
+.unit-bars{display:grid;gap:10px}
+.unit-bars div{display:grid;grid-template-columns:60px 1fr;align-items:center;gap:12px}
+.unit-bars i{display:block;height:12px;background:repeating-linear-gradient(90deg,var(--fg) 0 7px,transparent 7px 8px)}
+.col12{display:grid;grid-template-columns:repeat(12,1fr);gap:8px;height:120px}
+.col12 div{background:var(--line);display:flex;align-items:flex-end;justify-content:center;padding:6px;font:500 10px var(--mono)}
+.col12 div.sp{background:var(--accent);color:var(--on-accent);grid-column:span 4}
+.col12 div.sp8{background:var(--fg);color:var(--bg);grid-column:span 8}
+/* shapes */
+.shape-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:24px}
+.shape-card{border:1px solid var(--line);padding:12px;display:grid;gap:8px;place-items:center;min-height:200px}
+/* glyphs */
+.glyphs{display:grid;grid-template-columns:repeat(auto-fill,minmax(118px,1fr));border-top:1px solid var(--fg);border-left:1px solid var(--fg)}
+.glyph{border-right:1px solid var(--fg);border-bottom:1px solid var(--fg);padding:14px 8px 10px;display:flex;flex-direction:column;align-items:center;gap:12px;background:transparent;color:var(--fg);cursor:pointer;font-family:var(--mono)}
+.glyph:hover{background:var(--fg);color:var(--bg)}
+/* signal plates */
+.plate{border:1px solid var(--fg);display:grid;grid-template-columns:auto 1fr;align-items:stretch}
+.plate .sym{background:var(--fg);color:var(--bg);padding:14px;display:grid;place-items:center}
+.plate .txt{padding:10px 14px;display:grid;align-content:center}
+.plate .word{font:400 26px/1 var(--wide);text-transform:uppercase}
+.plate.live .sym{background:var(--accent);color:var(--on-accent)}
+.plate.inverse{background:var(--fg);color:var(--bg)}
+.plate.inverse .sym{background:var(--bg);color:var(--fg)}
+.lvl{display:grid;grid-template-columns:auto auto 1fr;align-items:center;gap:12px}
+.lvl .nm{background:var(--bg);color:var(--fg);border:1px solid var(--fg);font:400 22px/1 var(--wide);padding:6px 12px;text-transform:uppercase}
+.lvl .ds{font-size:9px;letter-spacing:.14em;text-transform:uppercase}
+/* data */
+.readout{font:900 48px/1 var(--hero);letter-spacing:-.04em}
+.readout.acc{background:var(--accent);color:var(--on-accent);padding:2px 8px;display:inline-block;align-self:flex-start}
+.lcd{font:700 40px/1 var(--pixel)}
+table{width:100%;border-collapse:collapse;font-size:11px}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line)}
+th{font-weight:500;letter-spacing:.14em;text-transform:uppercase;border-bottom:1px solid var(--fg);font-size:10px}
+tbody tr:hover{background:var(--fg);color:var(--bg)}
+tbody tr:hover .chip.live{background:var(--bg);color:var(--fg)}
+.terminal{background:#0F1A0E;color:#DDEBD6;padding:16px;font-size:12px;min-height:220px;border-left:8px solid #4B8A3F}
+.terminal .p{color:#A9D39C}
+/* motion */
+.scan-box{height:180px;border:1px solid var(--fg);position:relative;overflow:hidden;display:grid;place-items:center}
+.scan-box::after{content:"";position:absolute;left:0;right:0;height:8px;top:0;background:repeating-linear-gradient(90deg,var(--accent) 0 7px,transparent 7px 8px);animation:scan 2.4s steps(22) infinite}
+@keyframes scan{to{top:calc(100% - 8px)}}
+.ticker{overflow:hidden;white-space:nowrap;border:1px solid var(--fg);background:var(--fg);color:var(--bg)}
+.ticker span{display:inline-block;padding:8px 0;animation:tick 30s linear infinite;font-size:10px;letter-spacing:.2em}
+@keyframes tick{to{transform:translateX(-50%)}}
+.build i{animation:bld 3s steps(1) infinite;opacity:0}
+@keyframes bld{40%,100%{opacity:1}}
+/* samples */
+.sample-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:32px}
+.sample{display:grid;gap:12px;align-content:start;min-width:0}
+.sample-cap{display:flex;justify-content:space-between;border-top:1px solid var(--fg);padding-top:8px;gap:8px;flex-wrap:wrap}
+.poster{aspect-ratio:736/1040;container-type:inline-size;position:relative;overflow:hidden;border:1px solid var(--fg);background:#F4F4F1;color:#111311;--fg:#111311;--bg:#F4F4F1;--dotc:#C9CBC6;--line:#D3D5CF}
+.poster > *{position:absolute}
+.poster .pp-bar{top:4cqw;left:4cqw;right:4cqw;display:grid;grid-template-columns:1fr auto 1fr;font-family:var(--hero);text-transform:uppercase}
+.poster .pp-bar .s{display:flex;gap:2cqw;font:500 2cqw var(--hero);align-items:center}
+.poster .pp-bar .s b{font:800 2.6cqw var(--hero)}
+.poster .pp-bar .s.r{justify-content:flex-end}
+.poster .pp-bar .m{text-align:center}
+.poster .pp-bar .m b{display:block;font:800 2.8cqw var(--hero)}
+.poster .pp-bar .m span{font:500 1.9cqw var(--hero)}
+.poster .pp-mk{top:10.5cqw;left:4cqw;right:4cqw;display:flex;justify-content:space-between}
+.poster .pp-giant{top:15cqw;left:3cqw;right:3cqw;text-align:center;font:900 23.5cqw/.8 var(--hero);letter-spacing:-.05em;z-index:1}
+.poster .pp-copy{top:36cqw;left:4cqw;right:4cqw;display:flex;justify-content:space-between;font:500 1.35cqw/1.45 var(--hero);text-transform:uppercase;z-index:3}
+.poster .pp-copy p:last-child{text-align:right}
+.poster .pp-art{top:30cqw;left:6cqw;width:90cqw;z-index:2}
+.poster .pp-dots{left:4cqw;right:4cqw;top:78cqw;height:45cqw}
+.poster .pp-keys{left:4cqw;right:4cqw;bottom:13cqw;display:grid;grid-template-columns:repeat(6,1fr);font-family:var(--hero);text-transform:uppercase}
+.poster .pp-keys b{display:block;font:800 1.5cqw var(--hero)} .poster .pp-keys span{font:500 1.3cqw var(--hero)}
+.poster .pp-slogan{left:4cqw;right:4cqw;bottom:4.5cqw;display:flex;justify-content:space-between;font:500 2.9cqw var(--hero);text-transform:uppercase}
+.poster .pp-slogan b{font-weight:800}
+.asset{aspect-ratio:736/1040;container-type:inline-size;position:relative;overflow:hidden;background:#22461F;color:#F1F1EC;border:1px solid var(--fg)}
+.asset > *{position:absolute}
+.asset .a-top{top:3.5cqw;left:3.5cqw;right:3.5cqw;display:flex;justify-content:space-between;font:400 1.6cqw var(--mono);letter-spacing:.14em}
+.asset .a-h{top:9cqw;left:3cqw;font:400 17cqw/.9 var(--wide)}
+.asset .a-sub{top:27cqw;left:3.5cqw;font:400 3.6cqw/1.15 var(--wide);text-transform:uppercase;max-width:60cqw}
+.asset .a-cube{right:9cqw;bottom:24cqw;width:36cqw}
+.asset .a-foot{bottom:3.5cqw;left:3.5cqw;right:3.5cqw;display:flex;justify-content:space-between;align-items:center;font:400 1.6cqw var(--mono);letter-spacing:.14em}
+.asset .a-foot b{font:700 2.6cqw var(--pixel)}
+.asset .a-bb{top:41cqw;left:3.5cqw;font-size:4cqw;color:#A9D39C}
+.slides{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;background:#0B0C0B;padding:16px}
+.slide{aspect-ratio:16/9;container-type:inline-size;position:relative;overflow:hidden}
+.slide > *{position:absolute}
+.slide .st{top:3cqw;left:3.5cqw;right:3.5cqw;display:flex;justify-content:space-between;font:400 1.6cqw var(--mono);letter-spacing:.14em;text-transform:uppercase;z-index:3}
+.slide .sb{bottom:3cqw;right:3.5cqw;font:700 2.2cqw var(--pixel);z-index:3}
+.sl-paper{background:#F1F1EC;color:#111311} .sl-forest{background:#2E5A28;color:#F1F1EC} .sl-mint{background:#A9D39C;color:#111311} .sl-pale{background:#E7EEE2;color:#111311}
+.err-page{background:#22461F;color:#F1F1EC;padding:32px;position:relative;overflow:hidden;min-height:340px;display:flex;flex-direction:column;justify-content:space-between}
+.err-page > *{position:relative;z-index:1}
+.err-page .pixel{font-size:clamp(56px,11vw,140px)}
+.phone{width:min(300px,100%);height:600px;border:1px solid var(--fg);margin:0 auto;display:flex;flex-direction:column;background:var(--bg);overflow:hidden}
+.phone-status{display:flex;justify-content:space-between;padding:10px 16px;border-bottom:1px solid var(--fg);font:500 10px var(--mono)}
+.phone-body{flex:1;padding:16px;display:grid;gap:14px;align-content:start;overflow:hidden}
+.phone-list > div{display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--line);font-size:11px}
+.phone-nav{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--fg)}
+.phone-nav span{padding:12px 0;text-align:center;font:500 9px var(--mono);letter-spacing:.12em}
+.phone-nav span.on{background:var(--fg);color:var(--bg)}
+.launch{border:1px solid var(--fg);padding:24px;display:grid;gap:16px;position:relative;overflow:hidden;min-height:200px;align-content:space-between}
+.launch > *{position:relative;z-index:1}
+pre.code{background:#0F1A0E;color:#DDEBD6;padding:20px;font:12px/1.6 var(--mono);overflow-x:auto;border-left:8px solid #4B8A3F}
+.footer{border-top:1px solid var(--fg);padding:24px 32px;display:grid;gap:20px}
+/* =====================================================
+   05 // AUTH + DASHBOARD
+   ===================================================== */
+.auth{min-height:100vh;display:grid;grid-template-columns:1.2fr 1fr}
+.auth-art{position:relative;overflow:hidden;padding:32px;display:flex;flex-direction:column;justify-content:space-between;min-height:560px;background:#22461F;color:#F1F1EC}
+.auth-art > *{position:relative;z-index:1}
+.auth-panel{padding:72px 40px 48px;display:flex;flex-direction:column;justify-content:center;gap:24px;position:relative;border-left:1px solid var(--fg)}
+.auth-tools{position:absolute;top:24px;left:40px;right:24px;display:flex;justify-content:space-between;gap:8px}
+form{display:flex;flex-direction:column;gap:16px}
+.app{display:grid;grid-template-columns:240px 1fr;min-height:100vh}
+.side{border-right:1px solid var(--fg);display:flex;flex-direction:column}
+.side .brand{background:var(--fg);color:var(--bg);padding:20px}
+.nav{list-style:none;border-top:1px solid var(--fg);margin-top:24px}
+.nav button{width:100%;text-align:left;font:500 11px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--fg);padding:13px 20px;border:0;border-bottom:1px solid var(--line);background:transparent;cursor:pointer;display:flex;gap:12px;transition:0s}
+.nav button:hover{background:var(--line)}
+.nav button[aria-current="page"]{background:var(--accent);color:var(--on-accent)}
+.nav .idx{color:var(--gray)} .nav button[aria-current="page"] .idx{color:inherit}
+.side-foot{margin-top:auto;padding:20px;border-top:1px solid var(--fg)}
+.main{display:flex;flex-direction:column;min-width:0}
+.topbar{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--fg);padding:11px 24px;gap:16px;flex-wrap:wrap}
+.content{padding:24px;display:grid;gap:24px}
+.hero{position:relative;border:1px solid var(--fg);padding:24px;overflow:hidden;min-height:220px;display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap;background:#2E5A28;color:#F1F1EC}
+.hero > *{position:relative;z-index:1}
+.hero .wide{font-size:clamp(40px,8vw,120px);overflow-wrap:anywhere}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--fg);border-left:1px solid var(--fg)}
+.cell{border-right:1px solid var(--fg);border-bottom:1px solid var(--fg);padding:16px;position:relative;min-height:140px;display:flex;flex-direction:column;justify-content:space-between;min-width:0}
+.cell .tag{position:absolute;top:8px;right:10px}
+.cell.inverse{background:var(--fg);color:var(--bg)}
+/* =====================================================
+   06 // BAYBAYIN MODULE
+   ===================================================== */
+.rx-bb{font-family:var(--bb);line-height:1.5;text-transform:none!important;letter-spacing:0!important}
+.rx-bb--bold{font-weight:700}
+.bb-conv{grid-template-columns:minmax(0,1fr) minmax(0,2fr)}
+.bb-out{min-height:150px;display:flex;align-items:center;overflow-x:auto;padding:8px 0;border-top:1px solid var(--line)}
+.bb-out svg{height:var(--bb-h,120px);width:auto;max-width:none;flex:none}
+.bb-pix{overflow-x:auto;padding:8px 0;border-top:1px solid var(--line)}
+.bb-pix svg{max-width:none;display:block}
+.bb-uni{font-size:32px;font-weight:700;word-break:break-all;border-top:1px solid var(--line);padding-top:8px;min-height:64px}
+.spec-table{width:100%;font-size:10px}.spec-table td{padding:5px 0;border-bottom:1px dashed var(--line)}
+.bb-tbl td{border:1px solid var(--fg);padding:6px 10px;vertical-align:middle}
+.bb-tbl th{border:1px solid var(--fg);background:var(--fg);color:var(--bg);font-size:9px;letter-spacing:.14em;padding:6px 10px;text-align:left;font-weight:400}
+.bb-tbl td.k{font-weight:700;width:72px;background:var(--line);letter-spacing:.1em}
+.bb-tbl .g{font-size:44px;font-weight:700;line-height:1.3;display:block}
+.bb-tbl tr:hover td{background:var(--field-focus)}
+.bb-tbl button{all:unset;cursor:pointer;display:block}
+.bb-tbl button:focus-visible{outline:2px solid var(--accent)}
+.bb-cat .g{font-size:56px;font-weight:700;line-height:1.2;font-family:var(--bb)}
+.bb-hero{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1fr);border:1px solid var(--fg);margin-bottom:32px}
+.bb-hero > div{padding:20px;min-width:0}
+.bb-hero .big{font-size:clamp(56px,10vw,128px);font-weight:700;line-height:1.15}
+.bb-block{background:#22461F;color:#F1F1EC;position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:space-between;gap:16px}
+.bb-block > *{position:relative;z-index:1}
+/* =====================================================
+   07 // RESPONSIVE + MOTION
+   ===================================================== */
+@media (max-width:1100px){.sample-grid{grid-template-columns:1fr}.c4{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:960px){
+  .auth{grid-template-columns:1fr}.auth-art{min-height:340px}.auth-panel{border-left:0;border-top:1px solid var(--fg)}
+  .app{grid-template-columns:1fr}.side{border-right:0;border-bottom:1px solid var(--fg)}
+  .nav{display:grid;grid-template-columns:repeat(2,1fr);margin-top:0}.nav button{border-right:1px solid var(--line)}.side-foot{display:none}
+  .grid{grid-template-columns:repeat(2,1fr)}.c3{grid-template-columns:1fr}.spec{grid-template-columns:1fr}
+  .keyrow{grid-template-columns:repeat(3,1fr)}
+  .nav-tools .sw:last-child{display:none}
+}
+@media (max-width:640px){
+  .sec{padding:48px 16px}.sec-head{grid-template-columns:1fr}.sec-meta{text-align:left}
+  .c2,.c4,.grid,.slides{grid-template-columns:1fr}.span2{grid-column:span 1}
+  .cover{padding:16px}.cover-copy{display:none}
+  .bbar{grid-template-columns:1fr;text-align:left}.bbar .mid{text-align:left}.bbar .side.r{justify-content:flex-start}
+  .keyrow{grid-template-columns:repeat(2,1fr)}
+  .scale-row{grid-template-columns:70px 1fr}.scale-row .px{display:none}
+  .auth-panel{padding:72px 20px 32px}.auth-tools{left:20px;right:20px}
+  .bb-conv,.bb-hero{grid-template-columns:1fr}
+  .tabs button{font-size:10px;letter-spacing:.06em;padding:10px 4px}
+  .brand-mini .micro{display:none}
+}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation:none!important;transition:none!important}.build i{opacity:1}}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<!-- RX09 BAYBAYIN SVG ENGINE // window.RX09Baybayin -->
+<script>
+/*! RX09 Baybayin SVG Engine v1.0 | glyph outlines: angular derivative of Noto Sans Tagalog (SIL OFL 1.1) */
+(function(root){
+"use strict";
+var DATA={"unitsHeight":1300,"baselineY":1000,"units":{"a":{"d":"M196 904 220 648H84V528H236V504H84V392H188L92 296L116 184L292 280L348 392H508V504H364L324 824L356 896L460 832L780 376L908 336L1028 400L1076 480L972 528L908 464L836 488L548 920L340 1032Z","w":1066,"u":"ᜀ"},"i":{"d":"M96 392 328 480 808 392 1056 504 984 600 744 520 320 600 64 512ZM96 800H288L408 616H488L536 720L608 616H688L776 800H952L1016 904L760 936L632 800L512 912L440 816L360 904L224 952L32 904Z","w":1063,"u":"ᜁ"},"u":{"d":"M48 992 88 872 296 904 392 856 400 752 208 712V600L360 576L392 504L328 464L152 496L104 384L360 344L520 448L512 584L448 640L520 696L544 832L456 976L280 1024Z","w":587,"u":"ᜂ"},"e":{"d":"M96 392 328 480 808 392 1056 504 984 600 744 520 320 600 64 512ZM96 800H288L408 616H488L536 720L608 616H688L776 800H952L1016 904L760 936L632 800L512 912L440 816L360 904L224 952L32 904Z","w":1063,"u":"ᜁ"},"o":{"d":"M48 992 88 872 296 904 392 856 400 752 208 712V600L360 576L392 504L328 464L152 496L104 384L360 344L520 448L512 584L448 640L520 696L544 832L456 976L280 1024Z","w":587,"u":"ᜂ"},"ka":{"d":"M51 904 131 808 299 888 475 824V592L227 648L59 544L131 456L307 528L747 368L1011 424L963 536L779 488L603 552V776L843 728L1011 784L963 888L755 848L291 1008Z","w":1036,"u":"ᜃ"},"ki":{"d":"M51 904 131 808 299 888 475 824V592L227 648L59 544L131 456L307 528L747 368L1011 424L963 536L779 488L603 552V776L843 728L1011 784L963 888L755 848L291 1008Z M439 240 527 144 615 240 527 336Z","w":1036,"u":"ᜃᜒ"},"ku":{"d":"M51 904 131 808 299 888 475 824V592L227 648L59 544L131 456L307 528L747 368L1011 424L963 536L779 488L603 552V776L843 728L1011 784L963 888L755 848L291 1008Z M487 1080 575 984 655 1080 575 1176Z","w":1036,"u":"ᜃᜓ"},"k":{"d":"M51 904 131 808 299 888 475 824V592L227 648L59 544L131 456L307 528L747 368L1011 424L963 536L779 488L603 552V776L843 728L1011 784L963 888L755 848L291 1008Z M517 1160H445V1064H517V992H621V1064H685V1160H621V1232H517Z","w":1036,"u":"ᜃ᜔"},"k_p":{"d":"M51 904 131 808 299 888 475 824V592L227 648L59 544L131 456L307 528L747 368L1011 424L963 536L779 488L603 552V776L843 728L1011 784L963 888L755 848L291 1008Z M1220 560V896L1172 1040L1012 1152L716 1160V1040L972 1032L1076 960L1100 560Z","w":1284,"u":"ᜃ᜕"},"ke":{"d":"M51 904 131 808 299 888 475 824V592L227 648L59 544L131 456L307 528L747 368L1011 424L963 536L779 488L603 552V776L843 728L1011 784L963 888L755 848L291 1008Z M439 240 527 144 615 240 527 336Z","w":1036,"u":"ᜃᜒ"},"ko":{"d":"M51 904 131 808 299 888 475 824V592L227 648L59 544L131 456L307 528L747 368L1011 424L963 536L779 488L603 552V776L843 728L1011 784L963 888L755 848L291 1008Z M487 1080 575 984 655 1080 575 1176Z","w":1036,"u":"ᜃᜓ"},"ga":{"d":"M48 992 88 872 296 904 392 856 400 752 208 712V600L360 576L392 504L328 464L152 496L104 384L336 336L472 392H664L736 528L752 864L872 912V1040L640 952L608 544L552 496L520 504L512 592L448 648L536 720L520 904L424 992L280 1024Z","w":889,"u":"ᜄ"},"gi":{"d":"M48 992 88 872 296 904 392 856 400 752 208 712V600L360 576L392 504L328 464L152 496L104 384L336 336L472 392H664L736 528L752 864L872 912V1040L640 952L608 544L552 496L520 504L512 592L448 648L536 720L520 904L424 992L280 1024Z M351 240 439 144 527 240 439 336Z","w":889,"u":"ᜄᜒ"},"gu":{"d":"M48 992 88 872 296 904 392 856 400 752 208 712V600L360 576L392 504L328 464L152 496L104 384L336 336L472 392H664L736 528L752 864L872 912V1040L640 952L608 544L552 496L520 504L512 592L448 648L536 720L520 904L424 992L280 1024Z M493 1080 581 984 661 1080 581 1176Z","w":889,"u":"ᜄᜓ"},"g":{"d":"M48 992 88 872 296 904 392 856 400 752 208 712V600L360 576L392 504L328 464L152 496L104 384L336 336L472 392H664L736 528L752 864L872 912V1040L640 952L608 544L552 496L520 504L512 592L448 648L536 720L520 904L424 992L280 1024Z M523 1160H451V1064H523V992H627V1064H691V1160H627V1232H523Z","w":889,"u":"ᜄ᜔"},"g_p":{"d":"M48 992 88 872 296 904 392 856 400 752 208 712V600L360 576L392 504L328 464L152 496L104 384L336 336L472 392H664L736 528L752 864L872 912V1040L640 952L608 544L552 496L520 504L512 592L448 648L536 720L520 904L424 992L280 1024Z M1073 560V896L1025 1040L865 1152L569 1160V1040L825 1032L929 960L953 560Z","w":1137,"u":"ᜄ᜕"},"ge":{"d":"M48 992 88 872 296 904 392 856 400 752 208 712V600L360 576L392 504L328 464L152 496L104 384L336 336L472 392H664L736 528L752 864L872 912V1040L640 952L608 544L552 496L520 504L512 592L448 648L536 720L520 904L424 992L280 1024Z M351 240 439 144 527 240 439 336Z","w":889,"u":"ᜄᜒ"},"go":{"d":"M48 992 88 872 296 904 392 856 400 752 208 712V600L360 576L392 504L328 464L152 496L104 384L336 336L472 392H664L736 528L752 864L872 912V1040L640 952L608 544L552 496L520 504L512 592L448 648L536 720L520 904L424 992L280 1024Z M493 1080 581 984 661 1080 581 1176Z","w":889,"u":"ᜄᜓ"},"nga":{"d":"M108 840 380 832 436 744 388 592 180 632 68 576 52 440 180 320 252 424 180 480V496L444 472L556 640L804 528L916 552L988 632V816L844 944L748 976L716 864L844 800L876 712L804 648L564 768L460 936L212 944L188 1024H68Z","w":1063,"u":"ᜅ"},"ngi":{"d":"M108 840 380 832 436 744 388 592 180 632 68 576 52 440 180 320 252 424 180 480V496L444 472L556 640L804 528L916 552L988 632V816L844 944L748 976L716 864L844 800L876 712L804 648L564 768L460 936L212 944L188 1024H68Z M439 240 527 144 615 240 527 336Z","w":1063,"u":"ᜅᜒ"},"ngu":{"d":"M108 840 380 832 436 744 388 592 180 632 68 576 52 440 180 320 252 424 180 480V496L444 472L556 640L804 528L916 552L988 632V816L844 944L748 976L716 864L844 800L876 712L804 648L564 768L460 936L212 944L188 1024H68Z M512 1080 600 984 680 1080 600 1176Z","w":1063,"u":"ᜅᜓ"},"ng":{"d":"M108 840 380 832 436 744 388 592 180 632 68 576 52 440 180 320 252 424 180 480V496L444 472L556 640L804 528L916 552L988 632V816L844 944L748 976L716 864L844 800L876 712L804 648L564 768L460 936L212 944L188 1024H68Z M542 1160H470V1064H542V992H646V1064H710V1160H646V1232H542Z","w":1063,"u":"ᜅ᜔"},"ng_p":{"d":"M108 840 380 832 436 744 388 592 180 632 68 576 52 440 180 320 252 424 180 480V496L444 472L556 640L804 528L916 552L988 632V816L844 944L748 976L716 864L844 800L876 712L804 648L564 768L460 936L212 944L188 1024H68Z M1247 560V896L1199 1040L1039 1152L743 1160V1040L999 1032L1103 960L1127 560Z","w":1311,"u":"ᜅ᜕"},"nge":{"d":"M108 840 380 832 436 744 388 592 180 632 68 576 52 440 180 320 252 424 180 480V496L444 472L556 640L804 528L916 552L988 632V816L844 944L748 976L716 864L844 800L876 712L804 648L564 768L460 936L212 944L188 1024H68Z M439 240 527 144 615 240 527 336Z","w":1063,"u":"ᜅᜒ"},"ngo":{"d":"M108 840 380 832 436 744 388 592 180 632 68 576 52 440 180 320 252 424 180 480V496L444 472L556 640L804 528L916 552L988 632V816L844 944L748 976L716 864L844 800L876 712L804 648L564 768L460 936L212 944L188 1024H68Z M512 1080 600 984 680 1080 600 1176Z","w":1063,"u":"ᜅᜓ"},"ta":{"d":"M212 728 68 720 84 496 188 584 180 624 188 632 604 368 788 344 988 384 932 488 716 472 500 568 332 760 244 1024H108Z","w":1027,"u":"ᜆ"},"ti":{"d":"M212 728 68 720 84 496 188 584 180 624 188 632 604 368 788 344 988 384 932 488 716 472 500 568 332 760 244 1024H108Z M439 240 527 144 615 240 527 336Z","w":1027,"u":"ᜆᜒ"},"tu":{"d":"M212 728 68 720 84 496 188 584 180 624 188 632 604 368 788 344 988 384 932 488 716 472 500 568 332 760 244 1024H108Z M487 1080 575 984 655 1080 575 1176Z","w":1027,"u":"ᜆᜓ"},"t":{"d":"M212 728 68 720 84 496 188 584 180 624 188 632 604 368 788 344 988 384 932 488 716 472 500 568 332 760 244 1024H108Z M517 1160H445V1064H517V992H621V1064H685V1160H621V1232H517Z","w":1027,"u":"ᜆ᜔"},"t_p":{"d":"M212 728 68 720 84 496 188 584 180 624 188 632 604 368 788 344 988 384 932 488 716 472 500 568 332 760 244 1024H108Z M1211 560V896L1163 1040L1003 1152L707 1160V1040L963 1032L1067 960L1091 560Z","w":1275,"u":"ᜆ᜕"},"te":{"d":"M212 728 68 720 84 496 188 584 180 624 188 632 604 368 788 344 988 384 932 488 716 472 500 568 332 760 244 1024H108Z M439 240 527 144 615 240 527 336Z","w":1027,"u":"ᜆᜒ"},"to":{"d":"M212 728 68 720 84 496 188 584 180 624 188 632 604 368 788 344 988 384 932 488 716 472 500 568 332 760 244 1024H108Z M487 1080 575 984 655 1080 575 1176Z","w":1027,"u":"ᜆᜓ"},"da":{"d":"M195 920 115 832V672L179 568L51 496L115 400L339 480L819 392L1075 504L1003 600L763 512L315 592L235 728L243 784L291 824L819 744L1075 848L1003 944L763 864L323 944Z","w":1100,"u":"ᜇ"},"di":{"d":"M195 920 115 832V672L179 568L51 496L115 400L339 480L819 392L1075 504L1003 600L763 512L315 592L235 728L243 784L291 824L819 744L1075 848L1003 944L763 864L323 944Z M478 240 566 144 654 240 566 336Z","w":1100,"u":"ᜇᜒ"},"du":{"d":"M195 920 115 832V672L179 568L51 496L115 400L339 480L819 392L1075 504L1003 600L763 512L315 592L235 728L243 784L291 824L819 744L1075 848L1003 944L763 864L323 944Z M500 1080 588 984 668 1080 588 1176Z","w":1100,"u":"ᜇᜓ"},"d":{"d":"M195 920 115 832V672L179 568L51 496L115 400L339 480L819 392L1075 504L1003 600L763 512L315 592L235 728L243 784L291 824L819 744L1075 848L1003 944L763 864L323 944Z M530 1160H458V1064H530V992H634V1064H698V1160H634V1232H530Z","w":1100,"u":"ᜇ᜔"},"d_p":{"d":"M195 920 115 832V672L179 568L51 496L115 400L339 480L819 392L1075 504L1003 600L763 512L315 592L235 728L243 784L291 824L819 744L1075 848L1003 944L763 864L323 944Z M1284 560V896L1236 1040L1076 1152L780 1160V1040L1036 1032L1140 960L1164 560Z","w":1348,"u":"ᜇ᜕"},"de":{"d":"M195 920 115 832V672L179 568L51 496L115 400L339 480L819 392L1075 504L1003 600L763 512L315 592L235 728L243 784L291 824L819 744L1075 848L1003 944L763 864L323 944Z M478 240 566 144 654 240 566 336Z","w":1100,"u":"ᜇᜒ"},"do":{"d":"M195 920 115 832V672L179 568L51 496L115 400L339 480L819 392L1075 504L1003 600L763 512L315 592L235 728L243 784L291 824L819 744L1075 848L1003 944L763 864L323 944Z M500 1080 588 984 668 1080 588 1176Z","w":1100,"u":"ᜇᜓ"},"na":{"d":"M314 1040 434 904 346 808 434 736 346 648 434 560 386 472 298 520 226 648 242 1024H106L74 712L210 432L482 344L642 392L762 512L826 864L794 1024H658L698 792L666 624L578 504L522 480L578 576L498 648L602 728L498 816L594 896L426 1096Z","w":902,"u":"ᜈ"},"ni":{"d":"M314 1040 434 904 346 808 434 736 346 648 434 560 386 472 298 520 226 648 242 1024H106L74 712L210 432L482 344L642 392L762 512L826 864L794 1024H658L698 792L666 624L578 504L522 480L578 576L498 648L602 728L498 816L594 896L426 1096Z M361 240 449 144 537 240 449 336Z","w":902,"u":"ᜈᜒ"},"nu":{"d":"M314 1040 434 904 346 808 434 736 346 648 434 560 386 472 298 520 226 648 242 1024H106L74 712L210 432L482 344L642 392L762 512L826 864L794 1024H658L698 792L666 624L578 504L522 480L578 576L498 648L602 728L498 816L594 896L426 1096Z M385 1168 473 1072 553 1168 473 1264Z","w":902,"u":"ᜈᜓ"},"n":{"d":"M314 1040 434 904 346 808 434 736 346 648 434 560 386 472 298 520 226 648 242 1024H106L74 712L210 432L482 344L642 392L762 512L826 864L794 1024H658L698 792L666 624L578 504L522 480L578 576L498 648L602 728L498 816L594 896L426 1096Z M415 1248H343V1152H415V1080H519V1152H583V1248H519V1320H415Z","w":902,"u":"ᜈ᜔"},"n_p":{"d":"M314 1040 434 904 346 808 434 736 346 648 434 560 386 472 298 520 226 648 242 1024H106L74 712L210 432L482 344L642 392L762 512L826 864L794 1024H658L698 792L666 624L578 504L522 480L578 576L498 648L602 728L498 816L594 896L426 1096Z M1086 560V896L1038 1040L878 1152L582 1160V1040L838 1032L942 960L966 560Z","w":1150,"u":"ᜈ᜕"},"ne":{"d":"M314 1040 434 904 346 808 434 736 346 648 434 560 386 472 298 520 226 648 242 1024H106L74 712L210 432L482 344L642 392L762 512L826 864L794 1024H658L698 792L666 624L578 504L522 480L578 576L498 648L602 728L498 816L594 896L426 1096Z M361 240 449 144 537 240 449 336Z","w":902,"u":"ᜈᜒ"},"no":{"d":"M314 1040 434 904 346 808 434 736 346 648 434 560 386 472 298 520 226 648 242 1024H106L74 712L210 432L482 344L642 392L762 512L826 864L794 1024H658L698 792L666 624L578 504L522 480L578 576L498 648L602 728L498 816L594 896L426 1096Z M385 1168 473 1072 553 1168 473 1264Z","w":902,"u":"ᜈᜓ"},"pa":{"d":"M202 920 218 648H58V528L338 560L322 864L378 896L514 800L818 376L954 336L1074 400L1122 480L1010 528L954 464L898 472L802 600L914 776L802 832L730 704L546 944L354 1032Z","w":1122,"u":"ᜉ"},"pi":{"d":"M202 920 218 648H58V528L338 560L322 864L378 896L514 800L818 376L954 336L1074 400L1122 480L1010 528L954 464L898 472L802 600L914 776L802 832L730 704L546 944L354 1032Z M439 240 527 144 615 240 527 336Z","w":1122,"u":"ᜉᜒ"},"pu":{"d":"M202 920 218 648H58V528L338 560L322 864L378 896L514 800L818 376L954 336L1074 400L1122 480L1010 528L954 464L898 472L802 600L914 776L802 832L730 704L546 944L354 1032Z M538 1080 626 984 706 1080 626 1176Z","w":1122,"u":"ᜉᜓ"},"p":{"d":"M202 920 218 648H58V528L338 560L322 864L378 896L514 800L818 376L954 336L1074 400L1122 480L1010 528L954 464L898 472L802 600L914 776L802 832L730 704L546 944L354 1032Z M568 1160H496V1064H568V992H672V1064H736V1160H672V1232H568Z","w":1122,"u":"ᜉ᜔"},"p_p":{"d":"M202 920 218 648H58V528L338 560L322 864L378 896L514 800L818 376L954 336L1074 400L1122 480L1010 528L954 464L898 472L802 600L914 776L802 832L730 704L546 944L354 1032Z M1306 560V896L1258 1040L1098 1152L802 1160V1040L1058 1032L1162 960L1186 560Z","w":1370,"u":"ᜉ᜕"},"pe":{"d":"M202 920 218 648H58V528L338 560L322 864L378 896L514 800L818 376L954 336L1074 400L1122 480L1010 528L954 464L898 472L802 600L914 776L802 832L730 704L546 944L354 1032Z M439 240 527 144 615 240 527 336Z","w":1122,"u":"ᜉᜒ"},"po":{"d":"M202 920 218 648H58V528L338 560L322 864L378 896L514 800L818 376L954 336L1074 400L1122 480L1010 528L954 464L898 472L802 600L914 776L802 832L730 704L546 944L354 1032Z M538 1080 626 984 706 1080 626 1176Z","w":1122,"u":"ᜉᜓ"},"ba":{"d":"M136 992 64 872 144 544 384 352 656 384 824 624 792 912 640 1024 512 1016 440 960 264 1024ZM464 792 560 896 664 864 704 672 600 496 432 472 272 584 192 832 216 888 264 904Z","w":903,"u":"ᜊ"},"bi":{"d":"M136 992 64 872 144 544 384 352 656 384 824 624 792 912 640 1024 512 1016 440 960 264 1024ZM464 792 560 896 664 864 704 672 600 496 432 472 272 584 192 832 216 888 264 904Z M439 240 527 144 615 240 527 336Z","w":903,"u":"ᜊᜒ"},"bu":{"d":"M136 992 64 872 144 544 384 352 656 384 824 624 792 912 640 1024 512 1016 440 960 264 1024ZM464 792 560 896 664 864 704 672 600 496 432 472 272 584 192 832 216 888 264 904Z M468 1159 556 1063 636 1159 556 1255Z","w":903,"u":"ᜊᜓ"},"b":{"d":"M136 992 64 872 144 544 384 352 656 384 824 624 792 912 640 1024 512 1016 440 960 264 1024ZM464 792 560 896 664 864 704 672 600 496 432 472 272 584 192 832 216 888 264 904Z M498 1239H426V1143H498V1071H602V1143H666V1239H602V1311H498Z","w":903,"u":"ᜊ᜔"},"b_p":{"d":"M136 992 64 872 144 544 384 352 656 384 824 624 792 912 640 1024 512 1016 440 960 264 1024ZM464 792 560 896 664 864 704 672 600 496 432 472 272 584 192 832 216 888 264 904Z M1087 560V896L1039 1040L879 1152L583 1160V1040L839 1032L943 960L967 560Z","w":1151,"u":"ᜊ᜕"},"be":{"d":"M136 992 64 872 144 544 384 352 656 384 824 624 792 912 640 1024 512 1016 440 960 264 1024ZM464 792 560 896 664 864 704 672 600 496 432 472 272 584 192 832 216 888 264 904Z M439 240 527 144 615 240 527 336Z","w":903,"u":"ᜊᜒ"},"bo":{"d":"M136 992 64 872 144 544 384 352 656 384 824 624 792 912 640 1024 512 1016 440 960 264 1024ZM464 792 560 896 664 864 704 672 600 496 432 472 272 584 192 832 216 888 264 904Z M468 1159 556 1063 636 1159 556 1255Z","w":903,"u":"ᜊᜓ"},"ma":{"d":"M250 992 202 888 218 592H58V472L314 488L338 584L610 608L794 360L922 344L1018 392L1074 480L970 528L906 464L834 488L554 912L354 1032ZM434 856 538 712H330L322 848L362 896Z","w":1082,"u":"ᜋ"},"mi":{"d":"M250 992 202 888 218 592H58V472L314 488L338 584L610 608L794 360L922 344L1018 392L1074 480L970 528L906 464L834 488L554 912L354 1032ZM434 856 538 712H330L322 848L362 896Z M439 240 527 144 615 240 527 336Z","w":1082,"u":"ᜋᜒ"},"mu":{"d":"M250 992 202 888 218 592H58V472L314 488L338 584L610 608L794 360L922 344L1018 392L1074 480L970 528L906 464L834 488L554 912L354 1032ZM434 856 538 712H330L322 848L362 896Z M525 1080 613 984 693 1080 613 1176Z","w":1082,"u":"ᜋᜓ"},"m":{"d":"M250 992 202 888 218 592H58V472L314 488L338 584L610 608L794 360L922 344L1018 392L1074 480L970 528L906 464L834 488L554 912L354 1032ZM434 856 538 712H330L322 848L362 896Z M555 1160H483V1064H555V992H659V1064H723V1160H659V1232H555Z","w":1082,"u":"ᜋ᜔"},"m_p":{"d":"M250 992 202 888 218 592H58V472L314 488L338 584L610 608L794 360L922 344L1018 392L1074 480L970 528L906 464L834 488L554 912L354 1032ZM434 856 538 712H330L322 848L362 896Z M1266 560V896L1218 1040L1058 1152L762 1160V1040L1018 1032L1122 960L1146 560Z","w":1330,"u":"ᜋ᜕"},"me":{"d":"M250 992 202 888 218 592H58V472L314 488L338 584L610 608L794 360L922 344L1018 392L1074 480L970 528L906 464L834 488L554 912L354 1032ZM434 856 538 712H330L322 848L362 896Z M439 240 527 144 615 240 527 336Z","w":1082,"u":"ᜋᜒ"},"mo":{"d":"M250 992 202 888 218 592H58V472L314 488L338 584L610 608L794 360L922 344L1018 392L1074 480L970 528L906 464L834 488L554 912L354 1032ZM434 856 538 712H330L322 848L362 896Z M525 1080 613 984 693 1080 613 1176Z","w":1082,"u":"ᜋᜓ"},"ya":{"d":"M202 928 226 648H58V528L338 560L330 864L378 896L522 792L810 376L946 336L1058 392L1098 512L1034 632L778 648L786 624L586 912L354 1032ZM850 536 930 544 962 520 954 472H898Z","w":1081,"u":"ᜌ"},"yi":{"d":"M202 928 226 648H58V528L338 560L330 864L378 896L522 792L810 376L946 336L1058 392L1098 512L1034 632L778 648L786 624L586 912L354 1032ZM850 536 930 544 962 520 954 472H898Z M471 240 559 144 647 240 559 336Z","w":1081,"u":"ᜌᜒ"},"yu":{"d":"M202 928 226 648H58V528L338 560L330 864L378 896L522 792L810 376L946 336L1058 392L1098 512L1034 632L778 648L786 624L586 912L354 1032ZM850 536 930 544 962 520 954 472H898Z M531 1080 619 984 699 1080 619 1176Z","w":1081,"u":"ᜌᜓ"},"y":{"d":"M202 928 226 648H58V528L338 560L330 864L378 896L522 792L810 376L946 336L1058 392L1098 512L1034 632L778 648L786 624L586 912L354 1032ZM850 536 930 544 962 520 954 472H898Z M561 1160H489V1064H561V992H665V1064H729V1160H665V1232H561Z","w":1081,"u":"ᜌ᜔"},"y_p":{"d":"M202 928 226 648H58V528L338 560L330 864L378 896L522 792L810 376L946 336L1058 392L1098 512L1034 632L778 648L786 624L586 912L354 1032ZM850 536 930 544 962 520 954 472H898Z M1265 560V896L1217 1040L1057 1152L761 1160V1040L1017 1032L1121 960L1145 560Z","w":1329,"u":"ᜌ᜕"},"ye":{"d":"M202 928 226 648H58V528L338 560L330 864L378 896L522 792L810 376L946 336L1058 392L1098 512L1034 632L778 648L786 624L586 912L354 1032ZM850 536 930 544 962 520 954 472H898Z M471 240 559 144 647 240 559 336Z","w":1081,"u":"ᜌᜒ"},"yo":{"d":"M202 928 226 648H58V528L338 560L330 864L378 896L522 792L810 376L946 336L1058 392L1098 512L1034 632L778 648L786 624L586 912L354 1032ZM850 536 930 544 962 520 954 472H898Z M531 1080 619 984 699 1080 619 1176Z","w":1081,"u":"ᜌᜓ"},"ra":{"d":"M323 944 195 920 115 832V672L179 568L51 496L115 400L339 480L819 392L1075 504L1003 600L763 512L315 592L235 728L243 784L291 824L547 784L523 672L635 648L667 768L819 744L1075 848L1003 944L763 864L699 872L723 984L611 1016L579 896Z","w":1100,"u":"ᜍ"},"ri":{"d":"M323 944 195 920 115 832V672L179 568L51 496L115 400L339 480L819 392L1075 504L1003 600L763 512L315 592L235 728L243 784L291 824L547 784L523 672L635 648L667 768L819 744L1075 848L1003 944L763 864L699 872L723 984L611 1016L579 896Z M478 240 566 144 654 240 566 336Z","w":1100,"u":"ᜍᜒ"},"ru":{"d":"M323 944 195 920 115 832V672L179 568L51 496L115 400L339 480L819 392L1075 504L1003 600L763 512L315 592L235 728L243 784L291 824L547 784L523 672L635 648L667 768L819 744L1075 848L1003 944L763 864L699 872L723 984L611 1016L579 896Z M500 1080 588 984 668 1080 588 1176Z","w":1100,"u":"ᜍᜓ"},"r":{"d":"M323 944 195 920 115 832V672L179 568L51 496L115 400L339 480L819 392L1075 504L1003 600L763 512L315 592L235 728L243 784L291 824L547 784L523 672L635 648L667 768L819 744L1075 848L1003 944L763 864L699 872L723 984L611 1016L579 896Z M530 1160H458V1064H530V992H634V1064H698V1160H634V1232H530Z","w":1100,"u":"ᜍ᜔"},"r_p":{"d":"M323 944 195 920 115 832V672L179 568L51 496L115 400L339 480L819 392L1075 504L1003 600L763 512L315 592L235 728L243 784L291 824L547 784L523 672L635 648L667 768L819 744L1075 848L1003 944L763 864L699 872L723 984L611 1016L579 896Z M1284 560V896L1236 1040L1076 1152L780 1160V1040L1036 1032L1140 960L1164 560Z","w":1348,"u":"ᜍ᜕"},"re":{"d":"M323 944 195 920 115 832V672L179 568L51 496L115 400L339 480L819 392L1075 504L1003 600L763 512L315 592L235 728L243 784L291 824L547 784L523 672L635 648L667 768L819 744L1075 848L1003 944L763 864L699 872L723 984L611 1016L579 896Z M478 240 566 144 654 240 566 336Z","w":1100,"u":"ᜍᜒ"},"ro":{"d":"M323 944 195 920 115 832V672L179 568L51 496L115 400L339 480L819 392L1075 504L1003 600L763 512L315 592L235 728L243 784L291 824L547 784L523 672L635 648L667 768L819 744L1075 848L1003 944L763 864L699 872L723 984L611 1016L579 896Z M500 1080 588 984 668 1080 588 1176Z","w":1100,"u":"ᜍᜓ"},"la":{"d":"M380 984 492 864 404 800 484 704 412 648 428 560 236 600 28 504 108 408 316 480 708 336 956 392 908 504 692 464 556 536 540 600 652 696 564 776 660 856 484 1040Z","w":965,"u":"ᜎ"},"li":{"d":"M380 984 492 864 404 800 484 704 412 648 428 560 236 600 28 504 108 408 316 480 708 336 956 392 908 504 692 464 556 536 540 600 652 696 564 776 660 856 484 1040Z M439 240 527 144 615 240 527 336Z","w":965,"u":"ᜎᜒ"},"lu":{"d":"M380 984 492 864 404 800 484 704 412 648 428 560 236 600 28 504 108 408 316 480 708 336 956 392 908 504 692 464 556 536 540 600 652 696 564 776 660 856 484 1040Z M455 1129 543 1033 623 1129 543 1225Z","w":965,"u":"ᜎᜓ"},"l":{"d":"M380 984 492 864 404 800 484 704 412 648 428 560 236 600 28 504 108 408 316 480 708 336 956 392 908 504 692 464 556 536 540 600 652 696 564 776 660 856 484 1040Z M485 1209H413V1113H485V1041H589V1113H653V1209H589V1281H485Z","w":965,"u":"ᜎ᜔"},"l_p":{"d":"M380 984 492 864 404 800 484 704 412 648 428 560 236 600 28 504 108 408 316 480 708 336 956 392 908 504 692 464 556 536 540 600 652 696 564 776 660 856 484 1040Z M1149 560V896L1101 1040L941 1152L645 1160V1040L901 1032L1005 960L1029 560Z","w":1213,"u":"ᜎ᜕"},"le":{"d":"M380 984 492 864 404 800 484 704 412 648 428 560 236 600 28 504 108 408 316 480 708 336 956 392 908 504 692 464 556 536 540 600 652 696 564 776 660 856 484 1040Z M439 240 527 144 615 240 527 336Z","w":965,"u":"ᜎᜒ"},"lo":{"d":"M380 984 492 864 404 800 484 704 412 648 428 560 236 600 28 504 108 408 316 480 708 336 956 392 908 504 692 464 556 536 540 600 652 696 564 776 660 856 484 1040Z M455 1129 543 1033 623 1129 543 1225Z","w":965,"u":"ᜎᜓ"},"wa":{"d":"M202 920 226 648H58V528L338 560L330 864L426 888L586 720L626 496L570 432L402 488L314 416L466 304L642 312L762 456L730 712L578 936L378 1032Z","w":813,"u":"ᜏ"},"wi":{"d":"M202 920 226 648H58V528L338 560L330 864L426 888L586 720L626 496L570 432L402 488L314 416L466 304L642 312L762 456L730 712L578 936L378 1032Z M488 191 576 95 664 191 576 287Z","w":813,"u":"ᜏᜒ"},"wu":{"d":"M202 920 226 648H58V528L338 560L330 864L426 888L586 720L626 496L570 432L402 488L314 416L466 304L642 312L762 456L730 712L578 936L378 1032Z M405 1110 493 1014 573 1110 493 1206Z","w":813,"u":"ᜏᜓ"},"w":{"d":"M202 920 226 648H58V528L338 560L330 864L426 888L586 720L626 496L570 432L402 488L314 416L466 304L642 312L762 456L730 712L578 936L378 1032Z M435 1190H363V1094H435V1022H539V1094H603V1190H539V1262H435Z","w":813,"u":"ᜏ᜔"},"w_p":{"d":"M202 920 226 648H58V528L338 560L330 864L426 888L586 720L626 496L570 432L402 488L314 416L466 304L642 312L762 456L730 712L578 936L378 1032Z M997 560V896L949 1040L789 1152L493 1160V1040L749 1032L853 960L877 560Z","w":1061,"u":"ᜏ᜕"},"we":{"d":"M202 920 226 648H58V528L338 560L330 864L426 888L586 720L626 496L570 432L402 488L314 416L466 304L642 312L762 456L730 712L578 936L378 1032Z M488 191 576 95 664 191 576 287Z","w":813,"u":"ᜏᜒ"},"wo":{"d":"M202 920 226 648H58V528L338 560L330 864L426 888L586 720L626 496L570 432L402 488L314 416L466 304L642 312L762 456L730 712L578 936L378 1032Z M405 1110 493 1014 573 1110 493 1206Z","w":813,"u":"ᜏᜓ"},"sa":{"d":"M515 920 715 896 787 848 763 760 587 728V624L763 568V488L683 464L595 512L283 1024H171V456H19V336L291 376L299 760L547 392L723 336L875 416L899 576L835 664L915 736L907 904L779 1008L515 1040Z","w":974,"u":"ᜐ"},"si":{"d":"M515 920 715 896 787 848 763 760 587 728V624L763 568V488L683 464L595 512L283 1024H171V456H19V336L291 376L299 760L547 392L723 336L875 416L899 576L835 664L915 736L907 904L779 1008L515 1040Z M439 240 527 144 615 240 527 336Z","w":974,"u":"ᜐᜒ"},"su":{"d":"M515 920 715 896 787 848 763 760 587 728V624L763 568V488L683 464L595 512L283 1024H171V456H19V336L291 376L299 760L547 392L723 336L875 416L899 576L835 664L915 736L907 904L779 1008L515 1040Z M557 1159 645 1063 725 1159 645 1255Z","w":974,"u":"ᜐᜓ"},"s":{"d":"M515 920 715 896 787 848 763 760 587 728V624L763 568V488L683 464L595 512L283 1024H171V456H19V336L291 376L299 760L547 392L723 336L875 416L899 576L835 664L915 736L907 904L779 1008L515 1040Z M587 1239H515V1143H587V1071H691V1143H755V1239H691V1311H587Z","w":974,"u":"ᜐ᜔"},"s_p":{"d":"M515 920 715 896 787 848 763 760 587 728V624L763 568V488L683 464L595 512L283 1024H171V456H19V336L291 376L299 760L547 392L723 336L875 416L899 576L835 664L915 736L907 904L779 1008L515 1040Z M1158 560V896L1110 1040L950 1152L654 1160V1040L910 1032L1014 960L1038 560Z","w":1222,"u":"ᜐ᜕"},"se":{"d":"M515 920 715 896 787 848 763 760 587 728V624L763 568V488L683 464L595 512L283 1024H171V456H19V336L291 376L299 760L547 392L723 336L875 416L899 576L835 664L915 736L907 904L779 1008L515 1040Z M439 240 527 144 615 240 527 336Z","w":974,"u":"ᜐᜒ"},"so":{"d":"M515 920 715 896 787 848 763 760 587 728V624L763 568V488L683 464L595 512L283 1024H171V456H19V336L291 376L299 760L547 392L723 336L875 416L899 576L835 664L915 736L907 904L779 1008L515 1040Z M557 1159 645 1063 725 1159 645 1255Z","w":974,"u":"ᜐᜓ"},"ha":{"d":"M52 704 84 584 316 672 796 584 1052 688 980 784 732 704 316 792Z","w":1101,"u":"ᜑ"},"hi":{"d":"M52 704 84 584 316 672 796 584 1052 688 980 784 732 704 316 792Z M483 240 571 144 659 240 571 336Z","w":1101,"u":"ᜑᜒ"},"hu":{"d":"M52 704 84 584 316 672 796 584 1052 688 980 784 732 704 316 792Z M455 1080 543 984 623 1080 543 1176Z","w":1101,"u":"ᜑᜓ"},"h":{"d":"M52 704 84 584 316 672 796 584 1052 688 980 784 732 704 316 792Z M485 1160H413V1064H485V992H589V1064H653V1160H589V1232H485Z","w":1101,"u":"ᜑ᜔"},"h_p":{"d":"M52 704 84 584 316 672 796 584 1052 688 980 784 732 704 316 792Z M1285 560V896L1237 1040L1077 1152L781 1160V1040L1037 1032L1141 960L1165 560Z","w":1349,"u":"ᜑ᜕"},"he":{"d":"M52 704 84 584 316 672 796 584 1052 688 980 784 732 704 316 792Z M483 240 571 144 659 240 571 336Z","w":1101,"u":"ᜑᜒ"},"ho":{"d":"M52 704 84 584 316 672 796 584 1052 688 980 784 732 704 316 792Z M455 1080 543 984 623 1080 543 1176Z","w":1101,"u":"ᜑᜓ"},"|":{"d":"M234 224H362L146 1168H18Z","w":381,"u":"᜵"},"||":{"d":"M522 224 298 1168H178L394 224ZM362 224 146 1168H18L234 224Z","w":540,"u":"᜶"}," ":{"d":"","w":312,"u":" "}}};
+var U=DATA.units, H=DATA.unitsHeight;
+var V="aeiou";
+// Modern-chart convention for letters not native to Baybayin
+function normalize(s){
+  return String(s).toLowerCase().normalize("NFC")
+   .replace(/\u00f1/g,"ny")
+   .replace(/c(?=[ei])/g,"s").replace(/c/g,"k").replace(/q/g,"k")
+   .replace(/f/g,"p").replace(/v/g,"b").replace(/z/g,"s")
+   .replace(/x/g,"ks").replace(/j/g,"dy");
+}
+// Latin -> array of unit keys (e.g. "ba","ng","i","|"," ")
+function tokenize(text,opt){
+  opt=opt||{}; var s=normalize(text), out=[], i=0, kill=opt.killer==="pamudpod"?"_p":"";
+  while(i<s.length){
+    var ch=s[i], c=null;
+    if(s.substr(i,2)==="ng"){c="ng";}
+    else if("kgtdnpbmyrlwsh".indexOf(ch)>-1){c=ch;}
+    if(c){
+      var nx=s[i+c.length];
+      if(nx&&V.indexOf(nx)>-1){out.push(c+nx); i+=c.length+1;}
+      else {out.push(c+kill); i+=c.length;}
+    } else if(V.indexOf(ch)>-1){out.push(ch); i++;}
+    else if(/\s/.test(ch)){ if(out.length&&out[out.length-1]!==" ") out.push(" "); i++;}
+    else if(".!?;".indexOf(ch)>-1){out.push("||"); i++;}
+    else if(",:".indexOf(ch)>-1){out.push("|"); i++;}
+    else i++;
+  }
+  return out;
+}
+// Latin -> Unicode Baybayin (U+1700 block). Display with the RX09 Baybayin font.
+function transliterate(text,opt){return tokenize(text,opt).map(function(k){return U[k]?U[k].u:"";}).join("");}
+// Latin -> standalone SVG markup (pure vector, no font needed)
+function toSVG(text,opt){
+  opt=opt||{}; var toks=tokenize(text,opt), x=0, paths=[], track=opt.tracking||0;
+  toks.forEach(function(k){var g=U[k]; if(!g)return; if(g.d) paths.push('<path transform="translate('+x+' 0)" d="'+g.d+'"/>'); x+=g.w+track;});
+  x=Math.max(1,x-track);
+  var h=opt.height||64, w=Math.round(h*x/H*100)/100;
+  var t=String(text).replace(/[<>&"]/g,"");
+  return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 '+x+' '+H+'" width="'+w+'" height="'+h+'" role="img" aria-label="'+t+'"><title>'+t+'</title><g fill="'+(opt.color||"currentColor")+'">'+paths.join("")+'</g></svg>';
+}
+function render(el,text,opt){el.innerHTML=toSVG(text,opt);return el;}
+var api={tokenize:tokenize,transliterate:transliterate,toSVG:toSVG,render:render,units:U,version:"1.0.0"};
+if(typeof module==="object"&&module.exports) module.exports=api; else root.RX09Baybayin=api;
+})(typeof self!=="undefined"?self:this);
+</script>
+<script type="text/babel">
+const { useState, useEffect, useRef, useCallback, useMemo } = React;
+const reduced = () => window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+const BB = () => window.RX09Baybayin;
+const bbt = (s) => BB().transliterate(s);
+
+/* =====================================================
+   STORE + THEME
+   ===================================================== */
+const store = {
+  users(){ return JSON.parse(localStorage.getItem("bato_users") || "[]"); },
+  save(u){ localStorage.setItem("bato_users", JSON.stringify(u)); },
+  session(){ return JSON.parse(localStorage.getItem("bato_session") || "null"); },
+  setSession(s){ s ? localStorage.setItem("bato_session", JSON.stringify(s)) : localStorage.removeItem("bato_session"); }
+};
+function useDocAttr(attr, key, fallback) {
+  const [v, setV] = useState(document.documentElement.getAttribute(attr) || fallback);
+  useEffect(() => { document.documentElement.setAttribute(attr, v); localStorage.setItem(key, v); }, [v]);
+  return [v, setV];
+}
+function ThemeSwitch({ theme, setTheme }) {
+  const dark = theme === "dark";
+  return (
+    <button type="button" className="sw" role="switch" aria-checked={dark} aria-label="Toggle night mode" onClick={() => setTheme(dark ? "light" : "dark")}>
+      <span className={!dark ? "on" : ""}>PAPER</span><span className={dark ? "on" : ""}>GABI · NIGHT</span>
+    </button>
+  );
+}
+function AccentSwitch({ accent, setAccent }) {
+  const mono = accent === "mono";
+  return (
+    <button type="button" className="sw" role="switch" aria-checked={mono} aria-label="Toggle monochrome mode" onClick={() => setAccent(mono ? "green" : "mono")}>
+      <span className={!mono ? "on" : ""}>A·GREEN</span><span className={mono ? "on" : ""}>B·MONO</span>
+    </button>
+  );
+}
+
+/* =====================================================
+   GLYPH KIT (24px grid · 1.75px stroke · square caps)
+   ===================================================== */
+const G = {
+  CUBE:      <path d="M12 2l9 5v10l-9 5-9-5V7z M3 7l9 5 9-5 M12 12v10"/>,
+  GRID:      <path d="M3 3h18v18H3z M9 3v18 M15 3v18 M3 9h18 M3 15h18"/>,
+  ARCH:      <path d="M3 21V9h3V6h3V4h6v2h3v3h3v12h-5V11h-2V9h-4v2H8v10z"/>,
+  BLOCKS:    <path d="M3 15h6v6H3z M9 9h6v6H9z M15 3h6v6h-6z M9 15h6v6H9z"/>,
+  LAYERS:    <path d="M12 3l9 4-9 4-9-4z M3 12l9 4 9-4 M3 17l9 4 9-4"/>,
+  NODE:      <><rect x="9" y="9" width="6" height="6"/><path d="M12 2v7M12 15v7M2 12h7M15 12h7"/></>,
+  CHAIN:     <><rect x="2" y="8" width="9" height="8"/><rect x="13" y="8" width="9" height="8"/><path d="M8 12h8"/></>,
+  THRESHOLD: <><path d="M3 21h18"/><rect x="4" y="13" width="4" height="8"/><rect x="10" y="9" width="4" height="12"/><rect x="16" y="4" width="4" height="17"/></>,
+  OPERATOR:  <><rect x="8" y="3" width="8" height="8"/><path d="M4 21v-6h16v6"/></>,
+  RESERVE:   <><path d="M4 9h16v12H4z M3 9l9-6 9 6"/><path d="M8 12v6M12 12v6M16 12v6"/></>,
+  VAULT:     <><rect x="3" y="3" width="18" height="18"/><rect x="8" y="8" width="8" height="8"/><path d="M12 3v5M12 16v5M3 12h5M16 12h5"/></>,
+  LOCK:      <><path d="M5 11h14v10H5z"/><path d="M8 11V4h8v7"/><path d="M12 15v2"/></>,
+  KEY:       <><rect x="2" y="8" width="8" height="8"/><path d="M10 12h12M18 12v4M21 12v3"/></>,
+  SHIELD:    <path d="M12 2l8 3v7l-8 10-8-10V5z M8 12l3 3 5-6"/>,
+  RECORD:    <><path d="M4 3h16v18H4z"/><path d="M8 8h8M8 12h8M8 16h4"/></>,
+  SIGNAL:    <path d="M4 20v-4M9 20v-8M14 20v-12M19 20V4"/>,
+  ARROW:     <path d="M3 12h16M14 7l5 5-5 5"/>,
+  CORNER:    <path d="M4 4v16h16"/>,
+  BOXSLASH:  <><rect x="3" y="3" width="18" height="18"/><path d="M3 21L21 3"/></>,
+  PLUS:      <path d="M12 4v16M4 12h16"/>,
+  LIVE:      <><rect x="9" y="9" width="6" height="6" fill="currentColor"/><rect x="4" y="4" width="16" height="16"/></>,
+  PROOF:     <><rect x="3" y="3" width="18" height="18"/><path d="M7 12l3 3 7-7"/></>,
+};
+function Glyph({ name, size = 24, color }) {
+  return <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color || "currentColor"} strokeWidth="1.75" strokeLinecap="square" strokeLinejoin="miter" aria-hidden="true">{G[name]}</svg>;
+}
+function Marks({ flip }) {
+  return <span className="row" style={{ gap:10 }} aria-hidden="true">{flip ? <><Glyph name="BOXSLASH" size={14}/><span style={{ transform:"scaleX(-1)", display:"inline-flex" }}><Glyph name="CORNER" size={14}/></span></> : <><Glyph name="CORNER" size={14}/><Glyph name="BOXSLASH" size={14}/></>}</span>;
+}
+
+/* =====================================================
+   PIXEL + ISO GRAPHIC LIBRARY
+   ===================================================== */
+function seeded(seed) { let s = seed; return () => (s = (s * 9301 + 49297) % 233280) / 233280; }
+const SYM = ["#","*","=","+",":","-","."];
+const C30 = 0.8660254;
+const iso = (x, y, z, s) => [(x - y) * C30 * s, (x + y) * 0.5 * s - z * s];
+const P = (pts) => pts.map(p => p[0].toFixed(1) + "," + p[1].toFixed(1)).join(" ");
+
+/* IsoBlock — isometric building block with pixel erosion (poster hero) */
+function IsoBlock({ L = 6, D = 22, H = 9, s = 16, seed = 11, green = "#3E7A34", dark = "#14250F", blobs, label = "Isometric pixel block" }) {
+  const geo = useMemo(() => {
+    const r = seeded(seed);
+    const B = blobs || [[D * .72, H * .78, 3.2], [D * .38, H * .35, 3.6], [D * .15, H * .2, 2.4]];
+    const prob = (y, z) => Math.max(...B.map(([by, bz, rr]) => Math.exp(-((y - by) ** 2 + (z - bz) ** 2) / (rr * rr))));
+    const top = [], left = [], right = [], debris = [], glyphs = [];
+    for (let x = 0; x < L; x++) for (let y = 0; y < D; y++)
+      top.push(P([iso(x,y,H,s), iso(x+1,y,H,s), iso(x+1,y+1,H,s), iso(x,y+1,H,s)]));
+    for (let x = 0; x < L; x++) for (let z = 0; z < H; z++)
+      left.push(P([iso(x,D,z,s), iso(x+1,D,z,s), iso(x+1,D,z+1,s), iso(x,D,z+1,s)]));
+    for (let y = 0; y < D; y++) for (let z = 0; z < H; z++) {
+      const p = prob(y + .5, z + .5) + (r() - .5) * .25, q = r();
+      const pts = [iso(L,y,z,s), iso(L,y+1,z,s), iso(L,y+1,z+1,s), iso(L,y,z+1,s)];
+      let kind = "w";
+      if (p > .78) kind = q < .25 ? "g" : "k";
+      else if (p > .5) kind = q < .3 ? "g" : q < .55 ? "k" : "sym";
+      else if (p > .3) kind = q < .5 ? "sym" : "w";
+      right.push({ pts:P(pts), kind });
+      const c = iso(L, y + .5, z + .5, s);
+      if (kind === "sym") glyphs.push({ x:c[0], y:c[1], t:SYM[Math.floor(r() * SYM.length)] });
+      if (p > .28 && p < .8 && r() < .35) {
+        const k = 1 + Math.floor(r() * 3), dx = k * C30 * s * .95, dy = k * .5 * s * .95;
+        debris.push({ pts:P(pts.map(([a, b]) => [a + dx, b + dy])), dark: r() < .25, t: r() < .6 ? SYM[Math.floor(r() * SYM.length)] : "", cx:c[0] + dx, cy:c[1] + dy });
+      }
+    }
+    const all = [iso(0,0,H,s), iso(L,0,0,s), iso(L,D,0,s), iso(0,D,0,s), iso(L+3,D,0,s), iso(L+3,0,H,s)];
+    const xs = all.map(p => p[0]), ys = all.map(p => p[1]);
+    const vb = [Math.min(...xs) - 4, Math.min(...ys) - 4, Math.max(...xs) - Math.min(...xs) + 8, Math.max(...ys) - Math.min(...ys) + 8];
+    const outline = [P([iso(0,0,H,s), iso(L,0,H,s), iso(L,D,H,s), iso(0,D,H,s)]), P([iso(L,0,H,s), iso(L,0,0,s), iso(L,D,0,s), iso(L,D,H,s)]), P([iso(0,D,H,s), iso(0,D,0,s), iso(L,D,0,s), iso(L,D,H,s)])];
+    return { top, left, right, debris, glyphs, vb, outline };
+  }, [L, D, H, s, seed]);
+  const fs = s * .52;
+  return (
+    <svg viewBox={geo.vb.join(" ")} width="100%" role="img" aria-label={label} style={{ display:"block", overflow:"visible" }}>
+      <g strokeWidth=".6" className="s-ink">
+        {geo.top.map((p, i) => <polygon key={"t" + i} points={p} className="f-bg" />)}
+        {geo.left.map((p, i) => <polygon key={"l" + i} points={p} fill={green} stroke={dark} strokeWidth=".5" />)}
+        {geo.right.map((c, i) => <polygon key={"r" + i} points={c.pts} fill={c.kind === "k" ? "var(--fg)" : c.kind === "g" ? green : "var(--bg)"} />)}
+      </g>
+      <g fontFamily="IBM Plex Mono" fontSize={fs} textAnchor="middle" className="f-ink">
+        {geo.glyphs.map((g, i) => <text key={i} x={g.x} y={g.y + fs * .35}>{g.t}</text>)}
+      </g>
+      <g strokeWidth=".7" className="s-ink">
+        {geo.debris.map((d, i) => <g key={i}><polygon points={d.pts} fill={d.dark ? "var(--fg)" : "var(--bg)"} />{d.t && !d.dark && <text x={d.cx} y={d.cy + fs * .35} fontFamily="IBM Plex Mono" fontSize={fs} textAnchor="middle" stroke="none" className="f-ink">{d.t}</text>}</g>)}
+      </g>
+      <g fill="none" strokeWidth="1.4" className="s-ink">{geo.outline.map((p, i) => <polygon key={i} points={p} />)}</g>
+    </svg>
+  );
+}
+/* DotField — square dot matrix fading in size downward */
+function DotField({ cols = 48, rows = 14, gap = 14, max = .62, min = .08, style }) {
+  const cells = [];
+  for (let y = 0; y < rows; y++) {
+    const t = y / Math.max(1, rows - 1), sz = gap * (min + (max - min) * t);
+    for (let x = 0; x < cols; x++) cells.push(<rect key={x + "-" + y} x={x * gap + (gap - sz) / 2} y={y * gap + (gap - sz) / 2} width={sz} height={sz} />);
+  }
+  return <svg viewBox={`0 0 ${cols * gap} ${rows * gap}`} preserveAspectRatio="xMidYMid slice" width="100%" height="100%" className="f-dot" aria-hidden="true" style={{ display:"block", ...style }}>{cells}</svg>;
+}
+/* PixelField — green tile noise (asset posters / dark slides) */
+function PixelField({ cols = 40, rows = 56, seed = 5, base = "#22461F", tones = ["#2A5326","#305C2B","#3A6A33","#1D3D1A","#45783C"], density = .55, style }) {
+  const r = seeded(seed), cells = [];
+  const blob = (x, y) => .5 + .5 * Math.sin(x * .35 + seed) * Math.cos(y * .22 - seed * .5);
+  for (let y = 0; y < rows; y++) for (let x = 0; x < cols; x++) {
+    const b = blob(x, y), v = r();
+    if (v > density * (0.6 + b * .6)) continue;
+    const sz = .3 + r() * .55, t = tones[Math.floor(r() * tones.length)];
+    cells.push(<rect key={x + "-" + y} x={x + (1 - sz) / 2} y={y + (1 - sz) / 2} width={sz} height={sz} fill={t} />);
+  }
+  return (
+    <svg viewBox={`0 0 ${cols} ${rows}`} preserveAspectRatio="xMidYMid slice" width="100%" height="100%" aria-hidden="true" style={{ position:"absolute", inset:0, display:"block", maxWidth:"none", ...style }}>
+      <rect width={cols} height={rows} fill={base} />
+      <g stroke="#ffffff" strokeOpacity=".05" strokeWidth=".04">{Array.from({ length: cols }).map((_, i) => <line key={"v" + i} x1={i} x2={i} y1="0" y2={rows} />)}{Array.from({ length: rows }).map((_, i) => <line key={"h" + i} y1={i} y2={i} x1="0" x2={cols} />)}</g>
+      {cells}
+    </svg>
+  );
+}
+/* PixelArch — stepped arch built from blocks */
+function PixelArch({ w = 21, h = 13, cell = 10, fill = "var(--fg)", key2 = "var(--accent)", outline }) {
+  const cx = (w - 1) / 2, R = w / 2, r0 = R - 4, cells = [];
+  for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) {
+    const dy = Math.max(0, (h - R) - y) ;
+    const yy = y < h - R ? 0 : y - (h - R);
+    const d = Math.hypot(x - cx, (R - 0.5) - (y < R ? y : R - 0.5) + 0) ;
+    let on;
+    if (y < R) { const dd = Math.hypot(x - cx, R - .5 - y); on = dd <= R && dd >= r0; }
+    else on = Math.abs(x - cx) >= r0 && Math.abs(x - cx) <= R;
+    if (!on) continue;
+    const isKey = y === 0 && Math.abs(x - cx) < 1;
+    cells.push(<rect key={x + "-" + y} x={x * cell + .5} y={y * cell + .5} width={cell - 1} height={cell - 1} fill={isKey ? key2 : outline ? "none" : fill} stroke={outline ? "var(--fg)" : "none"} strokeWidth=".8" />);
+  }
+  return <svg viewBox={`0 0 ${w * cell} ${h * cell}`} width="100%" aria-hidden="true" style={{ display:"block" }}>{cells}</svg>;
+}
+/* GridCube — small iso cube with gridded faces (slide icons) */
+function GridCube({ size = 120, n = 4, top = "#A9D39C", left = "#2E5A28", right = "#3E7A34", stroke = "#14250F" }) {
+  const s = 10, face = [];
+  for (let i = 0; i < n; i++) for (let j = 0; j < n; j++) {
+    face.push(<polygon key={"t" + i + j} points={P([iso(i,j,n,s), iso(i+1,j,n,s), iso(i+1,j+1,n,s), iso(i,j+1,n,s)])} fill={top} />);
+    face.push(<polygon key={"l" + i + j} points={P([iso(i,n,j,s), iso(i+1,n,j,s), iso(i+1,n,j+1,s), iso(i,n,j+1,s)])} fill={left} />);
+    face.push(<polygon key={"r" + i + j} points={P([iso(n,i,j,s), iso(n,i+1,j,s), iso(n,i+1,j+1,s), iso(n,i,j+1,s)])} fill={right} />);
+  }
+  const w = n * 2 * C30 * s, h = n * 2 * s;
+  return <svg viewBox={`${-n * C30 * s - 1} ${-n * s - 1} ${w + 2} ${h + 2}`} width={size} aria-hidden="true" style={{ display:"block" }}><g stroke={stroke} strokeWidth=".6">{face}</g></svg>;
+}
+/* WireCube — outline cube with white gridded front face (asset poster) */
+function WireCube({ color = "#F1F1EC", n = 4 }) {
+  const cells = [];
+  for (let i = 0; i < n; i++) for (let j = 0; j < n; j++) cells.push(<rect key={i + "-" + j} x={70 + i * 25} y={0 + j * 25} width="25" height="25" fill={color} stroke="#22461F" strokeWidth="1.5" />);
+  return (
+    <svg viewBox="-2 -2 174 174" width="100%" aria-hidden="true" style={{ display:"block" }}>
+      <g fill="none" stroke={color} strokeWidth="1.5"><path d="M70 0 L0 70 V170 H70 L170 100" /><path d="M0 170 L70 100" strokeOpacity="0" /><path d="M70 100 H170" /></g>
+      {cells}
+    </svg>
+  );
+}
+/* PixelBaybayin — rasterizes the Baybayin SVG engine into a pixel/glyph grid */
+function PixelBaybayin({ text, rows = 22, cell = 8, color = "var(--fg)", edge = "var(--accent)", debris = true, label }) {
+  const [grid, setGrid] = useState(null);
+  useEffect(() => {
+    const E = BB(); const toks = E.tokenize(text || ""); let x = 0; const parts = [];
+    toks.forEach(k => { const g = E.units[k]; if (!g) return; if (g.d) parts.push([x, g.d]); x += g.w; });
+    const W = Math.max(1, x), H = 1300, cols = Math.max(1, Math.round(rows * W / H)), S = 6;
+    const cv = document.createElement("canvas"); cv.width = cols * S; cv.height = rows * S;
+    const ctx = cv.getContext("2d"); if (!ctx || !window.Path2D) { setGrid(null); return; }
+    ctx.scale(cv.width / W, cv.height / H);
+    parts.forEach(([ox, d]) => { ctx.save(); ctx.translate(ox, 0); ctx.fill(new Path2D(d)); ctx.restore(); });
+    const img = ctx.getImageData(0, 0, cv.width, cv.height).data, on = [];
+    for (let gy = 0; gy < rows; gy++) for (let gx = 0; gx < cols; gx++) {
+      let a = 0; for (let yy = 0; yy < S; yy++) for (let xx = 0; xx < S; xx++) a += img[((gy * S + yy) * cv.width + gx * S + xx) * 4 + 3];
+      on.push(a / (S * S * 255) > .38);
+    }
+    setGrid({ cols, rows, on });
+  }, [text, rows]);
+  if (!grid) return <div className="micro">RENDERING GRID…</div>;
+  const { cols, on } = grid, at = (x, y) => x >= 0 && y >= 0 && x < cols && y < rows && on[y * cols + x];
+  const r = seeded(7), out = [];
+  for (let y = 0; y < rows; y++) for (let x = 0; x < cols; x++) {
+    if (at(x, y)) {
+      const isEdge = !at(x-1,y) || !at(x+1,y) || !at(x,y-1) || !at(x,y+1);
+      out.push(<rect key={x + "-" + y} x={x * cell + .5} y={y * cell + .5} width={cell - 1} height={cell - 1} style={{ fill: isEdge && r() < .45 ? edge : color }} />);
+    } else if (debris && (at(x-1,y) || at(x+1,y) || at(x,y-1) || at(x,y+1)) && r() < .16) {
+      out.push(<g key={x + "-" + y}><rect x={x * cell + .5} y={y * cell + .5} width={cell - 1} height={cell - 1} fill="none" style={{ stroke: color }} strokeWidth=".6" />
+        {cell >= 8 && <text x={x * cell + cell / 2} y={y * cell + cell * .72} fontSize={cell * .62} textAnchor="middle" fontFamily="IBM Plex Mono" style={{ fill: color }}>{SYM[Math.floor(r() * 5)]}</text>}</g>);
+    }
+  }
+  return <svg viewBox={`0 0 ${cols * cell} ${rows * cell}`} width={cols * cell} height={rows * cell} role="img" aria-label={label || text}>{out}</svg>;
+}
+function BBText({ children, bold, style, className = "" }) {
+  return <span className={"rx-bb " + (bold ? "rx-bb--bold " : "") + className} lang="tl-Tglg" style={style}>{bbt(children)}</span>;
+}
+
+/* =====================================================
+   DATA HELPERS
+   ===================================================== */
+function Count({ to, pad = 3, className }) {
+  const [n, setN] = useState(0);
+  useEffect(() => {
+    if (reduced()) { setN(to); return; }
+    let f = 0; const id = setInterval(() => { f++; setN(Math.round(to * f / 20)); if (f >= 20) clearInterval(id); }, 40);
+    return () => clearInterval(id);
+  }, [to]);
+  return <span className={className}>{String(n).padStart(pad, "0")}</span>;
+}
+function Clock() {
+  const [t, setT] = useState(new Date());
+  useEffect(() => { const id = setInterval(() => setT(new Date()), 1000); return () => clearInterval(id); }, []);
+  return <span>{t.toLocaleTimeString("en-GB")}</span>;
+}
+function useTelemetry(ms = 2500) {
+  const [load, setLoad] = useState(64);
+  const [bars, setBars] = useState([70, 45, 88, 30, 60, 92]);
+  const [spark, setSpark] = useState(() => Array.from({ length: 28 }, (_, i) => 40 + Math.sin(i / 2) * 20 + i));
+  useEffect(() => {
+    const id = setInterval(() => {
+      setLoad(Math.floor(40 + Math.random() * 55));
+      setBars(b => b.map(() => Math.floor(15 + Math.random() * 85)));
+      setSpark(s => [...s.slice(1), Math.max(5, s[s.length - 1] + (Math.random() - .5) * 30)]);
+    }, ms);
+    return () => clearInterval(id);
+  }, []);
+  return { load, bars, spark };
+}
+/* PixelGauge — 10×10 block fill */
+function PixelGauge({ value, label = "SIGNERS ONLINE %" }) {
+  const on = Math.round(value);
+  return (
+    <div style={{ display:"grid", gap:8, justifyItems:"center" }} role="img" aria-label={`${label} ${value}`}>
+      <svg viewBox="0 0 100 100" width="110" aria-hidden="true">
+        {Array.from({ length: 100 }).map((_, i) => { const x = i % 10, y = 9 - Math.floor(i / 10), k = i < on;
+          return <rect key={i} x={x * 10 + 1} y={y * 10 + 1} width="8" height="8" style={{ fill: k ? (i > 85 ? "var(--accent)" : "var(--fg)") : "var(--line)" }} />; })}
+      </svg>
+      <span className="lcd" style={{ fontSize:28 }}>{String(value).padStart(2, "0")}</span>
+      <span className="micro">{label}</span>
+    </div>
+  );
+}
+/* BlockMeters — stacked pixel columns */
+function BlockMeters({ bars, labels = ["N1","N2","N3","N4","N5","N6"] }) {
+  return (
+    <div className="row" style={{ gap:14, alignItems:"flex-end", flexWrap:"nowrap" }} role="img" aria-label={"Levels: " + bars.join(", ")}>
+      {bars.map((b, i) => { const n = Math.round(b / 10);
+        return <div key={i} style={{ display:"grid", gap:2, justifyItems:"center" }}>
+          {Array.from({ length: 10 }).map((_, j) => <i key={j} style={{ width:14, height:8, display:"block", background: 9 - j < n ? (b > 85 && 9 - j >= 8 ? "var(--accent)" : "var(--fg)") : "var(--line)" }} />)}
+          <span className="micro" style={{ marginTop:4 }}>{labels[i]}</span></div>; })}
+    </div>
+  );
+}
+function StepLine({ data, w = 300, h = 80 }) {
+  const max = Math.max(...data), min = Math.min(...data), st = w / (data.length - 1);
+  let d = ""; data.forEach((v, i) => { const y = h - 6 - ((v - min) / (max - min || 1)) * (h - 12), x = i * st; d += i ? ` H${x} V${y}` : `M0 ${y}`; });
+  const lastY = h - 6 - ((data[data.length - 1] - min) / (max - min || 1)) * (h - 12);
+  return (
+    <svg viewBox={`0 0 ${w} ${h}`} width="100%" height={h} preserveAspectRatio="none" aria-hidden="true">
+      {[.25,.5,.75].map(y => <line key={y} x1="0" x2={w} y1={h * y} y2={h * y} className="s-line" strokeDasharray="2 4" />)}
+      <path d={d} fill="none" className="s-ink" strokeWidth="1.5" vectorEffect="non-scaling-stroke" />
+      <rect x={w - 6} y={lastY - 4} width="8" height="8" className="f-acc" />
+    </svg>
+  );
+}
+function SegBar({ value, total = 20 }) {
+  const on = Math.round(value / 100 * total);
+  return <div className="seg" role="progressbar" aria-valuenow={value} aria-valuemin="0" aria-valuemax="100">{Array.from({ length: total }).map((_, i) => <i key={i} className={i < on ? (i >= total - 3 ? "hot" : "on") : ""} />)}</div>;
+}
+function SecHead({ idx, title, bb, meta }) {
+  return (
+    <header className="sec-head">
+      <span className="sec-idx" aria-hidden="true">{idx}</span>
+      <div><p className="micro" style={{ marginBottom:8, display:"flex", gap:10, alignItems:"center" }}><BBText bold style={{ fontSize:16, color:"var(--fg)" }}>{bb}</BBText><span>// {bb.toUpperCase()}</span></p><h2 className="sec-title">{title}</h2></div>
+      <div className="sec-meta"><p className="micro">{meta}</p><p className="micro">[ BTO-{idx} ] · BATO-01</p></div>
+    </header>
+  );
+}
+function BracketBar({ l = "01", lt = "BTO", title = "STRUCTURE AND INFRASTRUCTURE", sub = "ON THE BATO GRID", rt = "LKH", r = "01" }) {
+  return (
+    <div className="bbar">
+      <div><div className="side"><b>{l}</b><span className="brk">{lt}</span></div><div className="mk"><Marks /></div></div>
+      <div className="mid"><b>{title}</b><span>{sub}</span></div>
+      <div><div className="side r"><span className="brk">{rt}</span><b>{r}</b></div><div className="mk" style={{ justifyContent:"flex-end" }}><Marks flip /></div></div>
+    </div>
+  );
+}
+const KEYS = [["BTO-01","LIVE"],["LKH-02","NEXT"],["HALIGI","THRESHOLD SIGNING"],["OPERATORS","INDEPENDENT"],["TALA","ONE RECORD"],["RESERVES","CHECKABLE"]];
+function KeyRow() { return <div className="keyrow">{KEYS.map(([a, b]) => <div key={a}><b>{a}</b><span>{b}</span></div>)}</div>; }
+function Slogan() { return <div className="slogan"><b>BEDROCK</b><span className="brk">LAID</span><b>STRUCTURE</b><span className="brk">BUILT</span><b>PROOF</b></div>; }
+
+/* =====================================================
+   SHOWCASE SECTIONS
+   ===================================================== */
+const SECTIONS = [
+  ["cover","00","COVER"],["color","01","COLOR"],["type","02","TYPE"],["grid","03","GRID"],["shape","04","FORM"],
+  ["glyphs","05","GLYPHS"],["signal","06","SIGNAL"],["components","07","CONTROLS"],["data","08","DATA"],
+  ["motion","09","MOTION"],["samples","10","SAMPLES"],["tokens","11","TOKENS"],["baybayin","12","BAYBAYIN"],
+];
+function Cover({ go }) {
+  return (
+    <section id="cover" className="sec cover" aria-label="Cover">
+      <BracketBar />
+      <div style={{ position:"relative" }}>
+        <h1 className="giant">BATO-01</h1>
+        <div className="cover-copy"><p>BATO ISSUES A STRUCTURAL DESIGN SYSTEM FOR INTERNAL TOOLS AND INSTITUTIONS.</p><p>ON THE BATO GRID. TRUST THAT IS STRUCTURAL.</p></div>
+        <div className="cover-art" style={{ maxWidth:980, margin:"calc(clamp(84px,19vw,300px) * -.45) auto 0" }}><IsoBlock /></div>
+        <div className="cover-bb"><BBText bold style={{ fontSize:"clamp(28px,4vw,56px)" }}>Bato</BBText><p className="micro">ᜊᜆᜓ · BATO = STONE · BEDROCK</p></div>
+      </div>
+      <div style={{ height:120, margin:"-60px 0 0" }}><DotField cols={70} rows={9} /></div>
+      <div className="row" style={{ justifyContent:"space-between" }}>
+        <p className="label">INDEX // 13 MODULES · COLOR · TYPE · GRID · FORM · GLYPHS · SIGNAL · CONTROLS · DATA · MOTION · SAMPLES · TOKENS · BAYBAYIN</p>
+        <div className="row"><button type="button" className="btn acc" onClick={() => go("color")}>ENTER SYSTEM →</button><button type="button" className="btn ghost" onClick={() => go("samples")}>VIEW SAMPLES</button></div>
+      </div>
+      <KeyRow />
+      <Slogan />
+    </section>
+  );
+}
+const COLORS = [
+  ["--paper","#F1F1EC","PAPER","BACKGROUND · NEVER PURE WHITE"],
+  ["--ink","#111311","INK","HEADLINES · BORDERS · PIXELS"],
+  ["--forest","#22461F","FOREST","PRIMARY ACCENT · ASSET PANELS"],
+  ["--moss","#2F5B2A","MOSS","SLIDE FIELDS · NOISE BASE"],
+  ["--leaf","#4B8A3F","LEAF","PIXEL TONES · ISO FACES"],
+  ["--mint","#A9D39C","MINT","LIGHT FIELD · NIGHT ACCENT"],
+  ["--pale","#DDEBD6","PALE","TINTS · FOCUS FILL"],
+  ["--dot","#C3C5C0","DOT GRAY","DOT MATRIX · FADES"],
+];
+const DARK = [["--bg","#0F1A0E"],["--fg","#E4ECDF"],["--line","#24341F"],["--dot","#2C3D27"],["--accent","#A9D39C"],["--on-accent","#0F1A0E"]];
+function ColorSec({ notify }) {
+  const copy = (hex) => { navigator.clipboard && navigator.clipboard.writeText(hex); notify(`COPIED ${hex}`); };
+  return (
+    <section id="color" className="sec">
+      <SecHead idx="01" title="Color" bb="kulay" meta="ONE HUE FAMILY · GREEN STRUCTURE" />
+      <p className="lead">Paper and ink carry the system; <b className="hl">one green family</b> builds the structure — forest for weight, leaf for pixels, mint for light fields. No second hue. Click a swatch to copy.</p>
+      <div className="swatches">
+        {COLORS.map(([tok, hex, name, use]) => (
+          <button type="button" key={tok} className="swatch" onClick={() => copy(hex)} aria-label={`Copy ${name} ${hex}`}>
+            <div className="chipc" style={{ background:hex }} />
+            <div className="info"><span className="label b">{name}</span><span style={{ font:"800 18px var(--hero)" }}>{hex}</span><span className="micro">{tok} · {use}</span></div>
+          </button>
+        ))}
+      </div>
+      <p className="micro" style={{ margin:"32px 0 8px" }}>GABI // NIGHT MODE MAPPING</p>
+      <div className="row" style={{ gap:0, border:"1px solid var(--fg)", flexWrap:"wrap" }}>
+        {DARK.map(([t, h]) => <div key={t} style={{ flex:"1 1 100px", borderRight:"1px solid var(--fg)" }}><div style={{ height:44, background:h }} /><p className="micro" style={{ padding:8, color:"var(--fg)" }}>{t}<br/>{h}</p></div>)}
+      </div>
+      <p className="micro" style={{ margin:"32px 0 0" }}>COMPOSITION RATIO</p>
+      <div className="ratio">
+        <div style={{ flex:62, background:"var(--bg)" }}>62% PAPER</div>
+        <div style={{ flex:18, background:"var(--fg)", color:"var(--bg)" }}>18% INK</div>
+        <div style={{ flex:14, background:"#22461F", color:"#F1F1EC" }}>14% FOREST</div>
+        <div style={{ flex:6, background:"#A9D39C", color:"#111311" }}>6%</div>
+      </div>
+    </section>
+  );
+}
+const SCALE = [["DISPLAY XL","200","var(--hero)",900,"BATO-01"],["WIDE","64","var(--wide)",400,"BTO-01"],["PIXEL","40","var(--pixel)",700,"BATO"],
+  ["STATEMENT","24","var(--wide)",400,"PROVES THE MODEL"],["BODY","13","var(--mono)",400,"Trust that is structural."],["LABEL","10","var(--mono)",500,"[ ASSET 02 ] 10 / 10"],["MICRO","9","var(--mono)",400,"BTO-01 · LIVE · BATO.GRID"]];
+const FONTS = [["Inter Tight","var(--hero)",900],["Tektur","var(--wide)",400],["Silkscreen","var(--pixel)",700],["IBM Plex Mono","var(--mono)",500],["Baybayin","var(--bb)",700]];
+function TypeSec() {
+  const [txt, setTxt] = useState("Bato Grid");
+  const [size, setSize] = useState(96);
+  const [font, setFont] = useState(0);
+  return (
+    <section id="type" className="sec">
+      <SecHead idx="02" title="Typography" bb="titik" meta="5 FAMILIES · 7 LEVELS" />
+      <div className="spec">
+        <div className="meta"><p className="label b">INTER TIGHT 900</p><p className="micro">HERO GROTESK · POSTER HEADLINE<br/>TRACKING −0.045EM · LH .80</p></div>
+        <div><p className="giant" style={{ fontSize:"clamp(64px,10vw,150px)" }}>BATO-01</p><p style={{ font:"800 18px var(--hero)", marginTop:12 }}>ASSETS AND INFRASTRUCTURE · 0123456789</p></div>
+        <div className="meta"><p className="label b">TEKTUR 400</p><p className="micro">WIDE STATEMENT · ASSET TITLES</p></div>
+        <div><p className="wide" style={{ fontSize:"clamp(40px,6vw,88px)" }}>BTO-01</p><p className="wide" style={{ fontSize:22, marginTop:10 }}>BTO-01 PROVES THE MODEL IN PRODUCTION.</p></div>
+        <div className="meta"><p className="label b">SILKSCREEN 700</p><p className="micro">PIXEL WORDMARK · READOUTS</p></div>
+        <div><p className="pixel" style={{ fontSize:"clamp(40px,7vw,96px)" }}>BATO</p><p className="pixel" style={{ fontSize:24, marginTop:8 }}>07 / 10 · 00.19.90</p></div>
+        <div className="meta"><p className="label b">IBM PLEX MONO</p><p className="micro">LABELS · BODY · UI</p></div>
+        <div><p style={{ font:"500 14px var(--mono)", letterSpacing:".14em" }}>ONE STORY AT THREE LEVELS · [ ASSET 02 ] 10 / 10</p><p style={{ marginTop:8 }}>Proof, not paperwork. 0123456789 // [ ] → ■ □ # * = + :</p></div>
+        <div className="meta"><p className="label b">RX09 BAYBAYIN 400/700</p><p className="micro">CULTURE SCRIPT · U+1700<br/>REPLACES ALL CJK FLAVOR TEXT</p></div>
+        <div><p className="rx-bb rx-bb--bold" lang="tl-Tglg" style={{ fontSize:"clamp(40px,7vw,88px)", lineHeight:1.2 }}>{bbt("Bato Tibay Haligi")}</p><p className="micro" style={{ marginTop:6 }}>BATO (STONE) · TIBAY (STRENGTH) · HALIGI (PILLAR)</p></div>
+      </div>
+      <p className="micro" style={{ margin:"48px 0 8px" }}>TYPE SCALE // HERO &gt; WIDE &gt; PIXEL &gt; LABEL &gt; MICRO</p>
+      <div>
+        {SCALE.map(([n, px, f, w, s]) => (
+          <div className="scale-row" key={n}>
+            <span className="label b">{n}</span><span className="micro px">{px}PX</span>
+            <span style={{ fontFamily:f, fontWeight:w, fontSize:Math.min(+px, 72), lineHeight:1, textTransform:n === "BODY" ? "none" : "uppercase", letterSpacing: +px <= 10 ? ".14em" : (f.includes("hero") ? "-.045em" : 0), whiteSpace:"nowrap", overflow:"hidden", textOverflow:"ellipsis" }}>{s}</span>
+          </div>
+        ))}
+      </div>
+      <div className="tester cnr" style={{ marginTop:48 }}>
+        <div className="row" style={{ justifyContent:"space-between" }}>
+          <p className="cell-title" style={{ margin:0 }}>TYPE TESTER</p>
+          <div className="tabs" role="tablist" style={{ flex:"1 1 320px", maxWidth:520 }}>
+            {FONTS.map(([n], i) => <button type="button" key={n} role="tab" aria-selected={font === i} onClick={() => setFont(i)}>{n.split(" ")[0]}</button>)}
+          </div>
+        </div>
+        <div className="row" style={{ alignItems:"flex-end" }}>
+          <div className="field" style={{ flex:2, minWidth:200 }}><label className="label" htmlFor="tt">Sample text</label><input id="tt" value={txt} maxLength={60} onChange={e => setTxt(e.target.value)} /></div>
+          <div className="field" style={{ flex:1, minWidth:160 }}><label className="label" htmlFor="ts">Size // {size}px</label><input id="ts" type="range" className="range" min="16" max="200" value={size} onChange={e => setSize(+e.target.value)} /></div>
+        </div>
+        {font === 4
+          ? <div className="tester-out rx-bb rx-bb--bold" lang="tl-Tglg" style={{ fontSize:size, lineHeight:1.3 }}>{bbt(txt) || " "}</div>
+          : <div className="tester-out" style={{ fontFamily:FONTS[font][1], fontWeight:FONTS[font][2], fontSize:size, lineHeight:.9, letterSpacing: font === 0 ? "-.045em" : 0, textTransform:"uppercase" }}>{txt || " "}</div>}
+        {font === 4 && <p className="micro">AUTO-TRANSLITERATED LATIN → BAYBAYIN // {BB().tokenize(txt).map(k => k === " " ? "/" : k).join(" · ").toUpperCase()}</p>}
+      </div>
+    </section>
+  );
+}
+function GridSec() {
+  return (
+    <section id="grid" className="sec">
+      <SecHead idx="03" title="Grid & Space" bb="sukat" meta="8PX UNIT · CELL = PIXEL" />
+      <div className="cells c2">
+        <div>
+          <p className="cell-title">SPACING UNITS</p>
+          <div className="unit-bars">{[8,16,24,32,64,128].map(u => <div key={u}><span className="label b">{u}PX</span><i style={{ width:u * 2 }} /></div>)}</div>
+          <p className="micro" style={{ marginTop:16 }}>×1 ×2 ×3 ×4 ×8 ×16 OF --u · EVERY BAR IS BUILT FROM 8PX BLOCKS</p>
+        </div>
+        <div>
+          <p className="cell-title">DOT MATRIX // FADE FIELD</p>
+          <div style={{ height:150, border:"1px solid var(--line)" }}><DotField cols={30} rows={10} /></div>
+          <p className="micro" style={{ marginTop:8 }}>SQUARES GROW 8% → 62% OF CELL FROM TOP TO BOTTOM</p>
+        </div>
+        <div style={{ gridColumn:"1 / -1" }}>
+          <p className="cell-title">12-COLUMN MODULAR GRID</p>
+          <div className="col12">{Array.from({ length: 12 }).map((_, i) => <div key={i}>{String(i + 1).padStart(2,"0")}</div>)}</div>
+          <div className="col12" style={{ height:56, marginTop:8 }}><div className="sp8">SPAN 8 // STRUCTURE</div><div className="sp">SPAN 4 // DATA</div></div>
+        </div>
+        <div style={{ gridColumn:"1 / -1" }}>
+          <p className="cell-title">POSTER FRAME // BRACKET HEADER + KEY ROW</p>
+          <div className="stack" style={{ gap:24 }}><BracketBar /><div style={{ height:1, background:"var(--line)" }} /><KeyRow /><Slogan /></div>
+        </div>
+      </div>
+    </section>
+  );
+}
+function ShapeSec() {
+  return (
+    <section id="shape" className="sec">
+      <SecHead idx="04" title="Form Language" bb="anyo" meta="ISOMETRIC 30° · PIXEL EROSION · RADIUS 0" />
+      <p className="lead">Every object is a <b className="hl">grid made solid</b>. Isometric blocks at 30°, arches built from stones, cubes with gridded faces. Edges erode into pixels and glyph cells — <b>#&nbsp;*&nbsp;=&nbsp;+&nbsp;:</b></p>
+      <div className="shape-grid">
+        <div className="shape-card"><div style={{ width:"100%" }}><IsoBlock L={4} D={10} H={12} s={10} seed={3} blobs={[[3,6,2.6],[7,3,2]]} /></div><span className="label">F-01 TOWER BLOCK</span></div>
+        <div className="shape-card"><GridCube size={130} /><span className="label">F-02 GRID CUBE</span></div>
+        <div className="shape-card"><GridCube size={130} top="#F1F1EC" left="#111311" right="#22461F" stroke="#111311" /><span className="label">F-03 INK CUBE</span></div>
+        <div className="shape-card"><div style={{ width:150 }}><PixelArch /></div><span className="label">F-04 PIXEL ARCH</span></div>
+        <div className="shape-card"><div style={{ width:150 }}><PixelArch outline /></div><span className="label">F-05 ARCH OUTLINE</span></div>
+        <div className="shape-card" style={{ background:"#22461F" }}><div style={{ width:130 }}><WireCube /></div><span className="label" style={{ color:"#F1F1EC" }}>F-06 WIRE CUBE</span></div>
+        <div className="shape-card"><div className="cnr" style={{ width:"80%", height:90, border:"1px solid var(--line)", display:"grid", placeItems:"center" }}><span className="label">CORNER MARKS</span></div><span className="label">F-07 .cnr</span></div>
+        <div className="shape-card"><span className="pixel hl" style={{ fontSize:26, lineHeight:1.25 }}>WE ISSUE<br/>THE ASSETS</span><span className="label">F-08 INK HIGHLIGHT .hl</span></div>
+      </div>
+    </section>
+  );
+}
+function GlyphSec({ notify }) {
+  return (
+    <section id="glyphs" className="sec">
+      <SecHead idx="05" title="Glyph Library" bb="sagisag" meta={`${Object.keys(G).length} ICONS · 24PX · 1.75PX STROKE`} />
+      <p className="lead">Square-cap, miter-join vectors on a 24px grid. Built from blocks and right angles — the same logic as the isometric forms. All use <b className="hl">currentColor</b>.</p>
+      <div className="glyphs">
+        {Object.keys(G).map((k, i) => (
+          <button type="button" key={k} className="glyph" onClick={() => notify(`<Glyph name="${k}" />`)} data-tip="CLICK FOR USAGE">
+            <span className="micro" style={{ alignSelf:"flex-start" }}>G-{String(i + 1).padStart(2,"0")}</span>
+            <Glyph name={k} size={36} /><span className="label">{k}</span>
+          </button>
+        ))}
+      </div>
+      <div className="row" style={{ marginTop:32, gap:32 }}>
+        <div className="stack" style={{ gap:4 }}><p className="micro">SIZES</p><div className="row">{[16,24,32,48].map(s => <Glyph key={s} name="CUBE" size={s} />)}</div></div>
+        <div className="stack" style={{ gap:4 }}><p className="micro">ON FOREST</p><div className="row" style={{ background:"#22461F", color:"#F1F1EC", padding:8 }}><Glyph name="ARCH" /><Glyph name="LAYERS" /><Glyph name="VAULT" /></div></div>
+        <div className="stack" style={{ gap:4 }}><p className="micro">ON INK</p><div className="row" style={{ background:"var(--fg)", color:"var(--bg)", padding:8 }}><Glyph name="NODE" /><Glyph name="CHAIN" /><Glyph name="PROOF" /></div></div>
+        <div className="stack" style={{ gap:4 }}><p className="micro">ASCII CELLS</p><p style={{ font:"500 18px var(--mono)", letterSpacing:".1em" }}># * = + : [ ] → ■ □ ⧄</p></div>
+      </div>
+    </section>
+  );
+}
+function SignalSec() {
+  return (
+    <section id="signal" className="sec">
+      <SecHead idx="06" title="Signal & Status" bb="hudyat" meta="LIVE · NEXT · LOCKED · LEVELS" />
+      <div className="cells c3">
+        <div className="stack">
+          <p className="cell-title">STATUS PLATES</p>
+          <div className="plate live"><div className="sym"><Glyph name="LIVE" size={30} /></div><div className="txt"><p className="word">LIVE</p><p className="micro" style={{ color:"var(--fg)" }}><BBText>buhay</BBText> · BTO-01 IN PRODUCTION</p></div></div>
+          <div className="plate"><div className="sym"><Glyph name="ARROW" size={30} /></div><div className="txt"><p className="word">NEXT</p><p className="micro" style={{ color:"var(--fg)" }}><BBText>susunod</BBText> · LKH-02 ISSUING</p></div></div>
+          <div className="plate inverse"><div className="sym"><Glyph name="LOCK" size={30} /></div><div className="txt"><p className="word">LOCKED</p><p className="micro"><BBText>sarado</BBText> · RESERVES CHECKABLE</p></div></div>
+        </div>
+        <div className="stack" style={{ background:"#2E5A28", color:"#F1F1EC", overflow:"hidden" }}>
+          <PixelField cols={24} rows={30} seed={9} base="#2E5A28" />
+          <p className="cell-title" style={{ position:"relative" }}>THREE LEVELS</p>
+          {[["BEDROCK","STONE AND POURED CONCRETE"],["STRUCTURE","ARCHES · AQUEDUCTS · KEYSTONES"],["GRID","MANY NODES · NO SINGLE POINT"]].map(([a, b]) => (
+            <div className="lvl" key={a} style={{ position:"relative", ["--bg"]:"#F1F1EC", ["--fg"]:"#111311" }}>
+              <GridCube size={34} n={3} /><span className="nm">{a}</span><span className="ds">{b}</span>
+            </div>))}
+        </div>
+        <div className="stack">
+          <p className="cell-title">INLINE STATUS</p>
+          <p className="err" role="alert">ERR_06 // SIGNATURE THRESHOLD NOT MET</p>
+          <div style={{ border:"1px solid var(--fg)", padding:"10px 12px" }} className="label">■ INFO // HALIGI 1.2 AVAILABLE</div>
+          <div style={{ background:"var(--accent)", color:"var(--on-accent)", padding:"10px 12px" }} className="label">■ DISTRIBUTED CONTROL · NOT SINGLE-OPERATOR</div>
+          <div className="row"><span className="chip live">LIVE</span><span className="chip next">NEXT</span><span className="chip ink">LOCKED</span><span className="chip">IDLE</span></div>
+          <div className="row" style={{ gap:4 }}>{Array.from({ length: 16 }).map((_, i) => <i key={i} style={{ width:12, height:12, display:"block", background: i < 11 ? "var(--fg)" : i < 13 ? "var(--accent)" : "var(--line)" }} />)}</div>
+          <p className="micro">11 / 16 SIGNERS · THRESHOLD 9</p>
+        </div>
+      </div>
+    </section>
+  );
+}
+function ComponentSec({ notify, openModal }) {
+  const [tab, setTab] = useState(0);
+  const [toggles, setToggles] = useState({ a:true, b:false });
+  const [lvl, setLvl] = useState(65);
+  const [radio, setRadio] = useState("AUTO");
+  return (
+    <section id="components" className="sec">
+      <SecHead idx="07" title="Controls" bb="pindutan" meta="BUTTONS · FORMS · FEEDBACK" />
+      <div className="cells c3">
+        <div className="stack">
+          <span className="micro tag">C-01</span><p className="cell-title">BUTTONS</p>
+          <button type="button" className="btn">BTO-01 · LIVE →</button>
+          <button type="button" className="btn acc">ISSUE ASSET →</button>
+          <button type="button" className="btn ghost">GHOST [ ]</button>
+          <button type="button" className="btn step">STEPPED CUT ▸</button>
+          <div className="row"><button type="button" className="btn sm">SM</button><button type="button" className="btn sm acc">SM</button><button type="button" className="btn" disabled>DISABLED</button></div>
+          <button type="button" className="btn lg acc">LARGE // DEPLOY <Glyph name="ARROW" size={16} /></button>
+        </div>
+        <div className="stack">
+          <span className="micro tag">C-02</span><p className="cell-title">INPUTS</p>
+          <div className="field"><label className="label" htmlFor="c1">Asset Name</label><input id="c1" placeholder="BTO-01" /><span className="hint">3–12 CHARS · UPPERCASE</span></div>
+          <div className="field invalid"><label className="label" htmlFor="c2">Reserve ID</label><input id="c2" defaultValue="52OO1" /><span className="hint">■ INVALID FORMAT // DIGITS ONLY</span></div>
+          <div className="field"><label className="label" htmlFor="c3">Level</label><select id="c3"><option>BEDROCK</option><option>STRUCTURE</option><option>GRID</option></select></div>
+          <div className="field"><label className="label" htmlFor="c4">Notes</label><textarea id="c4" placeholder="ENTER RECORD_" /></div>
+        </div>
+        <div className="stack">
+          <span className="micro tag">C-03</span><p className="cell-title">SELECTION</p>
+          <label className="opt"><input type="checkbox" className="chk" defaultChecked /> THRESHOLD SIGNING</label>
+          <label className="opt"><input type="checkbox" className="chk" /> SINGLE OPERATOR</label>
+          <div className="row" role="radiogroup" aria-label="Mode">{["AUTO","MANUAL","HOLD"].map(r => <label key={r} className="opt"><input type="radio" className="rad" name="drv" checked={radio === r} onChange={() => setRadio(r)} /> {r}</label>)}</div>
+          <label className="opt"><input type="checkbox" className="toggle" checked={toggles.a} onChange={e => setToggles({ ...toggles, a:e.target.checked })} /> AUTO-AUDIT · {toggles.a ? "ON" : "OFF"}</label>
+          <label className="opt"><input type="checkbox" className="toggle" checked={toggles.b} onChange={e => setToggles({ ...toggles, b:e.target.checked })} /> ALERT RELAY · {toggles.b ? "ON" : "OFF"}</label>
+          <div className="field"><label className="label" htmlFor="lv">Reserve Ratio // {lvl}%</label><input id="lv" type="range" className="range" value={lvl} onChange={e => setLvl(+e.target.value)} /></div>
+          <SegBar value={lvl} />
+        </div>
+        <div className="stack">
+          <span className="micro tag">C-04</span><p className="cell-title">TABS</p>
+          <div className="tabs" role="tablist">{["01 ASSET","02 RESERVE","03 LOG"].map((t, i) => <button type="button" key={t} role="tab" aria-selected={tab === i} onClick={() => setTab(i)}>{t}</button>)}</div>
+          <div style={{ border:"1px solid var(--fg)", borderTop:0, padding:16, minHeight:90 }}>
+            {tab === 0 && <><p className="wide" style={{ fontSize:28 }}>BTO-01</p><p className="micro">BACKED 1:1 · LIVE</p></>}
+            {tab === 1 && <><p className="lcd" style={{ fontSize:34 }}>100.0%</p><p className="micro">RESERVES · CHECKABLE</p></>}
+            {tab === 2 && <p className="label">08:41:22 MINT PATH COMPLETE<br/>08:33:05 OPERATOR 03 SIGNED</p>}
+          </div>
+        </div>
+        <div className="stack">
+          <span className="micro tag">C-05</span><p className="cell-title">ACCORDION</p>
+          <div>
+            <details className="acc" open><summary>01 // BTO IS LOCKED</summary><p>Collateral enters the vault and is recorded on one ledger.</p></details>
+            <details className="acc"><summary>02 // OPERATORS SIGN</summary><p>Independent operators reach threshold before anything moves.</p></details>
+            <details className="acc"><summary>03 // ASSET IS MINTED</summary><p>Redeeming reverses the same path. Proof, not paperwork.</p></details>
+          </div>
+        </div>
+        <div className="stack">
+          <span className="micro tag">C-06</span><p className="cell-title">FEEDBACK</p>
+          <button type="button" className="btn" onClick={() => notify("BTO-01 // COMMAND ACKNOWLEDGED")}>TRIGGER TOAST [!]</button>
+          <button type="button" className="btn acc" onClick={openModal}>OPEN MODAL [□]</button>
+          <button type="button" className="btn ghost" data-tip="BATO // TOOLTIP">HOVER TOOLTIP [?]</button>
+          <div className="row"><span className="chip live">ONLINE</span><span className="chip ink">LOCKED</span><span className="chip">OFFLINE</span></div>
+        </div>
+      </div>
+    </section>
+  );
+}
+const LOGS = [
+  { id:"[ 009 ]", unit:"BTO-01", event:"MINT PATH COMPLETE",    t:"08:41:22", s:"LIVE" },
+  { id:"[ 008 ]", unit:"LKH-02", event:"ISSUANCE QUEUED",       t:"08:33:05", s:"NEXT" },
+  { id:"[ 007 ]", unit:"OP-03",  event:"THRESHOLD SIGNATURE",   t:"08:12:47", s:"LIVE" },
+  { id:"[ 006 ]", unit:"TALA",   event:"RECORD RECONCILED",     t:"07:58:10", s:"LIVE" },
+  { id:"[ 005 ]", unit:"VAULT",  event:"RESERVE ATTESTATION",   t:"07:40:00", s:"NEXT" },
+];
+const TERM = ["bato issue --asset BTO-01","» locking collateral ............ OK","» operators signing 9/11 ........ OK","» writing to tala (one record) .. OK","» reserves checkable 1:1 ........ OK","note: LKH-02 queued — next","» TRUST THAT IS STRUCTURAL // ᜊᜆᜓ"];
+function Terminal() {
+  const [n, setN] = useState(reduced() ? TERM.length : 0);
+  useEffect(() => { if (reduced()) return; const id = setInterval(() => setN(v => (v >= TERM.length + 3 ? 0 : v + 1)), 700); return () => clearInterval(id); }, []);
+  return (
+    <div className="terminal" role="log" aria-label="Issue log">
+      {TERM.slice(0, n).map((l, i) => <div key={i}><span className="p">{i === 0 ? "bato@01:~$ " : ""}</span>{l}</div>)}
+      <span className="blink">█</span>
+    </div>
+  );
+}
+function DataSec() {
+  const { load, bars, spark } = useTelemetry();
+  return (
+    <section id="data" className="sec">
+      <SecHead idx="08" title="Data Display" bb="datos" meta="READOUTS · BLOCK METERS · RECORD" />
+      <div className="cells c4">
+        <div><span className="micro tag">[ 01 ]</span><p className="label">ASSETS LIVE</p><Count to={2} pad={2} className="readout" /><p className="micro">BTO-01 · LKH-02 NEXT</p></div>
+        <div><span className="micro tag">[ 02 ]</span><p className="label">OPERATORS</p><Count to={11} pad={2} className="readout acc" /><p className="micro">INDEPENDENT · 9 TO SIGN</p></div>
+        <div><span className="micro tag">[ 03 ]</span><p className="label">RESERVE RATIO</p><p className="lcd">1:1</p><p className="micro">CHECKABLE</p></div>
+        <div style={{ display:"grid", placeItems:"center" }}><span className="micro tag">[ 04 ]</span><PixelGauge value={load} /></div>
+        <div className="span2"><span className="micro tag">[ 05 ]</span><p className="cell-title">NODE LOAD // 6 CH</p><BlockMeters bars={bars} /></div>
+        <div className="span2"><span className="micro tag">[ 06 ]</span><p className="cell-title">ISSUANCE // LIVE</p><StepLine data={spark} /><div className="row" style={{ justifyContent:"space-between" }}><span className="micro">T-28</span><span className="label b">{Math.round(spark[spark.length - 1])} TX/S</span><span className="micro">NOW</span></div></div>
+        <div className="span2" style={{ padding:0 }}><div style={{ overflowX:"auto" }}><table>
+          <thead><tr><th>IDX</th><th>UNIT</th><th>EVENT</th><th>TIME</th><th>STATUS</th></tr></thead>
+          <tbody>{LOGS.map(l => <tr key={l.id}><td>{l.id}</td><td><b>{l.unit}</b></td><td>{l.event}</td><td>{l.t}</td><td><span className={"chip " + (l.s === "LIVE" ? "live" : "next")}>{l.s}</span></td></tr>)}</tbody>
+        </table></div></div>
+        <div className="span2" style={{ padding:0 }}><Terminal /></div>
+      </div>
+    </section>
+  );
+}
+function MotionSec() {
+  const r = seeded(4); const order = Array.from({ length: 63 }).map(() => r());
+  return (
+    <section id="motion" className="sec">
+      <SecHead idx="09" title="Motion" bb="galaw" meta="STEPPED · BLOCK-BY-BLOCK · REDUCED-MOTION SAFE" />
+      <p className="lead">Motion is <b className="hl">construction</b>: blocks appear one at a time with steps() timing. No easing blur. Everything holds still when the OS asks for reduced motion.</p>
+      <div className="cells c3">
+        <div><p className="cell-title">BLOCK SCAN</p><div className="scan-box"><p className="pixel" style={{ fontSize:52 }}>SCAN</p></div></div>
+        <div className="stack"><p className="cell-title">ASSEMBLE</p>
+          <div className="build" style={{ display:"grid", gridTemplateColumns:"repeat(9,1fr)", gap:2, width:180 }}>{order.map((d, i) => <i key={i} style={{ display:"block", aspectRatio:"1", background: i % 7 === 3 ? "var(--accent)" : "var(--fg)", animationDelay:(d * 2).toFixed(2) + "s" }} />)}</div>
+          <p className="micro">animation: … steps(1) · random delay per block</p></div>
+        <div className="stack"><p className="cell-title">COUNT-UP READOUT</p><Count to={976} className="readout" /><p className="cell-title" style={{ marginTop:16 }}>CURSOR</p><p className="lcd" style={{ fontSize:32 }}>READY<span className="blink accent-text">_</span></p></div>
+        <div style={{ gridColumn:"1 / -1" }}><p className="cell-title">TICKER</p><div className="ticker" aria-hidden="true"><span>{"BTO-01 LIVE ■ LKH-02 NEXT ■ HALIGI · THRESHOLD SIGNING ■ OPERATORS INDEPENDENT ■ TALA · ONE RECORD ■ RESERVES CHECKABLE ■ ".repeat(6)}</span></div></div>
+      </div>
+    </section>
+  );
+}
+
+/* ---------- SAMPLE IMPLEMENTATIONS ---------- */
+function Poster({ variant = 1 }) {
+  const tower = variant === 2;
+  return (
+    <div className="poster" role="img" aria-label="BATO poster sample">
+      <div className="pp-bar"><div className="s"><b>{tower ? "03" : "01"}</b><span className="brk">BTO</span></div><div className="m"><b>STRUCTURE AND INFRASTRUCTURE</b><span>ON THE BATO GRID</span></div><div className="s r"><span className="brk">LKH</span><b>01</b></div></div>
+      <div className="pp-mk"><Marks /><Marks flip /></div>
+      <div className="pp-dots"><DotField cols={44} rows={16} /></div>
+      <div className="pp-giant">BATO-01</div>
+      <div className="pp-copy"><p>BATO ISSUES A STRUCTURAL DESIGN<br/>SYSTEM FOR INTERNAL TOOLS</p><p>ON THE BATO GRID. TRUST THAT<br/>IS STRUCTURAL.</p></div>
+      <div className="pp-art" style={tower ? { left:"28cqw", width:"44cqw", top:"28cqw" } : null}>
+        {tower ? <IsoBlock L={4} D={9} H={20} s={12} seed={21} blobs={[[7,14,2.6],[3,6,2.2],[8,3,1.8]]} /> : <IsoBlock seed={11} />}
+      </div>
+      <div className="pp-keys">{KEYS.map(([a, b]) => <div key={a}><b>{a}</b><span>{b}</span></div>)}</div>
+      <div className="pp-slogan"><b>BEDROCK</b><span>[ &nbsp;LAID&nbsp; ]</span><b>STRUCTURE</b><span>[ &nbsp;BUILT&nbsp; ]</span><b>PROOF</b></div>
+    </div>
+  );
+}
+function AssetCard() {
+  return (
+    <div className="asset" role="img" aria-label="BTO-01 asset poster">
+      <PixelField cols={36} rows={51} seed={3} />
+      <div className="a-top"><span>ASSET 01</span><span>LIVE</span></div>
+      <div className="a-h">BTO-01</div>
+      <div className="a-sub">BTO-01 PROVES THE MODEL IN PRODUCTION.</div>
+      <div className="a-bb"><BBText bold>Tibay</BBText></div>
+      <div className="a-cube"><WireCube /></div>
+      <div className="a-foot"><span>BEDROCK ON THE GRID, BACKED 1:1.</span><b>BATO</b></div>
+    </div>
+  );
+}
+function Slides() {
+  return (
+    <div className="slides">
+      <div className="slide sl-paper">
+        <div style={{ left:"3%", top:"6%", width:"44%", height:"88%", background:"#2E5A28", overflow:"hidden" }}><PixelField cols={20} rows={22} seed={2} base="#2E5A28" /></div>
+        <div style={{ left:"7%", top:"18%", background:"#F1F1EC", color:"#111311", padding:"1.4cqw", font:"400 1.4cqw/1.7 var(--mono)", border:"1px solid #111311" }}>■ BTO-01 · MINT PATH<br/>01 BTO IS LOCKED.<br/>02 OPERATORS SIGN.<br/>03 BTO IS MINTED.</div>
+        <div style={{ left:"20%", top:"58%", width:"14%" }}><GridCube size="100%" n={3} /></div>
+        <div style={{ left:"52%", top:"16%", font:"700 4.2cqw/1.35 var(--pixel)" }}><span className="hl" style={{ ["--fg"]:"#111311", ["--bg"]:"#F1F1EC" }}>WE ISSUE<br/>THE ASSETS AND<br/>BUILD THE SYSTEMS<br/>BEHIND THEM.</span></div>
+        <div style={{ left:"52%", top:"62%", font:"400 1.4cqw/1.5 var(--mono)", width:"40%" }}>BATO ISSUES A STRUCTURAL SYSTEM FOR INTERNAL TOOLS ON THE BATO GRID.</div>
+        <div style={{ left:"52%", top:"78%", background:"#111311", color:"#F1F1EC", font:"400 1.3cqw var(--mono)", padding:".6cqw 1cqw" }}>■ BTO-01 · LIVE →</div>
+        <div style={{ right:"3.5%", bottom:"5%", font:"400 1.3cqw var(--mono)" }}>PROOF, NOT PAPERWORK.</div>
+      </div>
+      <div className="slide sl-forest">
+        <PixelField cols={32} rows={18} seed={6} base="#2E5A28" />
+        <div className="st"><span>ONE STORY AT THREE LEVELS</span><span>08 / 10</span></div>
+        <div style={{ left:"30%", top:"30%", display:"grid", gap:"1.6cqw" }}>
+          {[["BEDROCK","STONE AND POURED CONCRETE."],["STRUCTURE","ARCHES, AQUEDUCTS, KEYSTONES."],["GRID","MANY NODES, NO SINGLE POINT OF FAILURE."]].map(([a, b]) => <div key={a} style={{ display:"flex", alignItems:"center", gap:"1.6cqw" }}><span style={{ width:"4.4cqw" }}><GridCube size="100%" n={3} /></span><span style={{ background:"#F1F1EC", color:"#111311", font:"400 3.2cqw/1 var(--wide)", padding:".5cqw 1cqw" }}>{a}</span><span style={{ font:"400 1.2cqw var(--mono)" }}>{b}</span></div>)}
+        </div>
+        <div className="sb">BATO</div>
+      </div>
+      <div className="slide sl-mint">
+        <div className="st"><span>BATO · BEDROCK</span><span>07 / 10</span></div>
+        <div style={{ left:0, right:0, top:"16%", textAlign:"center", font:"700 15cqw/1 var(--pixel)" }}>BATO</div>
+        <div style={{ left:"45%", top:"38%", width:"10%" }}><PixelArch cell={10} fill="#111311" key2="#2E5A28" /></div>
+        <div style={{ left:0, right:0, bottom:0, height:"42%", ["--dotc"]:"#111311" }}><DotField cols={60} rows={12} max={.55} min={.12} /></div>
+        <div style={{ left:"3.5%", bottom:"6%", background:"#111311", color:"#A9D39C", font:"400 1.2cqw var(--mono)", padding:".5cqw 1cqw" }}>BTO-01 PROVES THE MODEL IN PRODUCTION.</div>
+        <div style={{ right:"3.5%", bottom:"6%", background:"#111311", color:"#A9D39C", font:"400 1.2cqw var(--mono)", padding:".5cqw 1cqw" }}>BEDROCK · STRUCTURE · GRID</div>
+      </div>
+      <div className="slide sl-forest">
+        <PixelField cols={32} rows={18} seed={12} base="#2A5326" density={.35} />
+        <div className="st"><span>BATO · INFRASTRUCTURE</span><span>06 / 10</span></div>
+        <div style={{ left:"20%", right:"20%", top:"36%", background:"#F1F1EC", color:"#111311", display:"flex", alignItems:"center", justifyContent:"space-between", padding:"1.4cqw 2cqw", font:"400 1.4cqw var(--mono)" }}><span>DISTRIBUTED CONTROL</span><span style={{ width:"4cqw" }}><GridCube size="100%" n={3} /></span><span>NOT SINGLE-OPERATOR DEPENDENCY</span></div>
+        <div style={{ left:"20%", right:"20%", top:"56%", background:"#F1F1EC", color:"#111311", display:"flex", justifyContent:"space-between", padding:".8cqw 2cqw", font:"400 1.2cqw var(--mono)" }}><span>■</span><span>BATO.GRID</span></div>
+      </div>
+      <div className="slide sl-pale">
+        <div style={{ inset:0 }}><DotField cols={64} rows={36} max={.35} min={.05} /></div>
+        <div className="st"><span>BATO.GRID</span><span>05 / 10</span></div>
+        <div style={{ left:"36%", right:"36%", top:"14%", background:"#F1F1EC", border:"1px solid #111311", padding:"2cqw 2cqw 1.2cqw", textAlign:"center" }}>
+          <div style={{ width:"60%", margin:"0 auto" }}><PixelArch outline cell={10} key2="#2E5A28" /></div>
+          <div style={{ font:"700 2.6cqw/1.1 var(--pixel)", marginTop:"1.2cqw" }}>BATO<br/>TRUST THAT IS<br/>STRUCTURAL.</div>
+        </div>
+        <div style={{ left:0, right:0, bottom:"8%", textAlign:"center", font:"400 1.3cqw var(--mono)", letterSpacing:".14em" }}>ENGINEERED PERMANENCE · <BBText>tibay</BBText></div>
+      </div>
+      <div className="slide sl-pale" style={{ background:"#C9DFC0" }}>
+        <div style={{ inset:0, ["--dotc"]:"#A9C99D" }}><DotField cols={64} rows={36} max={.4} min={.05} /></div>
+        <div className="st"><span>NEXT ASSET</span><span>[ ASSET 02 ] 10 / 10</span></div>
+        <div style={{ left:0, right:0, top:"14%", textAlign:"center", font:"700 2.4cqw var(--pixel)" }}>BATO</div>
+        <div style={{ left:"27%", top:"24%", width:"18%" }}><GridCube size="100%" left="#1D3D1A" right="#2E5A28" top="#4B8A3F" /></div>
+        <div style={{ left:"55%", top:"24%", width:"18%" }}><GridCube size="100%" /></div>
+        <div style={{ left:"22%", right:"22%", top:"62%", display:"flex", justifyContent:"space-between", font:"400 1.1cqw var(--mono)" }}><span>BTO-01 · ASSET 01 · LIVE</span><span>LKH-02 · ASSET 02 · NEXT</span></div>
+        <div style={{ left:0, right:0, top:"72%", textAlign:"center", font:"400 5cqw/1 var(--wide)" }}>INTRODUCING LKH-02</div>
+        <div style={{ left:0, right:0, top:"86%", textAlign:"center", font:"400 1.3cqw var(--mono)" }}>ISSUED THE SAME WAY. ON THE SAME SYSTEM.</div>
+      </div>
+    </div>
+  );
+}
+function ErrorPage() {
+  return (
+    <div className="err-page">
+      <PixelField cols={30} rows={18} seed={8} />
+      <div className="row" style={{ justifyContent:"space-between" }}><span className="label">■ RECORD NOT FOUND</span><span className="label">[ 404 ]</span></div>
+      <div>
+        <p className="pixel">404</p>
+        <p className="label" style={{ margin:"12px 0 20px" }}>NO STONE HERE // <BBText>wala</BBText></p>
+        <button type="button" className="btn" style={{ background:"#F1F1EC", color:"#111311", borderColor:"#F1F1EC" }}>RETURN TO BEDROCK ←</button>
+      </div>
+    </div>
+  );
+}
+function Phone() {
+  return (
+    <div className="phone" aria-label="Mobile app sample">
+      <div className="phone-status"><span>BATO</span><span>■■■ 5G</span></div>
+      <div className="phone-body">
+        <div className="row" style={{ justifyContent:"space-between" }}><span className="micro">[ ASSET 01 ]</span><span className="chip live">LIVE</span></div>
+        <p className="wide" style={{ fontSize:56 }}>BTO-01</p>
+        <div style={{ border:"1px solid var(--fg)", padding:12 }}><p className="micro">RESERVE RATIO</p><p className="lcd" style={{ fontSize:34 }}>1:1</p><SegBar value={100} /></div>
+        <div className="phone-list">{[["BEDROCK","LIVE"],["STRUCTURE","LIVE"],["LKH-02","NEXT"]].map(([a, b]) => <div key={a}><span className="label">{a}</span><span className={"chip " + (b === "LIVE" ? "live" : "next")}>{b}</span></div>)}</div>
+        <button type="button" className="btn acc">ISSUE →</button>
+      </div>
+      <div className="phone-nav"><span className="on">HOME</span><span>ASSETS</span><span>RECORD</span><span>SYS</span></div>
+    </div>
+  );
+}
+function SamplesSec({ setView }) {
+  return (
+    <section id="samples" className="sec">
+      <SecHead idx="10" title="Sample Builds" bb="halimbawa" meta="POSTER · ASSET · DECK · UI" />
+      <div className="sample-grid">
+        <div className="sample"><Poster /><div className="sample-cap"><span className="label b">S-01 // POSTER · BLOCK</span><span className="micro">CONTAINER-QUERY SCALED</span></div></div>
+        <div className="sample"><AssetCard /><div className="sample-cap"><span className="label b">S-02 // ASSET POSTER</span><span className="micro">PIXEL FIELD · WIRE CUBE</span></div></div>
+        <div className="sample" style={{ gridColumn:"1 / -1" }}><Slides /><div className="sample-cap"><span className="label b">S-03 // PRESENTATION DECK · 6 LAYOUTS</span><span className="micro">16:9 · PAPER · FOREST · MINT · PALE</span></div></div>
+        <div className="sample"><Poster variant={2} /><div className="sample-cap"><span className="label b">S-04 // POSTER · TOWER</span><span className="micro">ISSUE 03</span></div></div>
+        <div className="sample">
+          <ErrorPage /><div className="sample-cap"><span className="label b">S-05 // ERROR PAGE</span><span className="micro">FOREST PANEL</span></div>
+          <div className="launch" style={{ marginTop:24, background:"#22461F", color:"#F1F1EC" }}>
+            <PixelField cols={30} rows={12} seed={14} />
+            <div><p className="micro" style={{ color:"#A9D39C" }}>S-07 // LIVE DEMO</p><p className="wide" style={{ fontSize:56 }}>AUTH</p><p className="label">LOGIN + SIGN UP · VALIDATION · SESSION</p></div>
+            <button type="button" className="btn" style={{ background:"#F1F1EC", color:"#111311", borderColor:"#F1F1EC" }} onClick={() => setView("auth")}>LAUNCH LOGIN DEMO →</button>
+          </div>
+          <div className="launch" style={{ marginTop:24 }}>
+            <div><p className="micro">S-08 // LIVE DEMO</p><p className="wide" style={{ fontSize:56 }}>DASH</p><p className="label">SIDEBAR · READOUTS · BLOCK GAUGE · RECORD</p></div>
+            <button type="button" className="btn" onClick={() => setView(store.session() ? "dashboard" : "auth")}>LAUNCH DASHBOARD →</button>
+          </div>
+          <div style={{ marginTop:24 }}><Phone /></div><div className="sample-cap"><span className="label b">S-06 // MOBILE APP</span><span className="micro">300 × 600 FRAME</span></div>
+        </div>
+      </div>
+    </section>
+  );
+}
+const TOKENS_CSS = `:root{
+  --paper:#F1F1EC; --ink:#111311; --forest:#22461F; --moss:#2F5B2A;
+  --leaf:#4B8A3F;  --mint:#A9D39C; --pale:#DDEBD6;  --dot:#C3C5C0;
+  --bg:var(--paper); --fg:var(--ink); --accent:var(--forest); --on-accent:var(--paper);
+  --u:8px;
+  --hero:"Inter Tight",sans-serif;   /* 900 · poster headline */
+  --wide:"Tektur",sans-serif;        /* asset titles · statements */
+  --pixel:"Silkscreen",monospace;    /* wordmark · readouts */
+  --mono:"IBM Plex Mono",monospace;  /* labels · body */
+  --bb:"RX09 Baybayin",sans-serif;   /* baybayin · U+1700 */
+}
+[data-theme="dark"]{ --bg:#0F1A0E; --fg:#E4ECDF; --accent:#A9D39C; --on-accent:#0F1A0E; }
+[data-accent="mono"]{ --accent:var(--fg); --on-accent:var(--bg); }
+.btn{border:1px solid var(--fg);background:var(--fg);color:var(--bg);transition:0s}
+.btn::before{content:"";width:7px;height:7px;background:currentColor}
+.hl{background:var(--fg);color:var(--bg);box-decoration-break:clone}
+.brk::before{content:"["} .brk::after{content:"]"}`;
+function TokensSec({ notify }) {
+  return (
+    <section id="tokens" className="sec">
+      <SecHead idx="11" title="Tokens & Rules" bb="tuntunin" meta="COPY INTO ANY PROJECT" />
+      <div className="cells c2">
+        <div style={{ padding:0 }}>
+          <div className="topbar"><span className="label b">tokens.css</span><button type="button" className="btn sm" onClick={() => { navigator.clipboard && navigator.clipboard.writeText(TOKENS_CSS); notify("TOKENS COPIED // READY TO PASTE"); }}>COPY</button></div>
+          <pre className="code">{TOKENS_CSS}</pre>
+        </div>
+        <div className="stack">
+          <p className="cell-title">COMPOSITION CHECKLIST</p>
+          {["One giant grotesk headline (or pixel wordmark)","Bracket header: 01 [ TAG ] TITLE [ TAG ] 01","One isometric / pixel structure object","Edges erode into # * = + : glyph cells","One dot-matrix fade field","One green field or block","Key row: 6 × KEY / value","Bracketed slogan footer","One Baybayin word as identity","≈60% paper / empty space"].map(c =>
+            <label className="opt" key={c}><input type="checkbox" className="chk" defaultChecked /> {c}</label>)}
+          <p className="cell-title" style={{ marginTop:16 }}>NEVER</p>
+          <p className="label" style={{ lineHeight:2.2 }}>{["ROUNDED UI","GRADIENTS","BLUR / GLOW","SECOND HUE","EMOJI","CJK FLAVOR TEXT","DROP SHADOWS"].map(n => <span key={n} className="chip" style={{ marginRight:6, textDecoration:"line-through" }}>{n}</span>)}</p>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* =====================================================
+   12 // BAYBAYIN TYPE SYSTEM
+   ===================================================== */
+const BB_CONS = [["k","KA"],["g","GA"],["ng","NGA"],["t","TA"],["d","DA"],["n","NA"],["p","PA"],["b","BA"],["m","MA"],["y","YA"],["r","RA"],["l","LA"],["w","WA"],["s","SA"],["h","HA"]];
+const BB_ROWS = [["", "VOWEL", ["a","i","u",null]]].concat(BB_CONS.map(c => [c[0], c[1], [c[0]+"a", c[0]+"i", c[0]+"u", c[0]]]));
+const BB_GLYPHS = [[0x1700,"A"],[0x1701,"I / E"],[0x1702,"U / O"],[0x1703,"KA"],[0x1704,"GA"],[0x1705,"NGA"],[0x1706,"TA"],[0x1707,"DA / RA"],[0x1708,"NA"],[0x1709,"PA"],[0x170A,"BA"],[0x170B,"MA"],[0x170C,"YA"],[0x170D,"RA"],[0x170E,"LA"],[0x170F,"WA"],[0x1710,"SA"],[0x1711,"HA"],[0x1712,"KUDLIT E/I"],[0x1713,"KUDLIT O/U"],[0x1714,"KRUS-KUDLIT"],[0x1715,"PAMUDPOD"],[0x1735,"DANDA"],[0x1736,"DOUBLE DANDA"]];
+const bbLabel = (k) => k === "a" ? "A" : k === "i" ? "E/I" : k === "u" ? "O/U" : k.length && !/[aiu]$/.test(k) ? k.toUpperCase() + " +" : k.toUpperCase().replace(/I$/, "E/I").replace(/U$/, "O/U");
+const BB_USAGE = `<!-- Font: Unicode Baybayin -->
+<p class="rx-bb rx-bb--bold">ᜊᜆᜓ</p>
+<!-- SVG engine: Latin in, vector out -->
+<span id="logo"></span>
+<script>
+  RX09Baybayin.render(document.getElementById('logo'), 'Bato', { height: 96 });
+  RX09Baybayin.transliterate('Tibay');              // Unicode
+  RX09Baybayin.toSVG('Haligi', { color: '#22461F' }); // SVG string
+<\/script>
+/* React — pixel version (BATO-01 only) */
+<PixelBaybayin text="Bato" rows={22} cell={8} />`;
+function BaybayinSec({ notify }) {
+  const E = BB();
+  const [txt, setTxt] = useState("Bato Tibay");
+  const [killer, setKiller] = useState("krus");
+  const [h, setH] = useState(110);
+  const [rows, setRows] = useState(22);
+  const [mode, setMode] = useState(0);
+  const opt = { killer, height: h };
+  const src = txt.slice(0, 120);
+  const svg = E.toSVG(src || " ", opt);
+  const uni = E.transliterate(src, opt);
+  const toks = E.tokenize(src, opt);
+  const download = () => {
+    const s = E.toSVG(src || "baybayin", { killer, height: 256, color: "#22461F" });
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(new Blob([s], { type: "image/svg+xml" }));
+    a.download = "bato-baybayin-" + ((src.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "")) || "text") + ".svg";
+    a.click(); setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+    notify("[X] SVG EXPORTED // " + a.download.toUpperCase());
+  };
+  const copy = (s, msg) => { (navigator.clipboard ? navigator.clipboard.writeText(s) : Promise.reject()).then(() => notify(msg), () => notify("COPY BLOCKED — SELECT MANUALLY")); };
+  return (
+    <section id="baybayin" className="sec">
+      <SecHead idx="12" title="Baybayin" bb="baybayin" meta="CULTURE MODULE PH-001 · U+1700" />
+      <div className="bb-hero">
+        <div>
+          <p className="micro">[ BTO-12 ] · BRAND: BATO / MODEL: BYBYN-01 · PIXEL + VECTOR</p>
+          <div style={{ margin:"16px 0", overflowX:"auto" }}><PixelBaybayin text="Baybayin" rows={20} cell={9} /></div>
+          <p className="lead" style={{ marginTop:8 }}>Baybayin is the identity layer of BATO-01 — it replaces every CJK flavor label. Use the <b className="hl">font</b> for text, the <b className="hl">SVG engine</b> for logos, and the <b className="hl">pixel renderer</b> to build script out of grid blocks like the iso structures.</p>
+        </div>
+        <div className="bb-block">
+          <PixelField cols={14} rows={20} seed={10} />
+          <p className="label">■ PIXEL TYPE SYSTEM<br/>GRID-BUILT SCRIPT</p>
+          <p className="pixel" style={{ fontSize:40 }}>U+1700</p>
+          <p className="label">24 GLYPHS · 78 SYLLABLES<br/>2 WEIGHTS · WOFF2 EMBEDDED<br/>STATUS: LIVE<span className="blink">_</span></p>
+        </div>
+      </div>
+      <div className="cells bb-conv">
+        <div className="stack">
+          <p className="cell-title">01 // LATIN INPUT</p>
+          <div className="field"><label className="label" htmlFor="bb-in">[ SOURCE ]</label>
+            <input id="bb-in" value={txt} maxLength={120} autoComplete="off" onChange={e => setTxt(e.target.value)} />
+            <span className="hint">{src.length}/120 · C→K/S · F→P · J→DY · Q→K · V→B · X→KS · Z→S · Ñ→NY</span></div>
+          <div className="field"><label className="label" htmlFor="bb-kill">[ VOWEL KILLER ]</label>
+            <select id="bb-kill" value={killer} onChange={e => setKiller(e.target.value)}><option value="krus">KRUS-KUDLIT + (U+1714)</option><option value="pamudpod">PAMUDPOD (U+1715)</option></select></div>
+          <div className="field"><label className="label" htmlFor="bb-h">VECTOR HEIGHT // {h}PX</label><input id="bb-h" type="range" className="range" min="48" max="200" value={h} onChange={e => setH(+e.target.value)} /></div>
+          <div className="field"><label className="label" htmlFor="bb-r">PIXEL ROWS // {rows}</label><input id="bb-r" type="range" className="range" min="10" max="40" value={rows} onChange={e => setRows(+e.target.value)} /></div>
+          <div className="row">
+            <button type="button" className="btn acc" onClick={download}>DOWNLOAD SVG →</button>
+            <button type="button" className="btn ghost nob" onClick={() => copy(uni, "UNICODE COPIED")}>COPY UNICODE</button>
+            <button type="button" className="btn ghost nob" onClick={() => copy(svg, "SVG MARKUP COPIED")}>COPY SVG</button>
+          </div>
+        </div>
+        <div className="stack">
+          <div className="tabs" role="tablist" aria-label="Output">{["02 VECTOR","03 PIXEL GRID","04 UNICODE"].map((t, i) => <button type="button" key={t} role="tab" aria-selected={mode === i} onClick={() => setMode(i)}>{t}</button>)}</div>
+          {mode === 0 && <div className="bb-out" style={{ "--bb-h": h + "px" }} aria-live="polite" dangerouslySetInnerHTML={{ __html: svg }} />}
+          {mode === 1 && <div className="bb-pix" aria-live="polite"><PixelBaybayin text={src || " "} rows={rows} cell={8} /></div>}
+          {mode === 2 && <div className="bb-uni rx-bb rx-bb--bold" lang="tl-Tglg">{uni || " "}</div>}
+          <p className="micro">TOKENS [{toks.length}]: {toks.map(k => k === " " ? "/" : k).join(" · ").toUpperCase() || "—"}</p>
+        </div>
+      </div>
+      <p className="micro" style={{ margin:"48px 0 8px" }}>SYLLABLE CHART // KUDLIT ABOVE = E/I · BELOW = O/U · + KILLS VOWEL · CLICK TO COPY</p>
+      <div style={{ overflowX:"auto" }}>
+        <table className="bb-tbl" style={{ minWidth:640 }}>
+          <thead><tr><th>CONS.</th><th>-A</th><th>-E / -I</th><th>-O / -U</th><th>KILLED (+)</th></tr></thead>
+          <tbody>{BB_ROWS.map(([c, name, keys]) => (
+            <tr key={name}><td className="k">{name}</td>
+              {keys.map((k, i) => !k ? <td key={i}><span className="micro">—</span></td>
+                : <td key={i}><button type="button" onClick={() => copy(E.units[k].u, "COPIED " + bbLabel(k))} aria-label={"Copy " + bbLabel(k)}><span className="g rx-bb" lang="tl-Tglg">{E.units[k].u}</span><span className="micro">{bbLabel(k)}</span></button></td>)}
+            </tr>))}</tbody>
+        </table>
+      </div>
+      <p className="micro" style={{ margin:"48px 0 8px" }}>GLYPH CATALOG // U+1700–U+1736 · {BB_GLYPHS.length} CODEPOINTS</p>
+      <div className="glyphs bb-cat">
+        {BB_GLYPHS.map(([cp, n]) => {
+          const mark = cp >= 0x1712 && cp <= 0x1715, ch = (mark ? "\u25CC" : "") + String.fromCodePoint(cp), hex = "U+" + cp.toString(16).toUpperCase();
+          return <button key={cp} type="button" className="glyph" onClick={() => copy(String.fromCodePoint(cp), "COPIED " + hex + " " + n)} data-tip="CLICK TO COPY"><span className="micro" style={{ alignSelf:"flex-start" }}>{hex}</span><span className="g" lang="tl-Tglg">{ch}</span><span className="label">{n}</span></button>;
+        })}
+      </div>
+      <div className="cells c2" style={{ marginTop:48 }}>
+        <div style={{ padding:0 }}>
+          <div className="topbar"><span className="label b">baybayin-usage.html</span><button type="button" className="btn sm" onClick={() => copy(BB_USAGE, "USAGE COPIED")}>COPY</button></div>
+          <pre className="code">{BB_USAGE}</pre>
+        </div>
+        <div className="stack">
+          <p className="cell-title">API // window.RX09Baybayin v{E.version}</p>
+          <table className="spec-table"><tbody>
+            {[["tokenize(text, opt)","→ UNIT KEYS"],["transliterate(text, opt)","→ UNICODE"],["toSVG(text, opt)","→ SVG STRING"],["render(el, text, opt)","→ INJECT SVG"],["<PixelBaybayin text rows cell />","→ PIXEL GRID"],["opt.killer","krus · pamudpod"]].map(([a, b]) => <tr key={a}><td>{a}</td><td style={{ textAlign:"right" }}>{b}</td></tr>)}
+          </tbody></table>
+          <p className="cell-title" style={{ marginTop:16 }}>RULES</p>
+          {["Baybayin replaces all Japanese / CJK flavor text","Keep Latin as the readable content","Never uppercase or letter-space Baybayin (.rx-bb resets it)","Pixel renderer for heroes; SVG engine for logos and exports","Use lang=\"tl-Tglg\" on every Baybayin run"].map(r => <p key={r} className="label" style={{ lineHeight:1.8 }}>[■] {r}</p>)}
+          <p className="micro" style={{ marginTop:8 }}>OUTLINES DERIVED FROM NOTO SANS TAGALOG · SIL OFL 1.1</p>
+        </div>
+      </div>
+    </section>
+  );
+}
+function Modal({ onClose }) {
+  const ref = useRef(null);
+  useEffect(() => { ref.current && ref.current.focus(); const k = (e) => e.key === "Escape" && onClose(); window.addEventListener("keydown", k); return () => window.removeEventListener("keydown", k); }, []);
+  return (
+    <div className="overlay" onClick={onClose}>
+      <div className="modal cnr" role="dialog" aria-modal="true" aria-labelledby="mt" onClick={e => e.stopPropagation()}>
+        <div className="modal-head"><span id="mt" className="label">■ CONFIRM // <BBText>tiyak</BBText></span><button type="button" ref={ref} onClick={onClose} aria-label="Close">[X] ESC</button></div>
+        <div className="modal-body">
+          <p className="wide" style={{ fontSize:48 }}>REDEEM?</p>
+          <p>Redeeming <b>BTO-01</b> reverses the same path. Operators must sign again.</p>
+          <div style={{ height:60 }}><DotField cols={40} rows={5} /></div>
+          <div className="row"><button type="button" className="btn acc" onClick={onClose}>CONFIRM →</button><button type="button" className="btn ghost" onClick={onClose}>CANCEL</button></div>
+        </div>
+      </div>
+    </div>
+  );
+}
+function Showcase({ setView, theme, setTheme, accent, setAccent }) {
+  const [active, setActive] = useState("cover");
+  const [toasts, setToasts] = useState([]);
+  const [modal, setModal] = useState(false);
+  const notify = useCallback((msg) => { const id = Date.now() + Math.random(); setToasts(t => [...t.slice(-2), { id, msg }]); setTimeout(() => setToasts(t => t.filter(x => x.id !== id)), 2600); }, []);
+  const go = (id) => { const el = document.getElementById(id); el && el.scrollIntoView({ behavior: reduced() ? "auto" : "smooth" }); };
+  useEffect(() => {
+    const io = new IntersectionObserver(es => es.forEach(e => e.isIntersecting && setActive(e.target.id)), { rootMargin:"-40% 0px -55% 0px" });
+    SECTIONS.forEach(([id]) => { const el = document.getElementById(id); el && io.observe(el); });
+    return () => io.disconnect();
+  }, []);
+  return (
+    <>
+      <nav className="topnav" aria-label="Design system sections">
+        <button type="button" className="brand-mini" onClick={() => go("cover")} aria-label="Back to top">BATO<span className="micro" style={{ color:"var(--gray)", fontFamily:"var(--mono)" }}>01</span></button>
+        <div className="links">{SECTIONS.map(([id, n, t]) => <a key={id} href={"#" + id} className={active === id ? "active" : ""} aria-current={active === id ? "true" : undefined} onClick={e => { e.preventDefault(); go(id); }}><span>{n}</span>{t}</a>)}</div>
+        <div className="nav-tools"><ThemeSwitch theme={theme} setTheme={setTheme} /><AccentSwitch accent={accent} setAccent={setAccent} /></div>
+      </nav>
+      <main>
+        <Cover go={go} /><ColorSec notify={notify} /><TypeSec /><GridSec /><ShapeSec /><GlyphSec notify={notify} /><SignalSec />
+        <ComponentSec notify={notify} openModal={() => setModal(true)} /><DataSec /><MotionSec /><SamplesSec setView={setView} /><TokensSec notify={notify} /><BaybayinSec notify={notify} />
+      </main>
+      <footer className="footer">
+        <KeyRow /><Slogan />
+        <div className="row" style={{ justifyContent:"space-between" }}>
+          <p className="micro">2026 BATO. TRUST THAT IS STRUCTURAL. · A BATO GRID ORIGINAL SYSTEM · <BBText style={{ fontSize:13, color:"var(--fg)" }}>disenyo</BBText></p>
+          <p className="micro">BRAND: BATO / MODEL: 01 / MODE: {accent === "mono" ? "B·MONO" : "A·GREEN"} / {theme === "dark" ? "GABI" : "PAPER"}</p>
+        </div>
+      </footer>
+      <div className="toasts" aria-live="polite">{toasts.map(t => <div key={t.id} className="toast">{t.msg}</div>)}</div>
+      {modal && <Modal onClose={() => setModal(false)} />}
+    </>
+  );
+}
+
+/* =====================================================
+   LIVE DEMOS: AUTH + DASHBOARD
+   ===================================================== */
+function Auth({ onAuth, onBack, theme, setTheme }) {
+  const [mode, setMode] = useState("login");
+  const [form, setForm] = useState({ name:"", email:"", password:"", confirm:"" });
+  const [error, setError] = useState("");
+  const set = (k) => (e) => setForm({ ...form, [k]: e.target.value });
+  function submit(e) {
+    e.preventDefault(); setError("");
+    const users = store.users(), email = form.email.trim().toLowerCase();
+    if (!/^\S+@\S+\.\S+$/.test(email)) return setError("ERR_01 // INVALID EMAIL FORMAT");
+    if (form.password.length < 6) return setError("ERR_02 // PASSWORD MIN 6 CHARS");
+    if (mode === "signup") {
+      if (!form.name.trim()) return setError("ERR_03 // OPERATOR NAME REQUIRED");
+      if (form.password !== form.confirm) return setError("ERR_04 // PASSWORDS DO NOT MATCH");
+      if (users.some(u => u.email === email)) return setError("ERR_05 // OPERATOR ALREADY REGISTERED");
+      const user = { id:"OP-" + String(users.length + 1).padStart(3, "0"), name:form.name.trim(), email, password:form.password };
+      store.save([...users, user]); store.setSession({ id:user.id, name:user.name, email });
+      return onAuth(store.session());
+    }
+    const u = users.find(x => x.email === email && x.password === form.password);
+    if (!u) return setError("ERR_06 // ACCESS DENIED — CHECK CREDENTIALS");
+    store.setSession({ id:u.id, name:u.name, email }); onAuth(store.session());
+  }
+  return (
+    <main className="auth">
+      <section className="auth-art" aria-hidden="true">
+        <PixelField cols={30} rows={36} seed={17} />
+        <div className="row" style={{ justifyContent:"space-between" }}><span className="label">ASSET 01</span><span className="label">LIVE</span></div>
+        <div><p className="wide" style={{ fontSize:"clamp(64px,12vw,180px)" }}>BATO</p><p className="wide" style={{ fontSize:"clamp(18px,2.4vw,30px)", marginTop:12 }}>TRUST THAT IS STRUCTURAL.</p>
+          <div style={{ marginTop:20, ["--fg"]:"#A9D39C" }}><PixelBaybayin text="Bato" rows={16} cell={7} color="#A9D39C" edge="#F1F1EC" /></div></div>
+        <div style={{ width:"34%", maxWidth:200, alignSelf:"flex-end" }}><WireCube /></div>
+        <div className="row" style={{ justifyContent:"space-between" }}><span className="label">BEDROCK ON THE GRID, BACKED 1:1.</span><span className="pixel" style={{ fontSize:20 }}>BATO</span></div>
+      </section>
+      <section className="auth-panel">
+        <div className="auth-tools"><button type="button" className="btn ghost sm nob" onClick={onBack}>← SYSTEM</button><ThemeSwitch theme={theme} setTheme={setTheme} /></div>
+        <div className="row"><GridCube size={40} n={3} /><div><p className="label b">OPERATOR ACCESS</p><p className="micro"><BBText>pasukan</BBText> · AUTHORIZED OPERATORS ONLY</p></div></div>
+        <div className="tabs" role="tablist" aria-label="Authentication mode">
+          {[["login","01 [ LOGIN ]"],["signup","02 [ SIGN UP ]"]].map(([k, t]) => <button type="button" key={k} role="tab" aria-selected={mode === k} onClick={() => { setMode(k); setError(""); }}>{t}</button>)}
+        </div>
+        <form onSubmit={submit} noValidate>
+          {mode === "signup" && <div className="field"><label className="label" htmlFor="name">Operator Name</label><input id="name" value={form.name} onChange={set("name")} autoComplete="name" placeholder="KIERWIN RAMOS" /></div>}
+          <div className="field"><label className="label" htmlFor="email">Email // ID</label><input id="email" type="email" value={form.email} onChange={set("email")} autoComplete="email" placeholder="operator@bato.grid" /></div>
+          <div className="field"><label className="label" htmlFor="pw">Access Key</label><input id="pw" type="password" value={form.password} onChange={set("password")} autoComplete={mode === "login" ? "current-password" : "new-password"} placeholder="••••••" /></div>
+          {mode === "signup" && <div className="field"><label className="label" htmlFor="pw2">Confirm Access Key</label><input id="pw2" type="password" value={form.confirm} onChange={set("confirm")} autoComplete="new-password" placeholder="••••••" /></div>}
+          {error && <p className="err" role="alert">{error}</p>}
+          <button className={"btn lg " + (mode === "login" ? "" : "acc")} type="submit">{mode === "login" ? "INITIATE ACCESS →" : "REGISTER OPERATOR →"}</button>
+        </form>
+        <p className="micro">DEMO ONLY: ACCOUNTS ARE STORED IN THIS BROWSER</p>
+      </section>
+    </main>
+  );
+}
+const NAV = ["OVERVIEW","ASSETS","OPERATORS","RECORD","SETTINGS"];
+function Dashboard({ user, onLogout, onBack, theme, setTheme }) {
+  const [page, setPage] = useState("OVERVIEW");
+  const { load, bars, spark } = useTelemetry();
+  return (
+    <div className="app">
+      <aside className="side">
+        <div className="brand"><p className="pixel" style={{ fontSize:34 }}>BATO</p><p className="micro">STRUCTURE GRID v1.0</p></div>
+        <nav aria-label="Main"><ul className="nav">
+          <li><button type="button" onClick={onBack}><span className="idx">00</span>[ SYSTEM ]</button></li>
+          {NAV.map((n, i) => <li key={n}><button type="button" aria-current={page === n ? "page" : undefined} onClick={() => setPage(n)}><span className="idx">{String(i + 1).padStart(2,"0")}</span>[ {n} ]</button></li>)}
+        </ul></nav>
+        <div className="side-foot">
+          <p className="micro">OPERATOR</p><p className="label b">{user.name}</p><p className="micro">{user.id}</p>
+          <div style={{ height:40, margin:"12px 0" }}><DotField cols={20} rows={4} /></div>
+          <button type="button" className="btn ghost" style={{ width:"100%" }} onClick={onLogout}>LOGOUT ←</button>
+        </div>
+      </aside>
+      <div className="main">
+        <header className="topbar">
+          <p className="label"><b>{String(NAV.indexOf(page) + 1).padStart(2,"0")}</b> // {page} <span className="micro">&nbsp;<BBText>galaw</BBText> MOVE</span></p>
+          <p className="label">■ LIVE &nbsp; <Clock /> <span className="blink">_</span></p>
+          <div className="row"><ThemeSwitch theme={theme} setTheme={setTheme} /><button type="button" className="btn ghost sm nob" onClick={onLogout}>[X] EXIT</button></div>
+        </header>
+        <div className="ticker" style={{ border:0, borderBottom:"1px solid var(--fg)" }} aria-hidden="true"><span>{"BTO-01 LIVE ■ LKH-02 NEXT ■ HALIGI · THRESHOLD SIGNING ■ OPERATORS INDEPENDENT ■ TALA · ONE RECORD ■ RESERVES CHECKABLE ■ ".repeat(6)}</span></div>
+        <main className="content">
+          <section className="hero">
+            <PixelField cols={48} rows={14} seed={19} base="#2E5A28" />
+            <div><p className="label">WELCOME BACK, {user.name.toUpperCase()}</p><h1 className="wide">{page === "OVERVIEW" ? "BTO-01" : page}</h1><p className="label" style={{ marginTop:8 }}>BTO-01 PROVES THE MODEL IN PRODUCTION.</p></div>
+            <div style={{ width:140 }}><WireCube /></div>
+          </section>
+          <section className="grid" aria-label="Metrics">
+            <div className="cell"><span className="micro tag">[ 01 ]</span><p className="label">ASSETS LIVE</p><Count to={2} pad={2} className="readout" /><p className="micro">LKH-02 NEXT</p></div>
+            <div className="cell"><span className="micro tag">[ 02 ]</span><p className="label">OPERATORS</p><Count to={11} pad={2} className="readout acc" /><p className="micro">9 OF 11 THRESHOLD</p></div>
+            <div className="cell"><span className="micro tag">[ 03 ]</span><p className="label">RESERVES</p><p className="lcd">1:1</p><p className="micro">CHECKABLE</p></div>
+            <div className="cell" style={{ alignItems:"center" }}><span className="micro tag">[ 04 ]</span><PixelGauge value={load} /></div>
+            <div className="cell span2"><span className="micro tag">[ 05 ]</span><p className="label">NODE LOAD // 6 CH</p><BlockMeters bars={bars} /></div>
+            <div className="cell span2"><span className="micro tag">[ 06 ]</span><p className="label">ISSUANCE // LIVE</p><StepLine data={spark} /></div>
+            <div className="cell span2 inverse"><span className="micro tag">[ 07 ]</span><p className="label">■ THREE LEVELS // <BBText>haligi</BBText></p><p className="wide" style={{ fontSize:"clamp(22px,3vw,34px)" }}>BEDROCK · STRUCTURE · GRID</p><p className="micro">ONE STORY AT THREE LEVELS</p></div>
+            <div className="cell span2" style={{ padding:0 }}><Terminal /></div>
+          </section>
+          <section style={{ border:"1px solid var(--fg)" }} aria-label="Record">
+            <div className="topbar"><p className="label b">RECORD // TALA</p><p className="micro">[■] AUTO-REFRESH</p></div>
+            <div style={{ overflowX:"auto" }}><table>
+              <thead><tr><th>IDX</th><th>UNIT</th><th>EVENT</th><th>TIME</th><th>STATUS</th></tr></thead>
+              <tbody>{LOGS.map(l => <tr key={l.id}><td>{l.id}</td><td><b>{l.unit}</b></td><td>{l.event}</td><td>{l.t}</td><td><span className={"chip " + (l.s === "LIVE" ? "live" : "next")}>{l.s}</span></td></tr>)}</tbody>
+            </table></div>
+          </section>
+        </main>
+        <footer className="footer"><Slogan /><p className="micro">2026 BATO. TRUST THAT IS STRUCTURAL. · BRAND: BATO / MODEL: 01</p></footer>
+      </div>
+    </div>
+  );
+}
+
+/* =====================================================
+   APP
+   ===================================================== */
+function App() {
+  const [theme, setTheme] = useDocAttr("data-theme", "bato_theme", "light");
+  const [accent, setAccent] = useDocAttr("data-accent", "bato_accent", "green");
+  const [view, setView] = useState("showcase");
+  const [user, setUser] = useState(store.session());
+  useEffect(() => { window.scrollTo(0, 0); }, [view]);
+  if (view === "auth") return <Auth theme={theme} setTheme={setTheme} onBack={() => setView("showcase")} onAuth={(u) => { setUser(u); setView("dashboard"); }} />;
+  if (view === "dashboard" && user) return <Dashboard user={user} theme={theme} setTheme={setTheme} onBack={() => setView("showcase")} onLogout={() => { store.setSession(null); setUser(null); setView("auth"); }} />;
+  return <Showcase setView={setView} theme={theme} setTheme={setTheme} accent={accent} setAccent={setAccent} />;
+}
+ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+</script>
+</body>
+</html>
